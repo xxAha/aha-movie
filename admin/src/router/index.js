@@ -6,9 +6,11 @@ import Login from '@/pages/Login'
 import Setting from '@/pages/Setting'
 import CreateType from '@/pages/Type/CreateType'
 import TypeList from '@/pages/Type/TypeList'
+import UpdateType from '@/pages/Type/UpdateType'
 import AddResource from '@/pages/Resource/AddResource'
 import ResourceList from '@/pages/Resource/ResourceList'
 import ChangePassword from '@/pages/ChangePassword'
+
 
 Vue.use(Router)
 
@@ -38,6 +40,11 @@ export default new Router({
           path: '/type-list',
           name: 'TypeList',
           component: TypeList
+        },
+        {
+          path: '/update-type',
+          name: 'UpdateType',
+          component: UpdateType
         },
         {
           path: '/resource-list',

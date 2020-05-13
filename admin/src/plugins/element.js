@@ -21,11 +21,18 @@ import {
   Input,
   Table,
   TableColumn,
-  image,
-  link
+  Image,
+  Link,
+  Tag,
+  MessageBox,
+  Dialog,
+  Transfer
 } from 'element-ui'
-Vue.use(link)
-Vue.use(image)
+Vue.use(Transfer)
+Vue.use(Dialog)
+Vue.use(Tag)
+Vue.use(Link)
+Vue.use(Image)
 Vue.use(Table)
 Vue.use(TableColumn)
 
@@ -47,4 +54,6 @@ Vue.use(Menu)
 Vue.use(MenuItemGroup)
 Vue.use(Submenu)
 Vue.use(MenuItem)
+
 Vue.prototype.$message = Message
+Vue.prototype.$messageBox = MessageBox
