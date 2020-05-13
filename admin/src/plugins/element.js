@@ -18,9 +18,16 @@ import {
   DropdownMenu,
   Avatar,
   Main,
-  Input
-
+  Input,
+  Table,
+  TableColumn,
+  image,
+  link
 } from 'element-ui'
+Vue.use(link)
+Vue.use(image)
+Vue.use(Table)
+Vue.use(TableColumn)
 
 Vue.use(Input)
 Vue.use(Form)

@@ -3,8 +3,12 @@ import Router from 'vue-router'
 import Layout from '@/layout/Layout'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
-import Page1 from '@/pages/Page1'
-import Page2 from '@/pages/Page2'
+import Setting from '@/pages/Setting'
+import CreateType from '@/pages/Type/CreateType'
+import TypeList from '@/pages/Type/TypeList'
+import AddResource from '@/pages/Resource/AddResource'
+import ResourceList from '@/pages/Resource/ResourceList'
+import ChangePassword from '@/pages/ChangePassword'
 
 Vue.use(Router)
 
@@ -21,14 +25,34 @@ export default new Router({
           component: Home
         },
         {
-          path: '/page1',
-          name: 'Page1',
-          component: Page1
+          path: '/setting',
+          name: 'Setting',
+          component: Setting
         },
         {
-          path: '/page2',
-          name: 'Page2',
-          component: Page2
+          path: '/create-type',
+          name: 'CreateType',
+          component: CreateType
+        },
+        {
+          path: '/type-list',
+          name: 'TypeList',
+          component: TypeList
+        },
+        {
+          path: '/resource-list',
+          name: 'ResourceList',
+          component: ResourceList
+        },
+        {
+          path: '/add-resource',
+          name: 'AddResource',
+          component: AddResource
+        },
+        {
+          path: '/change-password',
+          name: 'ChangePassword',
+          component: ChangePassword
         }
       ]
     },

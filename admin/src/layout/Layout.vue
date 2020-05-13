@@ -2,38 +2,48 @@
   <el-container>
     <!-- 侧边栏开始 -->
     <el-aside :width="isCollapse? '56px': '256px'">
-      <div class="logo">Logo</div>
-      <el-menu :router="true" :collapse="isCollapse" default-active="2" background-color="#545c64" text-color="#fff"
-        active-text-color="#ffd04b" :collapse-transition="false">
+      <div class="logo">Logo
+      </div>
+      <el-menu @select="handleMenuSelect" :router="true" :collapse="isCollapse" background-color="#545c64"
+        text-color="#fff" active-text-color="#ffd04b" :collapse-transition="false" :default-active="currentPath">
         <el-submenu index="1">
           <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>导航一</span>
+            <i class="el-icon-s-platform"></i>
+            <span>网站设置</span>
           </template>
-          <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="/page1">page1</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="/page2">page1</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="1-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="1-4-1">选项1</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="/setting">
+            <i class="el-icon-s-tools"></i>SEO设置
+          </el-menu-item>
         </el-submenu>
-        <el-menu-item index="2">
-          <i class="el-icon-menu"></i>
-          <span slot="title">导航二</span>
-        </el-menu-item>
-        <el-menu-item index="3" disabled>
-          <i class="el-icon-document"></i>
-          <span slot="title">导航三</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-setting"></i>
-          <span slot="title">导航四</span>
-        </el-menu-item>
+
+        <el-submenu index="2">
+          <template slot="title">
+            <i class="el-icon-s-order"></i>
+            <span>分类管理</span>
+          </template>
+          <el-menu-item index="/create-type">
+            <i class="el-icon-document-add"></i>创建分类
+          </el-menu-item>
+          <el-menu-item index="/type-list">
+            <i class="el-icon-document"></i>分类列表
+          </el-menu-item>
+          <!-- <el-menu-item index="/setting">
+            <i class="el-icon-document-copy"></i>分类管理
+          </el-menu-item> -->
+        </el-submenu>
+
+        <el-submenu index="3">
+          <template slot="title">
+            <i class="el-icon-video-camera-solid"></i>
+            <span>资源管理</span>
+          </template>
+          <el-menu-item index="/add-resource">
+            <i class="el-icon-s-ticket"></i>添加资源
+          </el-menu-item>
+          <el-menu-item index="/resource-list">
+            <i class="el-icon-s-ticket"></i>资源列表
+          </el-menu-item>
+        </el-submenu>
       </el-menu>
     </el-aside>
     <!-- 侧边栏结束 -->
@@ -48,23 +58,21 @@
           </div>
           <div class="breadcrumb-container">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-              <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-              <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+              <el-breadcrumb-item @click.native="goHome" :to="{ path: '/' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item v-if="breadcrumbText">{{breadcrumbText}}</el-breadcrumb-item>
             </el-breadcrumb>
           </div>
         </div>
         <div class="header-right">
 
-          <el-dropdown size="mini" placement="bottom-end">
+          <el-dropdown @command="handleCommand" size="mini" placement="bottom-end">
             <div class="user-icon-container">
-              <el-avatar class="avatar" size="small"
-                src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
+              <el-avatar class="avatar" size="small" :src="avatar"></el-avatar>
               <i class="el-icon-caret-bottom"></i>
             </div>
 
             <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
               <el-dropdown-item>退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -86,17 +94,50 @@
   export default {
     data() {
       return {
-        isCollapse: false
+        isCollapse: false, //左侧栏关闭状态
+        currentPath: '', //当前页面路径
+        avatar: 'https://unsplash.it/1600/900?random'
+      }
+    },
+    computed: {
+      //面包屑导航路径
+      breadcrumbText(v) {
+        const path = this.currentPath
+        switch (path) {
+          case '/setting':
+            return 'SEO设置'
+          case '/create-type':
+            return '创建分类'
+          case '/type-list':
+            return '分类列表'
+          case '/add-resource':
+            return '添加资源'
+          default:
+            return ''
+        }
       }
     },
     methods: {
+      initPath() {
+        this.currentPath = this.$route.path
+      },
+      handleMenuSelect(path) {
+        this.currentPath = path
+      },
+      goHome() {
+        this.currentPath = '/home'
+      },
+      handleCommand(type) {
+        if (type === 'changePassword') {
+          this.$router.push('/change-password')
+        }
+      },
       changeMenuStatus() {
-        console.log('1');
         this.isCollapse = !this.isCollapse
       }
     },
     mounted() {
-      //this.$message('sss')
+      this.initPath()
     }
   }
 
@@ -105,12 +146,14 @@
 <style lang="scss" scope>
   .el-container {
     height: 100%;
+
     .el-aside {
       display: flex;
       flex-direction: column;
       background-color: rgb(84, 92, 100);
       color: #333;
       transition: all .3s;
+
       .logo {
         height: 64px;
         line-height: 64px;
@@ -119,12 +162,18 @@
         color: #fff;
 
       }
+
       .el-menu {
         flex: 1;
         border: none;
+
+        .el-menu-item {
+          font-size: 12px;
+        }
       }
 
     }
+
     .el-header {
       display: flex;
       padding: 0 20px;
@@ -132,22 +181,28 @@
       align-items: center;
       height: 64px;
       color: #333;
+
       .header-left {
         display: flex;
         align-items: center;
+
         .close-icon {
           font-size: 26px;
         }
+
         .el-icon-s-unfold {
           cursor: pointer;
           transform: rotate(180deg);
           transition: all .3s;
         }
+
         .el-icon-s-unfold-active {
           transform: rotate(0);
         }
+
         .breadcrumb-container {
           margin-left: 30px;
+          cursor: pointer;
         }
       }
 
@@ -156,9 +211,11 @@
         align-items: center;
         margin-right: 10px;
         cursor: pointer;
+
         .user-icon-container {
           display: flex;
           align-items: center;
+
           .avatar {
             margin-right: 4px;
           }
@@ -172,9 +229,13 @@
       text-align: center;
       height: 100%;
       overflow: scroll;
+
+
       .main-content {
+        position: relative;
         background-color: #fff;
         min-height: 100%;
+        padding: 40px 20px;
       }
     }
 

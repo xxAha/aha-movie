@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import 'reset-css'
 import './plugins/element'
+import './assets/css//common.scss'
 
 
 
