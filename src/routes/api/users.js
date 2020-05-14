@@ -1,13 +1,26 @@
 const router = require('koa-router')()
+const {
+  login,
+  getOwnerInfo
+} = require('../../controller/user')
+const auth = require('../../middleware/jwt')
 
-router.prefix('/users')
+router.prefix('/api/users')
 
-router.get('/', function (ctx, next) {
-  ctx.body = 'this is a users response!'
+//用户登录
+router.post('/login', async (ctx, next) => {
+  const {
+    userName,
+    password
+  } = ctx.request.body
+  const result = await login(userName, password)
+  ctx.body = result
 })
 
-router.get('/bar', function (ctx, next) {
-  ctx.body = 'this is a users/bar response'
+//获取当前登录用户的新
+router.get('/owner', auth, async (ctx, next) => {
+  const result = await getOwnerInfo(ctx)
+  ctx.body = result
 })
 
 module.exports = router

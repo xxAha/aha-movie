@@ -26,8 +26,12 @@ import {
   Tag,
   MessageBox,
   Dialog,
-  Transfer
+  Transfer,
+  Loading
 } from 'element-ui'
+
+
+Vue.use(Loading)
 Vue.use(Transfer)
 Vue.use(Dialog)
 Vue.use(Tag)
@@ -35,7 +39,6 @@ Vue.use(Link)
 Vue.use(Image)
 Vue.use(Table)
 Vue.use(TableColumn)
-
 Vue.use(Input)
 Vue.use(Form)
 Vue.use(FormItem)

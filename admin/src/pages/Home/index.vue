@@ -1,22 +1,35 @@
 <template>
-  <div class="container">
-    <el-image style="width: 300px; height: 300px;border-radius: 50%;" :src="url"></el-image>
+  <div v-if="ownerInfo" class="container">
+    <el-image style="width: 300px; height: 300px;border-radius: 50%;" :src="ownerInfo.avatar"></el-image>
     <div class="right">
       <p class="time">{{time}}</p>
       <p class="hello">你好！</p>
-      <p class="user-name">{{userName}}</p>
+      <p class="user-name">{{ownerInfo.nickName}}</p>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+  import moment from 'moment'
   export default {
     data() {
       return {
-        time: '2020/5/20',
+        time: '',
         url: 'https://unsplash.it/1600/900?random',
         userName: 'zhangsan'
       }
+    },
+    computed: {
+      ...mapState(['ownerInfo'])
+    },
+    methods: {
+      getCurrentTime() {
+        this.time = moment().format('YYYY-MM-DD').replace(/-/g,"/")
+      }
+    },
+    mounted() {
+      this.getCurrentTime()
     }
   }
 
@@ -36,7 +49,7 @@
       text-indent: 60px;
     }
     .user-name {
-      text-indent: 40px;
+      //text-indent: 40px;
     }
     p {
       margin-bottom: 20px;

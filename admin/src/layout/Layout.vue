@@ -58,16 +58,16 @@
           </div>
           <div class="breadcrumb-container">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item @click.native="goHome" :to="{ path: '/' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item @click.native="currentPathToHome" :to="{ path: '/' }">首页</el-breadcrumb-item>
               <el-breadcrumb-item v-if="breadcrumbText">{{breadcrumbText}}</el-breadcrumb-item>
             </el-breadcrumb>
           </div>
         </div>
         <div class="header-right">
 
-          <el-dropdown @command="handleCommand" size="mini" placement="bottom-end">
+          <el-dropdown v-if="ownerInfo" @command="handleCommand" size="mini" placement="bottom-end">
             <div class="user-icon-container">
-              <el-avatar class="avatar" size="small" :src="avatar"></el-avatar>
+              <el-avatar  class="avatar" size="small" :src="ownerInfo.avatar"></el-avatar>
               <i class="el-icon-caret-bottom"></i>
             </div>
 
@@ -91,6 +91,7 @@
 </template>
 
 <script>
+  import { mapState,mapActions } from 'vuex'
   export default {
     data() {
       return {
@@ -100,6 +101,7 @@
       }
     },
     computed: {
+      ...mapState(['ownerInfo']),
       //面包屑导航路径
       breadcrumbText(v) {
         const path = this.currentPath
@@ -118,26 +120,37 @@
       }
     },
     methods: {
+      ...mapActions(['getOwnerInfoAct']),
+      //初始化path
       initPath() {
         this.currentPath = this.$route.path
       },
+      //左侧Menu点击处理
       handleMenuSelect(path) {
         this.currentPath = path
       },
-      goHome() {
+      //面包屑回到主页
+      currentPathToHome() {
         this.currentPath = '/home'
       },
+      //右上角下拉选择框点击处理
       handleCommand(type) {
         if (type === 'changePassword') {
           this.$router.push('/change-password')
         }
       },
+      //伸缩Menu
       changeMenuStatus() {
         this.isCollapse = !this.isCollapse
+      },
+      //获取当前登录用户的信息
+      async getOwnerInfo() {
+       this.getOwnerInfoAct()
       }
     },
     mounted() {
       this.initPath()
+      this.getOwnerInfo()
     }
   }
 

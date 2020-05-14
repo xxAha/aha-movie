@@ -38,6 +38,9 @@
   .container {
     width: 60%;
     margin: auto;
+    .el-form {
+      width: 100%;
+    }
   }
 
 </style>

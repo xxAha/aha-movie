@@ -5,22 +5,23 @@
         <p>欢迎登录</p>
       </div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item class="form-item" label-width="0" prop="name">
-          <el-input size="medium" placeholder="请输入内容" v-model="ruleForm.name">
+        <el-form-item class="form-item" label-width="0" prop="userName">
+          <el-input size="medium" placeholder="请输入内容" v-model="ruleForm.userName">
             <template slot="prepend">
               <el-button type="primary" icon="el-icon-user"></el-button>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item label-width="0" class="form-item" prop="password">
-          <el-input  type="password" size="medium" placeholder="请输入内容" v-model="ruleForm.password">
+          <el-input type="password" size="medium" placeholder="请输入内容" v-model="ruleForm.password">
             <template slot="prepend">
               <el-button type="primary" icon="el-icon-lock"></el-button>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item label-width="0">
-          <el-button class="submit" type="primary" size="small">登录</el-button>
+          <el-button v-loading.fullscreen.lock="loading" @click="handleLogin('ruleForm')" class="submit" type="primary"
+            size="small">登录</el-button>
           <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
         </el-form-item>
       </el-form>
@@ -29,32 +30,65 @@
 </template>
 
 <script>
+  import {
+    loginAPI
+  } from '../../api/user'
   export default {
     data() {
       return {
+        loading: false,
         ruleForm: {
-          name: '',
+          userName: '',
           password: ''
         },
         rules: {
-          name: [{
-              required: true,
-              message: '请输入用户名',
-              trigger: 'blur'
-            }
-          ],
-          password: [
-            {
-              required: true,
-              message: '请输入密码',
-              trigger: 'blur'
-            }
-          ]
-          
+          userName: [{
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur'
+          }],
+          password: [{
+            required: true,
+            message: '请输入密码',
+            trigger: 'blur'
+          }]
+
         }
       };
     },
+    mounted() {
+      this.init()
+    },
     methods: {
+      init() {
+        const token = sessionStorage.getItem('access_token')
+        if(token) this.$router.replace('/home')
+      },
+      //用户登录
+      handleLogin(form) {
+        this.$refs[form].validate(async v => {
+          if (!v) return
+          this.loading = true;
+          const result = await loginAPI(this.ruleForm)
+          this.loading = false
+          const data = result.data
+          if (data.errno !== 0) {
+            this.$message({
+              message: data.message,
+              type: 'error'
+            })
+            return
+          }
+   
+          this.setToken(data.data.token)
+          this.$router.replace('/home')
+        })
+      },
+      //保存token
+      setToken(token) {
+        sessionStorage.setItem('token_type', 'Bearer')
+        sessionStorage.setItem('access_token', token)
+      }
     }
   }
 
@@ -102,10 +136,12 @@
 
       .el-form {
         padding: 16px;
-             /deep/ .el-input-group__prepend {
-            padding: 0 10px;
-          }
+
+        /deep/ .el-input-group__prepend {
+          padding: 0 10px;
+        }
       }
+
       .submit {
         width: 100%;
       }

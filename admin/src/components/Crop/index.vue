@@ -63,7 +63,6 @@
       });
     },
     methods: {
-      onSubmit() {},
       addClassload() {
         this.color = "#1b95e0"
       },

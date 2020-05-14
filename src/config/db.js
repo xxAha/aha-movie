@@ -12,7 +12,7 @@ let MYSQL_CONF = {
   user: 'root',
   password: '19881115',
   port: '3306',
-  database: 'test_db'
+  database: 'aha_movie_db'
 }
 
 if (isProd) {
@@ -23,7 +23,7 @@ if (isProd) {
     user: 'root',
     password: '19881115',
     port: '3306',
-    database: 'test_db_prd'
+    database: 'aha_movie_db_prd'
   }
 
 }
