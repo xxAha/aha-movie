@@ -13,14 +13,14 @@
           </el-input>
         </el-form-item>
         <el-form-item label-width="0" class="form-item" prop="password">
-          <el-input type="password" size="medium" placeholder="请输入内容" v-model="ruleForm.password">
+          <el-input @keyup.enter.native="handleLogin('ruleForm')" type="password" size="medium" placeholder="请输入内容" v-model="ruleForm.password">
             <template slot="prepend">
               <el-button type="primary" icon="el-icon-lock"></el-button>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item label-width="0">
-          <el-button v-loading.fullscreen.lock="loading" @click="handleLogin('ruleForm')" class="submit" type="primary"
+          <el-button :loading="loading" @click="handleLogin('ruleForm')" class="submit" type="primary"
             size="small">登录</el-button>
           <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
         </el-form-item>
@@ -32,7 +32,7 @@
 <script>
   import {
     loginAPI
-  } from '../../api/user'
+  } from '@/api/user'
   export default {
     data() {
       return {

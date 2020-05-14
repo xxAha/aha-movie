@@ -27,6 +27,7 @@ async function login(userName, password) {
     return new ErrorModel(loginFailInfo)
   }
 
+
   const token = jwt.sign(user.dataValues, SECRET, {
     expiresIn: '1y'
   })
@@ -48,6 +49,7 @@ async function getOwnerInfo(ctx) {
   }
   return new SuccessModel(info)
 }
+
 
 module.exports = {
   login,
