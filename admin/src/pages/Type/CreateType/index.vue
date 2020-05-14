@@ -3,7 +3,7 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="分类图标" prop="logo">
         <input type="text" :value="form.logo" hidden/>
-        <Crop @cropDone="handlCropDone" />
+        <Crop @cropDone="handlCropDone" @sizeOver="handleSizeOver"/>
       </el-form-item>
       <el-form-item label="分类标题" prop="title">
         <el-input v-model="form.title"></el-input>
@@ -55,8 +55,11 @@
         })
       },
       handlCropDone(formData) {
-        console.log(formData)
         this.form.logo = formData
+        const file = formData.get('file')
+      },
+      handleSizeOver() {
+        this.$message('图片过大，请压缩图片。')
       }
     },
   }

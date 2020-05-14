@@ -2,7 +2,7 @@
   <div v-if="ownerInfo" class="container">
     <el-image style="width: 300px; height: 300px;border-radius: 50%;" :src="ownerInfo.avatar"></el-image>
     <div class="right">
-      <p class="time">{{time}}</p>
+      <p class="time">{{`${date.year}/${date.month > 10 ?date.month : '0' + date.month}/${date.day}`}}</p>
       <p class="hello">你好！</p>
       <p class="user-name">{{ownerInfo.nickName}}</p>
     </div>
@@ -11,13 +11,16 @@
 
 <script>
   import { mapState } from 'vuex'
-  import moment from 'moment'
   export default {
     data() {
       return {
         time: '',
         url: 'https://unsplash.it/1600/900?random',
-        userName: 'zhangsan'
+        date: {
+          year: '',
+          month: '',
+          day: ''
+        },
       }
     },
     computed: {
@@ -25,7 +28,10 @@
     },
     methods: {
       getCurrentTime() {
-        this.time = moment().format('YYYY-MM-DD').replace(/-/g,"/")
+        const date = new Date()
+        this.date.year = date.getFullYear()
+        this.date.month = date.getMonth() + 1 
+        this.date.day = date.getDate()
       }
     },
     mounted() {

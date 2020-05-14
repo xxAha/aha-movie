@@ -52,7 +52,7 @@
       var self = this;
       var image = document.getElementById('image');
       this.cropper = new Cropper(image, {
-        aspectRatio: 1,
+        aspectRatio: 1, //控制裁剪框的比例
         viewMode: 1,
         zoomOnWheel: false, //是否允许通过鼠标滚轮来缩放图片
         background: true, //是否在容器上显示网格背景
@@ -125,7 +125,9 @@
         this.headerImage = roundedCanvas.toDataURL();
         */
         //方形
-        this.headerImage = croppedCanvas.toDataURL();
+        //toDataURL不传入字符串是png格式，图片会很大
+        //传入'image/jpeg'是jepg格式，格式相对小很多
+        this.headerImage = croppedCanvas.toDataURL('image/jpeg');
         var gettype = Object.prototype.toString
         this.postImg()
       },
@@ -161,9 +163,20 @@
       },*/
       postImg() {
         //这边写图片的上传
-        var formData = new FormData();
-        formData.append("file", this.dataURLtoFile(this.headerImage));
-        this.$emit('cropDone', formData)
+        const file = this.dataURLtoFile(this.headerImage)
+        this.limitSize(file)
+      },
+      limitSize(file) {
+        const size = file.size
+        //1048576 = 1m
+        if (size > 1048576) {
+          this.headerImage = ''
+          this.$emit('sizeOver')
+        } else {
+          var formData = new FormData();
+          formData.append("file", file)
+          this.$emit('cropDone', formData)
+        }
       }
     }
   }

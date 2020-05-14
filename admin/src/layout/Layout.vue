@@ -1,10 +1,15 @@
 <template>
   <el-container>
     <!-- 侧边栏开始 -->
-    <el-aside :width="isCollapse? '56px': '256px'">
-      <div class="logo">Logo
+    <el-aside :width="isCollapse? '64px': '256px'">
+      <div v-show="!isCollapse" class="logo-box">
+        <div>
+          <img src="../../static/img/1.jpg" alt="logo">
+        </div>
+        <h1>Aha电影库</h1>
       </div>
-      <el-menu @select="handleMenuSelect" :router="true" :collapse="isCollapse" background-color="#545c64"
+      <!-- #545c64 -->
+      <el-menu @select="handleMenuSelect" :router="true" :collapse="isCollapse" background-color="#303133"
         text-color="#fff" active-text-color="#ffd04b" :collapse-transition="false" :default-active="currentPath">
         <el-submenu index="1">
           <template slot="title">
@@ -67,7 +72,7 @@
 
           <el-dropdown v-if="ownerInfo" @command="handleCommand" size="mini" placement="bottom-end">
             <div class="user-icon-container">
-              <el-avatar  class="avatar" size="small" :src="ownerInfo.avatar"></el-avatar>
+              <el-avatar class="avatar" size="small" :src="ownerInfo.avatar"></el-avatar>
               <i class="el-icon-caret-bottom"></i>
             </div>
 
@@ -91,7 +96,10 @@
 </template>
 
 <script>
-  import { mapState,mapActions } from 'vuex'
+  import {
+    mapState,
+    mapActions
+  } from 'vuex'
   export default {
     data() {
       return {
@@ -145,7 +153,7 @@
       },
       //获取当前登录用户的信息
       async getOwnerInfo() {
-       this.getOwnerInfoAct()
+        this.getOwnerInfoAct()
       }
     },
     mounted() {
@@ -163,16 +171,33 @@
     .el-aside {
       display: flex;
       flex-direction: column;
-      background-color: rgb(84, 92, 100);
+      background-color: #303133;
       color: #333;
       transition: all .3s;
 
-      .logo {
+      .logo-box {
+        display: flex;
         height: 64px;
-        line-height: 64px;
+        justify-content: center;
+        align-items: center;
         text-align: center;
-        background-color: rgb(84, 92, 100);
+        //background-color: rgb(84, 92, 100);
         color: #fff;
+
+        div {
+          border-radius: 50%;
+          overflow: hidden;
+          img {
+            display: block;
+            width: 50px;
+            height: 50px;
+          }
+        }
+        h1 {
+          margin-top: 20px;
+          margin-left: 10px;
+          font-weight: bold;
+        }
 
       }
 
