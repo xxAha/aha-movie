@@ -43,9 +43,14 @@ module.exports = {
     errno: 10008,
     message: '上传文件尺寸过大'
   },
-  // 上传文件过大
+  // 创建分类失败
   createTyepFailInfo: {
     errno: 10009,
     message: '创建分类失败'
+  },
+  // 角色权限不够
+  roleCheckFail: {
+    errno: 10010,
+    message: '角色权限不够'
   },
 }

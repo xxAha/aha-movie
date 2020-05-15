@@ -10,6 +10,7 @@ test('创建分类，应该成功', async () => {
     .post('/api/types/create')
     .send(typePostData)
     .set('Authorization', 'Bearer ' + token)
+
   expect(res.body.errno).toBe(0)
 })
 
