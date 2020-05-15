@@ -9,10 +9,11 @@ const { Type } = require('../db/model')
  * @param {string} title 标题
  * @param {string} logo 图标
  */
-async function createType(title, logo) {
+async function createType(title, logo, index) {
   const result = await Type.create({
     title,
-    logo
+    logo,
+    index
   })
   return result.dataValues
 

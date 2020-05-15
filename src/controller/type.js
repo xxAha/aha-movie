@@ -9,9 +9,9 @@ const { createType } = require('../services/type')
  * 创建分类
  * @param {object} ctx 执行上下文
  */
-async function addType(title, logo) {
+async function addType(title, logo, index) {
   try {
-    const result = await createType(title, logo)
+    const result = await createType(title, logo, index)
     return new SuccessModel(result)
 
   } catch (error) {

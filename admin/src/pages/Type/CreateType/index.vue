@@ -2,11 +2,14 @@
   <div class="wrapper">
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="分类图标" prop="logo">
-        <input type="text" :value="form.logo" hidden/>
-        <Crop @cropDone="handlCropDone" @sizeOver="handleSizeOver"/>
+        <input type="text" :value="form.logo" hidden />
+        <Crop @cropDone="handlCropDone" @sizeOver="handleSizeOver" />
       </el-form-item>
       <el-form-item label="分类标题" prop="title">
         <el-input v-model="form.title"></el-input>
+      </el-form-item>
+      <el-form-item label="index" prop="index">
+        <el-input type="number" v-model="form.index"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit('form')">创建</el-button>
@@ -18,14 +21,19 @@
 
 <script>
   import Crop from '@/components/Crop'
-  import { createTypeAPI } from '@/api/type'
-  import { uploadAPI } from '@/api/utils'
+  import {
+    createTypeAPI
+  } from '@/api/type'
+  import {
+    uploadAPI
+  } from '@/api/utils'
   export default {
     data() {
       return {
         form: {
           title: '',
-          logo: ''
+          logo: '',
+          index: 0
         },
         rules: {
           title: [{
@@ -36,6 +44,11 @@
           logo: [{
             required: true,
             message: '请上传图标',
+            trigger: 'change'
+          }],
+          index: [{
+            required: true,
+            message: '请输入排序数字',
             trigger: 'change'
           }]
 
@@ -49,13 +62,13 @@
     methods: {
       onSubmit(form) {
         this.$refs[form].validate(v => {
-          if(!v) return
+          if (!v) return
           createTypeAPI(this.form)
         })
       },
       async handlCropDone(formData) {
         const result = await uploadAPI(formData)
-        if(!result.errno) {
+        if (!result.errno) {
           this.form.logo = result.data.url
         }
       },

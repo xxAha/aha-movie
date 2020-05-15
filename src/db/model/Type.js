@@ -3,7 +3,8 @@
  */
 const seq = require('../seq')
 const {
-  STRING
+  STRING,
+  INTEGER
 } = require('../types')
 const { DEFAULT_TYPE_LOGO } = require('../../config/constant')
 
@@ -18,6 +19,11 @@ const Type = seq.define('type', {
     allowNull: false,
     defaultValue: DEFAULT_TYPE_LOGO,
     comment: '类型 logo'
+  },
+  index: {
+    type: INTEGER,
+    allowNull: false,
+    comment: '排序'
   }
 })
 
