@@ -53,4 +53,9 @@ module.exports = {
     errno: 10010,
     message: '角色权限不够'
   },
+  // token 验证失败
+  TokenValidationFail: {
+    errno: 10011,
+    message: 'token 验证失败'
+  },
 }

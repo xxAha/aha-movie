@@ -6,6 +6,8 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const logger = require('koa-logger')
 const koaBody = require('koa-body')
+const { ErrorModel } = require('./model/ResModel')
+const { TokenValidationFail } = require('./model/ErrorInfo')
 
 // error handler
 onerror(app)
@@ -34,6 +36,17 @@ app.use(views(__dirname + '/views', {
 }))
 
 
+//koa-jwt 401 token 验证失败的处理中间件
+app.use(async function (ctx, next) {
+  return next().catch((err) => {
+    if (401 == err.status) {
+      ctx.status = 401;
+      ctx.body = new ErrorModel(TokenValidationFail)
+    } else {
+      throw err;
+    }
+  })
+})
 
 //自动加载路由
 const initLoadRouters = require('../src/routes/core/init')
