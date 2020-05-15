@@ -168,8 +168,8 @@
       },
       limitSize(file) {
         const size = file.size
-        //1048576 = 1m
-        if (size > 1048576) {
+        //1 * 1024 * 1024 = 1m
+        if (size > 1 * 1024 * 1024) {
           this.headerImage = ''
           this.$emit('sizeOver')
         } else {

@@ -6,8 +6,12 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const logger = require('koa-logger')
 const koaBody = require('koa-body')
-const { ErrorModel } = require('./model/ResModel')
-const { TokenValidationFail } = require('./model/ErrorInfo')
+const {
+  ErrorModel
+} = require('./model/ResModel')
+const {
+  TokenValidationFail
+} = require('./model/ErrorInfo')
 
 // error handler
 onerror(app)
@@ -21,7 +25,9 @@ app.use(koaBody({
     //上传目录
     uploadDir: path.join(__dirname, '../uploadFiles'),
     //是否保留文件后缀名
-    keepExtensions: true
+    keepExtensions: true,
+    //限制图片大小 1 * 1024 * 1024 = 1m
+    maxFileSize: 1 * 1024 * 1024
   }
 }))
 
