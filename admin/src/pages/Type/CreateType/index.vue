@@ -19,6 +19,7 @@
 <script>
   import Crop from '@/components/Crop'
   import { createTypeAPI } from '@/api/type'
+  import { uploadAPI } from '@/api/utils'
   export default {
     data() {
       return {
@@ -49,14 +50,14 @@
       onSubmit(form) {
         this.$refs[form].validate(v => {
           if(!v) return
-          const formData = this.form.logo
-          formData.set('title', this.form.title)
-          createTypeAPI(formData)
+          createTypeAPI(this.form)
         })
       },
-      handlCropDone(formData) {
-        this.form.logo = formData
-        const file = formData.get('file')
+      async handlCropDone(formData) {
+        const result = await uploadAPI(formData)
+        if(!result.errno) {
+          this.form.logo = result.data.url
+        }
       },
       handleSizeOver() {
         this.$message('图片过大，请压缩图片。')

@@ -71,16 +71,14 @@
           this.loading = true;
           const result = await loginAPI(this.ruleForm)
           this.loading = false
-          const data = result.data
-          if (data.errno !== 0) {
+          if (result.errno !== 0) {
             this.$message({
-              message: data.message,
+              message: result.message,
               type: 'error'
             })
             return
           }
-   
-          this.setToken(data.data.token)
+          this.setToken(result.data.token)
           this.$router.replace('/home')
         })
       },

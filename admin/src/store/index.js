@@ -11,7 +11,7 @@ export default new Vuex.Store({
   actions: {
     async getOwnerInfoAct(ctx) {
       const result = await getOwnerInfoAPI()
-      ctx.commit('saveOwnerInfoMut', result.data.data)
+      ctx.commit('saveOwnerInfoMut', result.data)
     }
   },
   mutations: {

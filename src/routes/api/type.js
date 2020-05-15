@@ -1,17 +1,22 @@
+/**
+ * @description 分类 API
+ */
+
 const router = require('koa-router')()
-const path = require('path')
 const auth = require('../../middleware/jwt')
-const { PUBLIC_PATH } = require('../../config/constant')
+const { addType } = require('../../controller/type')
+
+
 
 router.prefix('/api/types')
 
 //创建分类
 router.post('/create', auth, async (ctx, next) => {
-  const file = ctx.request.files.file
-  const basename = path.basename(file.path)
-  
-  const url =  `${PUBLIC_PATH}/${basename}`
-  console.log(ctx.request.body, url)
+  const { title, logo } = ctx.request.body
+  const result = await addType(title, logo)
+
+  ctx.body = result
 })
+
 
 module.exports = router

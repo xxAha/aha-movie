@@ -2,18 +2,14 @@
  * @description user API 测试
  */
 const server = require('../server')
-
-const postData = {
-  userName: 'admin',
-  password: 'admin',
-}
+const { userInfo } = require('../testInfo')
 
 let token
 
 test('登录，应该成功', async () => {
   const res = await server
     .post('/api/users/login')
-    .send(postData)
+    .send(userInfo)
   //保存登录的token
   token = res.body.data.token
   expect(res.body.errno).toBe(0)

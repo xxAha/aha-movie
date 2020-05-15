@@ -97,7 +97,7 @@ export default ({method, url, data = ''}) => {
         })
       })
       .then(response => {
-        resolve(response)
+        resolve(response.data)
       })
       .catch(error => {
         reject(error)

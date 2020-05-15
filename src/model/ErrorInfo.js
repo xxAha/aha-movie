@@ -38,39 +38,14 @@ module.exports = {
     errno: 10007,
     message: '上传文件尺寸过大'
   },
-  // 修改基本信息失败
-  changeInfoFailInfo: {
+  // 上传文件过大
+  uploadFileFailInfo: {
     errno: 10008,
-    message: '修改基本信息失败'
+    message: '上传文件尺寸过大'
   },
-  // json schema 校验失败
-  jsonSchemaFileInfo: {
+  // 上传文件过大
+  createTyepFailInfo: {
     errno: 10009,
-    message: '数据格式校验错误'
+    message: '创建分类失败'
   },
-  // 删除用户失败
-  deleteUserFailInfo: {
-    errno: 10010,
-    message: '删除用户失败'
-  },
-  // 添加关注失败
-  addFollowerFailInfo: {
-    errno: 10011,
-    message: '添加关注失败'
-  },
-  // 取消关注失败
-  deleteFollowerFailInfo: {
-    errno: 10012,
-    message: '取消关注失败'
-  },
-  // 创建微博失败
-  createBlogFailInfo: {
-    errno: 11001,
-    message: '创建微博失败，请重试'
-  },
-  // 删除微博失败
-  deleteBlogFailInfo: {
-    errno: 11002,
-    message: '删除微博失败，请重试'
-  }
 }
