@@ -78,7 +78,7 @@
 
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
-              <el-dropdown-item>退出登录</el-dropdown-item>
+              <el-dropdown-item @click.native="handleLogout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -154,6 +154,11 @@
       //获取当前登录用户的信息
       async getOwnerInfo() {
         this.getOwnerInfoAct()
+      },
+      //登出
+      handleLogout() {
+        sessionStorage.clear()
+        this.$router.replace('/login')
       }
     },
     mounted() {
