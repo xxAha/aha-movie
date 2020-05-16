@@ -63,4 +63,9 @@ module.exports = {
     errno: 10012,
     message: '创建资源失败'
   },
+  // 创建资源失败
+  createTagFailInfo: {
+    errno: 10013,
+    message: '标签创建失败'
+  },
 }

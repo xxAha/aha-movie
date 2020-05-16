@@ -1,22 +1,22 @@
 /**
- * @description tyep API 测试
+ * @description resource API 测试
  */
 
 const server = require('../server')
 const { token } = require('../testInfo')
 const { DEFAULT_LOGO } = require('../../src/config/constant')
 
-const typePostData = {
-  title: '测试标题',
+const resourcePostData = {
+  title: '测试资源标题',
   logo: DEFAULT_LOGO,
-  index: 0
+  link: 'http://www.baidu.com',
+  index: 1
 }
 
-test('创建分类，应该成功', async () => {
+test('创建资源，应该成功', async () => {
   const res = await server
-    .post('/api/types/create')
-    .send(typePostData)
+    .post('/api/resources/create')
+    .send(resourcePostData)
     .set('Authorization', 'Bearer ' + token)
   expect(res.body.errno).toBe(0)
 })
-

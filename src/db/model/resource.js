@@ -6,7 +6,7 @@ const {
   STRING,
   INTEGER
 } = require('../types')
-const { DEFAULT_TYPE_LOGO } = require('../../config/constant')
+const { DEFAULT_LOGO } = require('../../config/constant')
 
 const Resource = seq.define('resource', {
   title: {
@@ -17,13 +17,13 @@ const Resource = seq.define('resource', {
   logo: {
     type: STRING,
     allowNull: false,
-    defaultValue: DEFAULT_TYPE_LOGO,
+    defaultValue: DEFAULT_LOGO,
     comment: '资源 logo'
   },
   link: {
     type: STRING,
     allowNull: false,
-    defaultValue: DEFAULT_TYPE_LOGO,
+    defaultValue: DEFAULT_LOGO,
     comment: '资源 link'
   },
   index: {

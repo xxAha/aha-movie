@@ -6,7 +6,7 @@ const {
   STRING,
   INTEGER
 } = require('../types')
-const { DEFAULT_TYPE_LOGO } = require('../../config/constant')
+const { DEFAULT_LOGO } = require('../../config/constant')
 
 const Type = seq.define('type', {
   title: {
@@ -17,7 +17,7 @@ const Type = seq.define('type', {
   logo: {
     type: STRING,
     allowNull: false,
-    defaultValue: DEFAULT_TYPE_LOGO,
+    defaultValue: DEFAULT_LOGO,
     comment: '类型 logo'
   },
   index: {

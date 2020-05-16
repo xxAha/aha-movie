@@ -2,7 +2,11 @@
  * @description user API 测试
  */
 const server = require('../server')
-const { userInfo } = require('../testInfo')
+
+const userInfo = {
+  userName: 'admin',
+  password: 'admin',
+}
 
 let token
 
