@@ -18,7 +18,7 @@ async function createTypeRelation(typeId, resourceId) {
 }
 
 /**
- * 获取某个资源的分类信息
+ * 获取某个资源的分类关系
  * @param {number} resourceId 资源id
  */
 async function findTypeRelation(resourceId) {
@@ -32,10 +32,24 @@ async function findTypeRelation(resourceId) {
       }
     ]
   })
-  return result.map(r => {
-    delete r.dataValues.typeId
-    return r
+  return result
+}
+
+/**
+ * 获取所有资源的分类信息
+ */
+async function findAllTypeRelation() {
+  const result = await TypeRelation.findAll({
+    include: [
+      {
+        model: Type
+      },
+      {
+        model: Resource
+      }
+    ]
   })
+  return result
 }
 
 //模拟查询分类关系表
@@ -62,5 +76,6 @@ async function findTypeRelation(resourceId) {
 
 module.exports = {
   createTypeRelation,
-  findTypeRelation
+  findTypeRelation,
+  findAllTypeRelation
 }

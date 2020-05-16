@@ -20,7 +20,7 @@ async function addType(title, logo, index) {
 }
 
 /**
- * 查询分类
+ * 查询所有分类
  */
 async function getTyps() {
   try {
@@ -29,8 +29,6 @@ async function getTyps() {
   } catch (error) {
     return new ErrorModel(getTypesFailInfo)
   }
-
-
 }
 
 module.exports = {

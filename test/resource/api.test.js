@@ -13,6 +13,7 @@ const resourcePostData = {
   index: 1
 }
 
+
 test('创建资源，应该成功', async () => {
   const res = await server
     .post('/api/resources/create')

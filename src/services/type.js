@@ -15,18 +15,16 @@ async function createType(title, logo, index) {
     logo,
     index
   })
-  return result.dataValues
+  return result
 
 }
 
 /**
- * 查询分类
+ * 查询所有分类
  */
 async function findTypes() {
   let result = await Type.findAll()
-  result = result.map(r => r.dataValues)
   return result
-
 }
 
 

@@ -17,8 +17,8 @@ router.post('/create', auth, role, async (ctx, next) => {
 })
 
 //查询某个分类关系
-router.get('/', auth, async (ctx, next) => {
-  const id  = ctx.request.query.id
+router.get('/:id', auth, async (ctx, next) => {
+  const { id } = ctx.params
   const result = await getTypeRelation(id * 1)
   ctx.body = result
 })

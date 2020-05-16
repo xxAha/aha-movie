@@ -9,7 +9,7 @@ export const createTypeAPI = function(data) {
   })
 }
 
-//查询分类
+//获取所有分类
 export const getTypesAPI = function(id) {
   return Axios({
     method: 'get',

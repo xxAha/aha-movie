@@ -1,12 +1,16 @@
 <template>
   <div class="wrapper">
     <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-      <el-form-item class="text-left" label="分类" prop="type">
-        <el-select v-model="form.type" filterable placeholder="请选择">
+      <el-form-item v-if="!isUpdate" class="text-left" label="选择分类" prop="typeId">
+        <el-select :class="form.typeId?'hidden-errorInfo': ''" v-model="form.typeId" filterable placeholder="请选择">
           <el-option v-for="type in types" :key="type.id" :label="type.title" :value="type.id">
           </el-option>
         </el-select>
+      </el-form-item>
 
+      <el-form-item v-else class="text-left" label="所属分类" prop="type">
+        <el-tag v-if="!belongTypes.length">暂无分类</el-tag>
+        <el-tag v-else v-for="item in belongTypes" :key="item.id">{{item.title}}</el-tag>
       </el-form-item>
 
       <el-form-item label="资源图标" prop="logo">
@@ -26,17 +30,18 @@
       </el-form-item>
 
       <el-form-item class="text-left" label="标签">
-        <el-tag :key="tag" v-for="tag in tags" closable :disable-transitions="false" @close="handleClose(tag)">
-          {{tag}}
+        <el-tag :key="tag.id" v-for="tag in form.tags" closable :disable-transitions="false" @close="handleClose(tag)">
+          {{tag.title}}
         </el-tag>
 
-        <el-input class="input-new-tag" v-if="inputVisible" v-model="form.tagValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
+        <el-input class="input-new-tag" v-if="inputVisible" v-model="tagValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
         </el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit('form')">创建</el-button>
+        <el-button v-if="!isUpdate" type="primary" @click="onSubmit('form')">创建</el-button>
+        <el-button v-else type="primary" @click="onUpdate('form')">更新</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -45,7 +50,7 @@
 <script>
   import Crop from '@/components/Crop'
   import { uploadAPI } from '@/api/utils'
-  import { createResourceAPI, getResourceTypeAPI } from '@/api/resource'
+  import { createResourceAPI, getResourceTypeAPI, getResourceAPI } from '@/api/resource'
   import { getTypesAPI } from '@/api/type'
   export default {
     data() {
@@ -53,15 +58,16 @@
         resourceId: null,
         loading: false,
         form: {
-          type: '',
+          typeId: '',
           title: '',
           link: '',
           logo: '',
           index: 0,
-          tagValue: ''
+          tagValue: '',
+          tags: []
         },
         rules: {
-          type: [{
+          typeId: [{
             required: true,
             message: '请选择分类',
             trigger: 'blur'
@@ -89,7 +95,7 @@
 
         },
         inputVisible: false,
-        tags: [], //资源标签
+        tagValue: '',
         belongTypes: [], //资源所属分类
         types: [], //所有分类
       }
@@ -98,29 +104,32 @@
       Crop
     },
     methods: {
+      onUpdate() {},
       //提交请求
       onSubmit(form) {
         this.$refs[form].validate(async v => {
           if (!v) return
           this.loading = true
-          this.form.tags = this.tags
           const result = await createResourceAPI(this.form)
           this.loading = false
           if (result.errno === 0) {
+            this.resetData()
             this.$message({
               type: 'success',
               message: '创建成功'
             })
-            this.$refs.form.resetFields()
-            this.$refs.crop.headerImage = ''
-            this.tags = []
             return
           }
           this.$message('创建失败')
 
         })
       },
-      
+      //重置数据
+      resetData() {
+        this.$refs.form.resetFields()
+        this.$refs.crop.headerImage = ''
+        this.form.tags = []
+      },
       //获取所有分类
       async getTypes() {
         const result = await getTypesAPI()
@@ -142,7 +151,10 @@
       },
 
       handleSizeOver() {
-        this.$message('图片过大，请压缩图片。')
+        this.$message({
+          type: 'warning',
+          message: '图片过大，请压缩图片'
+        })
       },
 
       //tag标签点击关闭
@@ -158,7 +170,6 @@
             message: '删除成功!'
           })
         })
-
       },
 
       //添加标签显示输入
@@ -171,19 +182,24 @@
 
       //确认添加标签
       handleInputConfirm() {
-        let inputValue = this.form.tagValue
+        let inputValue = this.tagValue
         if (inputValue) {
-          this.tags.push(inputValue);
+          this.form.tags.push(inputValue);
         }
         this.inputVisible = false;
-        this.form.tagValue = '';
+        this.tagValue = '';
       },
 
-      //获取当前资源所属的分类
-      async getCurrentResType() {
-        if(this.isUpdate) {
+      //获取当前资源的数据
+      async getCurrentData() {
+        if (this.isUpdate) {
           this.resourceId = this.$route.params.id
-          const result = await getResourceTypeAPI(this.resourceId)
+          const typeResult = await getResourceTypeAPI(this.resourceId)
+          const resResult = await getResourceAPI(this.resourceId)
+          this.form = resResult.data
+          this.belongTypes = typeResult.data
+          this.$refs.crop.headerImage = this.form.logo
+
         }
       }
 
@@ -195,7 +211,18 @@
     },
     mounted() {
       this.getTypes()
-      this.getCurrentResType()
+      this.getCurrentData()
+    },
+    beforeRouteEnter: (to, from, next) => {
+      // if(to.path === '/add-resource'){
+      //   this.resetData()
+      // }
+      next((vm) => {
+        const path = vm.$route.path
+        if (path === '/add-resource') {
+          vm.resetData()
+        }
+      })
     }
   }
 </script>
@@ -207,6 +234,13 @@
 
     .hidden-errorInfo+.el-form-item__error {
       display: none;
+
+    }
+
+    .hidden-errorInfo {
+      .el-input__inner {
+        border-color: #C0C4CC;
+      }
     }
   }
 

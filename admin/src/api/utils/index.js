@@ -1,6 +1,6 @@
 import Axios from '../index'
 
-//用户登录
+//上传文件
 export const uploadAPI = function (data) {
   return Axios({
     method: 'post',

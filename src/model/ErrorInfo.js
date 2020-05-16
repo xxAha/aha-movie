@@ -83,4 +83,14 @@ module.exports = {
     errno: 10016,
     message: '查询资源分类信息失败'
   },
+  // 查询某个资源信息失败
+  getResourceFailInfo: {
+    errno: 10017,
+    message: '查询某个资源信息失败'
+  },
+  // 查询所有资源信息失败
+  getAllResourceFailInfo: {
+    errno: 10018,
+    message: '查询所有资源信息失败'
+  },
 }

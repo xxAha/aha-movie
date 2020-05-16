@@ -1,22 +1,36 @@
  <template>
    <el-table :data="tableData" style="width: 100%">
-     <el-table-column prop="date" label="日期">
+     <el-table-column prop="createdAtFormat" label="创建日期">
      </el-table-column>
      <el-table-column prop="title" label="标题">
      </el-table-column>
      <el-table-column prop="img" label="图标">
        <template slot-scope="scope">
-         <el-image style="width: 40px; height: 40px" :src="scope.row.img"></el-image>
+         <img class="logo" :src="scope.row.logo" alt="logo">
        </template>
      </el-table-column>
      <el-table-column prop="link" label="链接">
        <template slot-scope="scope">
-         <el-link  :href="scope.row.link"  target="_blank" type="success">{{scope.row.link}}</el-link>
+         <el-link :href="scope.row.link" target="_blank" type="success">{{scope.row.link}}</el-link>
        </template>
      </el-table-column>
+
+      <el-table-column prop="types" label="分类">
+       <template slot-scope="scope">
+        <el-tag class="mr-10" v-for="item in scope.row.types" :key="item.id + Math.random()">{{item.title}}</el-tag>
+       </template>
+     </el-table-column>
+
+    <el-table-column prop="types" label="标签">
+       <template slot-scope="scope">
+        <el-tag class="mr-10" v-for="item in scope.row.tags" :key="item.id + Math.random()">{{item.title}}</el-tag>
+       </template>
+     </el-table-column>
+
+
      <el-table-column label="操作">
        <template slot-scope="scope">
-         <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+         <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
        </template>
      </el-table-column>
@@ -24,6 +38,7 @@
  </template>
 
  <script>
+   import { getAllResourceAPI } from '@/api/resource'
    export default {
      data() {
        return {
@@ -39,13 +54,35 @@
              img: 'https://unsplash.it/1600/900?random',
              link: 'https://unsplash.it/1600/900?random'
            }
-         ]
+         ],
+         total: 0,
        }
      },
      methods: {
-       handleEdit() {},
-       handleDelete() {}
+       handleEdit(id) {
+         this.$router.push(`/update-resource/${id}`)
+       },
+       handleDelete() {},
+       async init() {
+         const result = await getAllResourceAPI()
+         this.tableData = result.data.rows
+         this.total = result.data.count
+       }
+     },
+     mounted() {
+       this.init()
      },
    }
-
  </script>
+
+ <style lang="scss" scoped>
+  .logo {
+    display: block;
+    width: 60px;
+    height: 60px;
+  }
+  .el-tag+.el-tag {
+    margin-left: 0;
+  }
+ </style>
+ 

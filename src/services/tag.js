@@ -14,7 +14,7 @@ async function createTag(resourceId, title) {
     resourceId,
     title
   })
-  return result.dataValues
+  return result
 }
 
 module.exports = {
