@@ -20,8 +20,7 @@
           </el-input>
         </el-form-item>
         <el-form-item label-width="0">
-          <el-button :loading="loading" @click="handleLogin('ruleForm')" class="submit" type="primary"
-            size="small">登录</el-button>
+          <el-button :loading="loading" @click="handleLogin('ruleForm')" class="submit" type="primary" size="small">登录</el-button>
           <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
         </el-form-item>
       </el-form>
@@ -30,9 +29,7 @@
 </template>
 
 <script>
-  import {
-    loginAPI
-  } from '@/api/user'
+  import { loginAPI } from '@/api/user'
   export default {
     data() {
       return {
@@ -62,7 +59,7 @@
     methods: {
       init() {
         const token = sessionStorage.getItem('access_token')
-        if(token) this.$router.replace('/home')
+        if (token) this.$router.replace('/home')
       },
       //用户登录
       handleLogin(form) {
@@ -89,7 +86,6 @@
       }
     }
   }
-
 </script>
 
 <style lang="scss" scoped>
@@ -145,5 +141,4 @@
       }
     }
   }
-
 </style>

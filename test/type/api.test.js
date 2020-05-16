@@ -20,3 +20,10 @@ test('创建分类，应该成功', async () => {
   expect(res.body.errno).toBe(0)
 })
 
+test('查询分类，应该成功', async () => {
+  const res = await server
+    .get('/api/types')
+    .set('Authorization', 'Bearer ' + token)
+  expect(res.body.errno).toBe(0)
+})
+

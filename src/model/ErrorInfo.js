@@ -68,4 +68,19 @@ module.exports = {
     errno: 10013,
     message: '标签创建失败'
   },
+  // 查询分类失败
+  getTypesFailInfo: {
+    errno: 10014,
+    message: '查询分类失败'
+  },
+  // 分类关系创建失败
+  createTypeRelationFailInfo: {
+    errno: 10015,
+    message: '分类关系创建失败'
+  },
+  // 查询资源分类信息失败
+  getTypeRelationFailInfo: {
+    errno: 10016,
+    message: '查询资源分类信息失败'
+  },
 }

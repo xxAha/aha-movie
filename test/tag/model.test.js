@@ -2,9 +2,7 @@
  * @description tag Model 测试
  */
 
-const {
-  Tag
-} = require('../../src/db/model')
+const { Tag } = require('../../src/db/model')
 
 
 test('Tag 模型的各个属性，符合预期', () => {

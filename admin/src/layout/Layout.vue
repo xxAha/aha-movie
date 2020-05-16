@@ -9,8 +9,7 @@
         <h1>Aha电影库</h1>
       </div>
       <!-- #545c64 -->
-      <el-menu @select="handleMenuSelect" :router="true" :collapse="isCollapse" background-color="#303133"
-        text-color="#fff" active-text-color="#ffd04b" :collapse-transition="false" :default-active="currentPath">
+      <el-menu @select="handleMenuSelect" :router="true" :collapse="isCollapse" background-color="#303133" text-color="#fff" active-text-color="#ffd04b" :collapse-transition="false" :default-active="currentPath">
         <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-s-platform"></i>
@@ -96,10 +95,7 @@
 </template>
 
 <script>
-  import {
-    mapState,
-    mapActions
-  } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     data() {
       return {
@@ -166,7 +162,6 @@
       this.getOwnerInfo()
     }
   }
-
 </script>
 
 <style lang="scss" scope>
@@ -192,12 +187,14 @@
         div {
           border-radius: 50%;
           overflow: hidden;
+
           img {
             display: block;
             width: 50px;
             height: 50px;
           }
         }
+
         h1 {
           margin-top: 20px;
           margin-left: 10px;
@@ -283,5 +280,4 @@
     }
 
   }
-
 </style>

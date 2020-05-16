@@ -1,5 +1,5 @@
 /**
- * @description Resource数据模型
+ * @description resource数据模型
  */
 const seq = require('../seq')
 const {

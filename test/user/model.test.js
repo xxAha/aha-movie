@@ -2,9 +2,7 @@
  * @description user Model 测试
  */
 
-const {
-  User
-} = require('../../src/db/model')
+const { User } = require('../../src/db/model')
 const { DEFAULT_AVATAR } = require('../../src/config/constant')
 
 test('User 模型的各个属性，符合预期', () => {

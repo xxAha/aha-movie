@@ -6,6 +6,15 @@ const server = require('../server')
 const { token } = require('../testInfo')
 const { DEFAULT_LOGO } = require('../../src/config/constant')
 
+let resourceId
+let typeId
+
+const typePostData = {
+  title: '测试标题',
+  logo: DEFAULT_LOGO,
+  index: 0
+}
+
 const resourcePostData = {
   title: '测试资源标题',
   logo: DEFAULT_LOGO,
@@ -13,7 +22,14 @@ const resourcePostData = {
   index: 1
 }
 
-let resourceId
+test('创建分类，保存资源id', async () => {
+  const res = await server
+    .post('/api/types/create')
+    .send(typePostData)
+    .set('Authorization', 'Bearer ' + token)
+  expect(res.body.errno).toBe(0)
+  typeId = res.body.data.id
+})
 
 test('创建资源，保存资源id', async () => {
   const res = await server
@@ -24,11 +40,11 @@ test('创建资源，保存资源id', async () => {
   resourceId = res.body.data.id
 })
 
-test('创建标签，应该成功', async () => {
+test('创建分类关系，应该成功', async () => {
   const res = await server
-    .post('/api/tags/create')
+    .post('/api/type-relation/create')
     .send({
-      title: '测试标签',
+      typeId,
       resourceId
     })
     .set('Authorization', 'Bearer ' + token)

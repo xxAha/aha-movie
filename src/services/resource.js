@@ -2,7 +2,7 @@
  * @description 资源 services
  */
 
-const { Resource } = require('../db/model')
+const { Resource, Type, Tag } = require('../db/model')
 
 /**
  * 创建资源
@@ -17,6 +17,7 @@ async function createResource({title, logo, index, link, tags}) {
   })
   return result.dataValues
 }
+
 
 module.exports = {
   createResource

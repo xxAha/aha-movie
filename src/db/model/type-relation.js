@@ -1,17 +1,16 @@
 /**
- * @description tag数据模型
+ * @description type-relation 模型
  */
 const seq = require('../seq')
 const {
-  STRING,
   INTEGER
 } = require('../types')
 
-const Tag = seq.define('tag', {
-  title: {
-    type: STRING,
+const TypeRelation = seq.define('typeRelation', {
+  typeId: {
+    type: INTEGER,
     allowNull: false,
-    comment: '标签 标题'
+    comment: '分类 id'
   },
   resourceId: {
     type: INTEGER,
@@ -20,4 +19,4 @@ const Tag = seq.define('tag', {
   }
 })
 
-module.exports = Tag
+module.exports = TypeRelation

@@ -57,6 +57,11 @@ export default new Router({
           component: AddResource
         },
         {
+          path: '/update-resource/:id',
+          name: 'UpdateResource',
+          component: AddResource
+        },
+        {
           path: '/change-password',
           name: 'ChangePassword',
           component: ChangePassword

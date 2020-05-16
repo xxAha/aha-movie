@@ -2,9 +2,7 @@
  * @description type Model 测试
  */
 
-const {
-  Type
-} = require('../../src/db/model')
+const { Type } = require('../../src/db/model')
 const { DEFAULT_LOGO } = require('../../src/config/constant')
 
 test('Type 模型的各个属性，符合预期', () => {

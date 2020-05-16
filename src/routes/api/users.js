@@ -3,10 +3,7 @@
  */
 
 const router = require('koa-router')()
-const {
-  login,
-  getOwnerInfo
-} = require('../../controller/user')
+const { login, getOwnerInfo } = require('../../controller/user')
 const auth = require('../../middleware/jwt')
 
 router.prefix('/api/users')

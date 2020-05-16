@@ -5,7 +5,7 @@
 const path = require('path')
 const router = require('koa-router')()
 const { PUBLIC_PATH } = require('../../config/constant')
-const { SuccessModel, ErrorModel} = require('../../model/ResModel')
+const { SuccessModel, ErrorModel } = require('../../model/ResModel')
 
 router.prefix('/api')
 

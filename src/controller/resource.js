@@ -11,17 +11,10 @@ const { createTag } = require('../services/tag')
  * 创建资源
  * @param {object}
  */
-async function addResource({title, logo, index, link, tags = []}) {
+async function addResource({title, logo, index, link}) {
   try {
-    const resResult = await createResource({title, logo, index, link, tags})
-    if(tags.length) {
-      const resourceId = resResult.id
-      const tagResult = await Promise.all(tags.map(tag => createTag(resourceId, tag)))
-      resResult.tags = tagResult
-      return new SuccessModel(resResult)
-    }else {
-      return new SuccessModel(resResult)
-    }
+    const result = await createResource({title, logo, index, link})
+    return new SuccessModel(result)
     
   } catch (error) {
     return new ErrorModel(createResourceFailInfo)

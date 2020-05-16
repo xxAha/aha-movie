@@ -5,10 +5,7 @@
 const router = require('koa-router')()
 const auth = require('../../middleware/jwt')
 const role = require('../../middleware/role')
-const { addTag } = require('../../controller/tags')
-
-
-
+const { addTag } = require('../../controller/tag')
 
 router.prefix('/api/tags')
 
@@ -18,6 +15,7 @@ router.post('/create', auth, role, async (ctx, next) => {
   const result = await addTag(resourceId * 1, title)
   ctx.body = result
 })
+
 
 
 module.exports = router

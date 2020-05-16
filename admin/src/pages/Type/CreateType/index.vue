@@ -3,7 +3,8 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="分类图标" prop="logo">
         <input type="text" :value="form.logo" hidden />
-        <Crop ref="crop" @cropDone="handlCropDone" @sizeOver="handleSizeOver" />
+        <Crop :class="form.logo?'hidden-errorInfo': ''" ref="crop" @cropDone="handlCropDone"
+          @sizeOver="handleSizeOver" />
       </el-form-item>
       <el-form-item label="分类标题" prop="title">
         <el-input v-model="form.title"></el-input>
@@ -21,12 +22,8 @@
 
 <script>
   import Crop from '@/components/Crop'
-  import {
-    createTypeAPI
-  } from '@/api/type'
-  import {
-    uploadAPI
-  } from '@/api/utils'
+  import {createTypeAPI} from '@/api/type'
+  import {uploadAPI} from '@/api/utils'
   export default {
     data() {
       return {
@@ -98,6 +95,10 @@
   .wrapper {
     width: 60%;
     margin: auto;
+
+    .hidden-errorInfo+.el-form-item__error {
+      display: none;
+    }
   }
 
 </style>

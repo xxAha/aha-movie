@@ -28,12 +28,12 @@ import {
   Dialog,
   Transfer,
   Loading,
-  Popconfirm,
-  Popover,
+  Select,
+  Option
 } from 'element-ui'
 
-Vue.use(Popover)
-Vue.use(Popconfirm)
+Vue.use(Select)
+Vue.use(Option)
 Vue.use(Loading)
 Vue.use(Transfer)
 Vue.use(Dialog)

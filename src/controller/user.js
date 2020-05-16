@@ -2,18 +2,10 @@
  * @description 用户 controller
  */
 const jwt = require('jsonwebtoken')
-const {
-  getUserInfo
-} = require('../services/user')
+const { getUserInfo } = require('../services/user')
 const doCrypto = require('../utils/cryp')
-const {
-  ErrorModel,
-  SuccessModel
-} = require('../model/ResModel')
-const {
-  loginFailInfo,
-  loginCheckFailInfo
-} = require('../model/ErrorInfo')
+const { ErrorModel, SuccessModel } = require('../model/ResModel')
+const { loginFailInfo, loginCheckFailInfo } = require('../model/ErrorInfo')
 const { SECRET } = require('../config/constant')
 
 /**
@@ -34,7 +26,7 @@ async function login(userName, password) {
   return new SuccessModel({
     token
   })
-  
+
 }
 
 /**
@@ -43,7 +35,7 @@ async function login(userName, password) {
  */
 async function getOwnerInfo(ctx) {
   const info = ctx.state.user
-  if(info == null) {
+  if (info == null) {
     return new ErrorModel(loginCheckFailInfo)
   }
   return new SuccessModel(info)

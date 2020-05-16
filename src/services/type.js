@@ -19,6 +19,18 @@ async function createType(title, logo, index) {
 
 }
 
+/**
+ * 查询分类
+ */
+async function findTypes() {
+  let result = await Type.findAll()
+  result = result.map(r => r.dataValues)
+  return result
+
+}
+
+
 module.exports = {
-  createType
+  createType,
+  findTypes
 }
