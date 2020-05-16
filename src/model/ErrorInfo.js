@@ -49,13 +49,18 @@ module.exports = {
     message: '创建分类失败'
   },
   // 角色权限不够
-  roleCheckFail: {
+  roleCheckFailInfo: {
     errno: 10010,
     message: '角色权限不够'
   },
   // token 验证失败
-  TokenValidationFail: {
+  TokenValidationFailInfo: {
     errno: 10011,
     message: 'token 验证失败'
+  },
+  // 创建资源失败
+  createResourceFailInfo: {
+    errno: 10012,
+    message: '创建资源失败'
   },
 }

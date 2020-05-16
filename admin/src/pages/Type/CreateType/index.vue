@@ -3,7 +3,7 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="分类图标" prop="logo">
         <input type="text" :value="form.logo" hidden />
-        <Crop @cropDone="handlCropDone" @sizeOver="handleSizeOver" />
+        <Crop ref="crop" @cropDone="handlCropDone" @sizeOver="handleSizeOver" />
       </el-form-item>
       <el-form-item label="分类标题" prop="title">
         <el-input v-model="form.title"></el-input>
@@ -12,7 +12,7 @@
         <el-input type="number" v-model="form.index"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit('form')">创建</el-button>
+        <el-button :loading="loading" type="primary" @click="onSubmit('form')">创建</el-button>
       </el-form-item>
     </el-form>
 
@@ -30,6 +30,7 @@
   export default {
     data() {
       return {
+        loading: false,
         form: {
           title: '',
           logo: '',
@@ -61,9 +62,22 @@
     },
     methods: {
       onSubmit(form) {
-        this.$refs[form].validate(v => {
+        this.$refs[form].validate(async v => {
           if (!v) return
-          createTypeAPI(this.form)
+          this.loading = true
+          const result = await createTypeAPI(this.form)
+          this.loading = false
+          if (result.errno === 0) {
+            this.$message({
+              type: 'success',
+              message: '创建成功'
+            })
+            this.$refs.form.resetFields()
+            this.$refs.crop.headerImage = ''
+            return
+          }
+          this.$message('创建失败')
+
         })
       },
       async handlCropDone(formData) {

@@ -2,7 +2,7 @@ const {
   ErrorModel
 } = require('../model/ResModel')
 const {
-  roleCheckFail
+  roleCheckFailInfo
 } = require('../model/ErrorInfo')
 
 async function role(ctx, next) {
@@ -10,7 +10,7 @@ async function role(ctx, next) {
   if (role === 0) {
     await next()
   } else {
-    ctx.body = new ErrorModel(roleCheckFail)
+    ctx.body = new ErrorModel(roleCheckFailInfo)
     return
   }
 }

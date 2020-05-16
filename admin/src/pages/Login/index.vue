@@ -38,8 +38,8 @@
       return {
         loading: false,
         ruleForm: {
-          userName: '',
-          password: ''
+          userName: 'superAdmin',
+          password: 'admin'
         },
         rules: {
           userName: [{

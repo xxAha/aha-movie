@@ -14,8 +14,6 @@
   export default {
     data() {
       return {
-        time: '',
-        url: 'https://unsplash.it/1600/900?random',
         date: {
           year: '',
           month: '',

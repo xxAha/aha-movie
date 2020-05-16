@@ -10,7 +10,7 @@ const {
   ErrorModel
 } = require('./model/ResModel')
 const {
-  TokenValidationFail
+  TokenValidationFailInfo
 } = require('./model/ErrorInfo')
 
 // error handler
@@ -47,7 +47,7 @@ app.use(async function (ctx, next) {
   return next().catch((err) => {
     if (401 == err.status) {
       ctx.status = 401;
-      ctx.body = new ErrorModel(TokenValidationFail)
+      ctx.body = new ErrorModel(TokenValidationFailInfo)
     } else {
       throw err;
     }

@@ -27,10 +27,13 @@ import {
   MessageBox,
   Dialog,
   Transfer,
-  Loading
+  Loading,
+  Popconfirm,
+  Popover,
 } from 'element-ui'
 
-
+Vue.use(Popover)
+Vue.use(Popconfirm)
 Vue.use(Loading)
 Vue.use(Transfer)
 Vue.use(Dialog)
