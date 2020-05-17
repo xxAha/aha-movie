@@ -96,10 +96,10 @@ async function getResourceInfo(id) {
 /**
  * 查找所有资源
  */
-async function getAllResourceInfo(page = DEFAULT_PAGE, pageSize = DEFAULT_PAGESIZE) {
+async function getAllResourceInfo(page = DEFAULT_PAGE, pageSize = DEFAULT_PAGESIZE, searchValue) {
   try {
     //查询所有的资源
-    const resResult = await findAllResourceInfo(page, pageSize)
+    const resResult = await findAllResourceInfo(page, pageSize, searchValue)
     //查询所有的分类关系
     const tyRelationResult = await findAllTypeRelation()
 

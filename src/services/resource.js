@@ -4,6 +4,7 @@
 
 const { Resource, Tag, TypeRelation } = require('../db/model')
 const { formatResource } = require('./_format')
+const Op = require('sequelize').Op
 
 /**
  * 创建资源
@@ -91,8 +92,14 @@ async function findResourceInfo(id) {
 /**
  * 查找所有资源
  */
-async function findAllResourceInfo(page, pageSize) {
+async function findAllResourceInfo(page, pageSize, searchValue) {
+
   let result = await Resource.findAndCountAll({
+    where: {
+      title: {
+        [Op.like]: '%' + searchValue + '%'
+      }
+    },
     limit: pageSize,
     offset: page * pageSize,
     order: [

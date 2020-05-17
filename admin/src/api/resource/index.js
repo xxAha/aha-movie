@@ -10,13 +10,14 @@ export const createResourceAPI = function(data) {
 }
 
 //获取所有资源
-export const getAllResourceAPI = function(page, pageSize) {
+export const getAllResourceAPI = function(page, pageSize, searchValue) {
   return Axios({
     method: 'get',
     url: '/api/resources',
     data: {
       page,
-      pageSize
+      pageSize,
+      searchValue
     }
   })
 }

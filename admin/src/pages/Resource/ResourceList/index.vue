@@ -1,5 +1,8 @@
  <template>
-   <div class="container">
+   <div class="container text-left">
+     <el-input @input="handleSearch" class="search" placeholder="请输入搜索内容" prefix-icon="el-icon-search" v-model="searchValue">
+     </el-input>
+
      <el-table :data="tableData" style="width: 100%">
        <el-table-column prop="createdAtFormat" label="创建日期">
        </el-table-column>
@@ -50,16 +53,33 @@
        return {
          tableData: [],
          total: 0,
-         pageSize: 10,
-         currentPage: 0
+         pageSize: 2,
+         currentPage: 0,
+         searchValue: '',
+         timer: null
        }
      },
      methods: {
-       async handlePageChange(index) {
-         const result = await getAllResourceAPI(index - 1, this.pageSize)
-         this.tableData = result.data.rows
+       handleSearch(value) {
+         if(this.timer) return
+
+         this.timer = setTimeout(async () => {
+           this.currentPage = 0
+           const result = await this.getResourceData()
+           this.tableData = result.data.rows
+           this.total = result.data.count
+           this.timer = null
+         }, 200)
        },
 
+       async handlePageChange(index) {
+         this.currentPage = index - 1
+         const result = await this.getResourceData()
+         this.tableData = result.data.rows
+       },
+       async getResourceData() {
+         return await getAllResourceAPI(this.currentPage, this.pageSize, this.searchValue)
+       },
        handleEdit(id) {
          this.$router.push(`/update-resource/${id}`)
        },
@@ -87,7 +107,7 @@
 
        },
        async init() {
-         const result = await getAllResourceAPI(this.currentPage, this.pageSize)
+         const result = await this.getResourceData()
          this.tableData = result.data.rows
          this.total = result.data.count
        }
@@ -99,6 +119,10 @@
  </script>
 
  <style lang="scss" scoped>
+    .search {
+      width: 400px;
+      margin-bottom: 20px;
+    }
    .logo {
      display: block;
      width: 60px;
