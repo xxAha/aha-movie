@@ -280,10 +280,6 @@
 
           } else {
             this.createTags.push(inputValue)
-            this.$message({
-              type: 'success',
-              message: '标签添加成功'
-            })
           }
 
         }
