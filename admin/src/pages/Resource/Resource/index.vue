@@ -118,6 +118,7 @@
           let result
 
           if (!this.isUpdate) {
+            //怀疑是这个问题！！！
             this.form.tags = this.createTags
             result = await createResourceAPI(this.form)
           } else {
@@ -126,7 +127,7 @@
 
           this.loading = false
           if (result.errno === 0) {
-            !this.isUpdate && this.resetData()
+            //!this.isUpdate && this.resetData()
             this.$message({
               type: 'success',
               message: this.isUpdate ? '更新成功' : '创建成功'

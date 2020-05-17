@@ -14,7 +14,7 @@ async function createTypeRelation(typeId, resourceId) {
     typeId,
     resourceId
   })
-  return result.dataValues
+  return result
 }
 
 /**

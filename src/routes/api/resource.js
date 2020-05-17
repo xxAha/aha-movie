@@ -15,24 +15,9 @@ router.prefix('/api/resources')
 //创建资源
 router.post('/create', auth, role, async (ctx, next) => {
   //创建资源
-  const { title, logo, index, link, tags = [], types = [] } = ctx.request.body
-  const resResult = await addResource({ title, logo, index, link })
-  const resourceId = resResult.data.id
-
-  //创建资源标签
-  if (tags.length) {
-    const tagResult = await Promise.all(tags.map(tag => addTag(resourceId, tag)))
-    const tagList = tagResult.map(i => i.data)
-    resResult.data.dataValues.tags = tagList
-  }
-
-  //创建分类关系
-  if(types.length) {
-    const tyResult = await Promise.all(types.map(type => addTypeRelation(type, resourceId)))
-    const typeList = tyResult.map(i => i.data)
-    resResult.data.dataValues.types = typeList
-  }
-  ctx.body = resResult
+  const { title, logo, index, link, tags, types } = ctx.request.body
+  const result = await addResource({ title, logo, index, link, tags, types })
+  ctx.body = result
 
 })
 
