@@ -42,19 +42,7 @@
    export default {
      data() {
        return {
-         tableData: [{
-             date: '2016-05-02',
-             title: '美剧',
-             img: 'https://unsplash.it/1600/900?random',
-             link: 'https://unsplash.it/1600/900?random'
-           },
-           {
-             date: '2016-05-04',
-             title: '韩剧',
-             img: 'https://unsplash.it/1600/900?random',
-             link: 'https://unsplash.it/1600/900?random'
-           }
-         ],
+         tableData: [],
          total: 0,
        }
      },

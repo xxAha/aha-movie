@@ -13,6 +13,7 @@ const resourcePostData = {
   index: 1
 }
 
+let resourceId
 
 test('创建资源，应该成功', async () => {
   const res = await server
@@ -20,4 +21,22 @@ test('创建资源，应该成功', async () => {
     .send(resourcePostData)
     .set('Authorization', 'Bearer ' + token)
   expect(res.body.errno).toBe(0)
+  resourceId = res.body.data.id
 })
+
+test('某个资源，应该成功', async () => {
+  const res = await server
+    .get(`/api/resources/${resourceId}`)
+    .set('Authorization', 'Bearer ' + token)
+  expect(res.body.errno).toBe(0)
+})
+
+test('查询资源列表，应该成功', async () => {
+  const res = await server
+    .get('/api/resources')
+    .set('Authorization', 'Bearer ' + token)
+  expect(res.body.errno).toBe()
+})
+
+
+

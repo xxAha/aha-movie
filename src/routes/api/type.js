@@ -24,8 +24,5 @@ router.get('/', auth, async (ctx, next) => {
   ctx.body = result
 })
 
-router.get('/test/:id', auth, async (ctx, next) => {
-  console.log('xxxx')
-})
 
 module.exports = router

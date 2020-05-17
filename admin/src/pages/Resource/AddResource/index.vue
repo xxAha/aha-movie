@@ -30,9 +30,19 @@
       </el-form-item>
 
       <el-form-item class="text-left" label="标签">
+        <!-- 创建资源时渲染 -->
+        <div v-if="!isUpdate" class="tag-box">
+        <el-tag  :key="tag" v-for="tag in createTags" closable :disable-transitions="false" @close="handleClose(tag)">
+          {{tag}}
+        </el-tag>
+        </div>
+
+        <!-- 更新资源时渲染 -->
+        <div  v-else class="tag-box">
         <el-tag :key="tag.id" v-for="tag in form.tags" closable :disable-transitions="false" @close="handleClose(tag)">
           {{tag.title}}
         </el-tag>
+        </div>
 
         <el-input class="input-new-tag" v-if="inputVisible" v-model="tagValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm">
         </el-input>
@@ -52,6 +62,7 @@
   import { uploadAPI } from '@/api/utils'
   import { createResourceAPI, getResourceTypeAPI, getResourceAPI } from '@/api/resource'
   import { getTypesAPI } from '@/api/type'
+  import { createTagAPI } from '@/api/tag'
   export default {
     data() {
       return {
@@ -66,6 +77,7 @@
           tagValue: '',
           tags: []
         },
+        createTags: [], //创建资源时的tags
         rules: {
           typeId: [{
             required: true,
@@ -110,6 +122,7 @@
         this.$refs[form].validate(async v => {
           if (!v) return
           this.loading = true
+          this.form.tags = this.createTags
           const result = await createResourceAPI(this.form)
           this.loading = false
           if (result.errno === 0) {
@@ -129,6 +142,7 @@
         this.$refs.form.resetFields()
         this.$refs.crop.headerImage = ''
         this.form.tags = []
+        this.createTags = []
       },
       //获取所有分类
       async getTypes() {
@@ -164,7 +178,12 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.tags.splice(this.tags.indexOf(tag), 1);
+          if(this.isUpdate) {
+
+          }else { 
+            this.createTags.splice(this.createTags.indexOf(tag), 1)
+          }
+
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -181,10 +200,19 @@
       },
 
       //确认添加标签
-      handleInputConfirm() {
+      async handleInputConfirm() {
         let inputValue = this.tagValue
         if (inputValue) {
-          this.form.tags.push(inputValue);
+          if (this.isUpdate) {
+            const result = await createTagAPI({
+              resourceId: this.form.id,
+              title: inputValue
+            })
+            this.form.tags.push(result.data)
+          } else {
+            this.createTags.push(inputValue)
+          }
+
         }
         this.inputVisible = false;
         this.tagValue = '';
@@ -196,9 +224,17 @@
           this.resourceId = this.$route.params.id
           const typeResult = await getResourceTypeAPI(this.resourceId)
           const resResult = await getResourceAPI(this.resourceId)
-          this.form = resResult.data
-          this.belongTypes = typeResult.data
-          this.$refs.crop.headerImage = this.form.logo
+          if (typeResult.errno === 0 && resResult.errno === 0) {
+            this.form = resResult.data
+            this.belongTypes = typeResult.data
+            this.$refs.crop.headerImage = this.form.logo
+          } else {
+            this.$message({
+              type: 'warning',
+              message: '获取资源信息失败'
+            })
+          }
+
 
         }
       }
@@ -242,23 +278,26 @@
         border-color: #C0C4CC;
       }
     }
+    .tag-box {
+      display: inline-block;
+    }
   }
 
   .el-tag+.el-tag {
     margin-left: 10px;
   }
 
-  .button-new-tag {
+  /* .button-new-tag {
     margin-left: 10px;
     height: 32px;
     line-height: 30px;
     padding-top: 0;
     padding-bottom: 0;
-  }
+  } */
 
   .input-new-tag {
     width: 90px;
-    margin-left: 10px;
+    //margin-left: 10px;
     vertical-align: bottom;
   }
 </style>
