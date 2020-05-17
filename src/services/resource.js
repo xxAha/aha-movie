@@ -91,8 +91,10 @@ async function findResourceInfo(id) {
 /**
  * 查找所有资源
  */
-async function findAllResourceInfo() {
+async function findAllResourceInfo(page, pageSize) {
   let result = await Resource.findAndCountAll({
+    limit: pageSize,
+    offset: page * pageSize,
     order: [
       ['id', 'desc']
     ],

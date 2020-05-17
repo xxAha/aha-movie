@@ -18,12 +18,6 @@ router.post('/login', async (ctx, next) => {
   ctx.body = result
 })
 
-router.get('/', async (ctx) => {
-  ctx.body = {
-    a: 1
-  }
-})
-
 //获取当前登录用户的新
 router.get('/owner', auth, async (ctx, next) => {
   const result = await getOwnerInfo(ctx)

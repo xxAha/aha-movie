@@ -5,7 +5,7 @@
 const path = require('path')
 const router = require('koa-router')()
 const { PUBLIC_PATH } = require('../../config/constant')
-const { SuccessModel, ErrorModel } = require('../../model/ResModel')
+const { SuccessModel } = require('../../model/ResModel')
 
 router.prefix('/api')
 
@@ -16,7 +16,6 @@ router.post('/upload', async (ctx, next) => {
   //获取文件名字
   //file.path -> 文件的绝对路径
   const basename = path.basename(file.path)
-  //ctx.origin -> 域名http://localhost:3000
 
   ctx.body = new SuccessModel({
     url: `${PUBLIC_PATH}/${basename}`

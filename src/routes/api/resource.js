@@ -47,26 +47,9 @@ router.get('/:id', auth, role, async (ctx, next) => {
 
 //查询所有资源
 router.get('/', auth, role, async (ctx, next) => {
-  //查询所有的资源
-  const resResult = await getAllResourceInfo()
-  //查询所有的分类
-  const tyRelationResult = await getAllTypeRelation()
-
-  resResult.data.rows.forEach(item => {
-    tyRelationResult.data.forEach(ty => {
-      if(item.id === ty.resourceId) {
-        const data = item.dataValues
-        if(data.types) {
-          data.types.push(ty.type)
-        }else {
-          data.types = []
-          data.types.push(ty.type)
-        }
-      }
-    })
-  })
-
-  ctx.body = resResult
+  const { page, pageSize } = ctx.query
+  const result = await getAllResourceInfo(page * 1, pageSize * 1)
+  ctx.body = result
 })
 
 

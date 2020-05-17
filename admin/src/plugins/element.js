@@ -29,9 +29,11 @@ import {
   Transfer,
   Loading,
   Select,
-  Option
+  Option,
+  Pagination,
 } from 'element-ui'
 
+Vue.use(Pagination)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Loading)
