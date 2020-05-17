@@ -49,6 +49,21 @@ async function findAllTypeRelation() {
   return result
 }
 
+/**
+ * 删除某个资源的分类关系
+ * @param {number} typeId 分类id
+ * @param {number} resourceId 资源id
+ */
+async function destroyTypeRelation(typeId, resourceId) {
+  const result = await TypeRelation.destroy({
+    where: {
+      typeId,
+      resourceId
+    }
+  })
+  return result > 0
+}
+
 //模拟查询分类关系表
 // async function test() {
 //   const result = await TypeRelation.findAll({
@@ -74,5 +89,6 @@ async function findAllTypeRelation() {
 module.exports = {
   createTypeRelation,
   findTypeRelation,
-  findAllTypeRelation
+  findAllTypeRelation,
+  destroyTypeRelation
 }

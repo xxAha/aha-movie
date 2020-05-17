@@ -9,16 +9,15 @@ const { addTag, deleteTag } = require('../../controller/tag')
 
 router.prefix('/api/tags')
 
-//创建分类
+//创建标签
 router.post('/create', auth, role, async (ctx, next) => {
   const { resourceId, title } = ctx.request.body
   const result = await addTag(resourceId * 1, title)
   ctx.body = result
 })
 
-//删除分类
-router.post('/delete/:id', auth, role, async (ctx, next) => {
-  console.log(ctx.params)
+//删除标签
+router.delete('/:id', auth, role, async (ctx, next) => {
   const { id } = ctx.params
   const result = await deleteTag(id)
   ctx.body = result

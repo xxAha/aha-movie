@@ -98,4 +98,19 @@ module.exports = {
     errno: 10019,
     message: '删除标签失败'
   },
+  // 删除分类关系失败
+  deleteTypeRelationFailInfo: {
+    errno: 10020,
+    message: '删除分类关系失败'
+  },
+  // 删除资源失败
+  deleteResourceFailInfo: {
+    errno: 10021,
+    message: '删除资源失败'
+  },
+  // 修改资源失败
+  updateResourceFailInfo: {
+    errno: 10022,
+    message: '修改资源失败'
+  },
 }

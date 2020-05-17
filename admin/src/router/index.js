@@ -7,7 +7,7 @@ import Setting from '@/pages/Setting'
 import CreateType from '@/pages/Type/CreateType'
 import TypeList from '@/pages/Type/TypeList'
 import UpdateType from '@/pages/Type/UpdateType'
-import AddResource from '@/pages/Resource/AddResource'
+import Resource from '@/pages/Resource/Resource'
 import ResourceList from '@/pages/Resource/ResourceList'
 import ChangePassword from '@/pages/ChangePassword'
 
@@ -54,12 +54,12 @@ export default new Router({
         {
           path: '/add-resource',
           name: 'AddResource',
-          component: AddResource
+          component: Resource
         },
         {
           path: '/update-resource/:id',
           name: 'UpdateResource',
-          component: AddResource
+          component: Resource
         },
         {
           path: '/change-password',

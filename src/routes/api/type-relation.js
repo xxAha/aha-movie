@@ -5,7 +5,7 @@
 const router = require('koa-router')()
 const auth = require('../../middleware/jwt')
 const role = require('../../middleware/role')
-const { addTypeRelation, getTypeRelation } = require('../../controller/type-relation')
+const { addTypeRelation, getTypeRelation, deleteTypeRelation } = require('../../controller/type-relation')
 
 router.prefix('/api/type-relation')
 
@@ -20,6 +20,13 @@ router.post('/create', auth, role, async (ctx, next) => {
 router.get('/:id', auth, async (ctx, next) => {
   const { id } = ctx.params
   const result = await getTypeRelation(id * 1)
+  ctx.body = result
+})
+
+//删除某个分类关系
+router.delete('/', auth, async (ctx, next) => {
+  const { typeId, resourceId } = ctx.query
+  const result = await deleteTypeRelation(typeId, resourceId)
   ctx.body = result
 })
 

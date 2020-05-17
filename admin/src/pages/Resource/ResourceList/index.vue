@@ -15,15 +15,15 @@
        </template>
      </el-table-column>
 
-      <el-table-column prop="types" label="分类">
+     <el-table-column prop="types" label="分类">
        <template slot-scope="scope">
-        <el-tag class="mr-10" v-for="item in scope.row.types" :key="item.id + Math.random()">{{item.title}}</el-tag>
+         <el-tag class="mr-10" v-for="item in scope.row.types" :key="item.id + Math.random()">{{item.title}}</el-tag>
        </template>
      </el-table-column>
 
-    <el-table-column prop="types" label="标签">
+     <el-table-column prop="types" label="标签">
        <template slot-scope="scope">
-        <el-tag class="mr-10" v-for="item in scope.row.tags" :key="item.id + Math.random()">{{item.title}}</el-tag>
+         <el-tag class="mr-10" v-for="item in scope.row.tags" :key="item.id + Math.random()">{{item.title}}</el-tag>
        </template>
      </el-table-column>
 
@@ -31,14 +31,14 @@
      <el-table-column label="操作">
        <template slot-scope="scope">
          <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
-         <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+         <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
        </template>
      </el-table-column>
    </el-table>
  </template>
 
  <script>
-   import { getAllResourceAPI } from '@/api/resource'
+   import { getAllResourceAPI, deleteResourceAPI } from '@/api/resource'
    export default {
      data() {
        return {
@@ -50,7 +50,29 @@
        handleEdit(id) {
          this.$router.push(`/update-resource/${id}`)
        },
-       handleDelete() {},
+       async handleDelete(resource) {
+         this.$messageBox.confirm('删除该资源, 是否继续?', '提示', {
+           confirmButtonText: '确定',
+           cancelButtonText: '取消',
+           type: 'warning'
+         }).then(async () => {
+           const { id } = resource
+           const result = await deleteResourceAPI(id)
+           if (result.errno === 0) {
+             this.$message({
+               type: 'success',
+               message: '删除成功'
+             })
+             this.init()
+           } else {
+             this.$message({
+               type: 'warning',
+               message: '删除失败'
+             })
+           }
+         })
+
+       },
        async init() {
          const result = await getAllResourceAPI()
          this.tableData = result.data.rows
@@ -64,13 +86,13 @@
  </script>
 
  <style lang="scss" scoped>
-  .logo {
-    display: block;
-    width: 60px;
-    height: 60px;
-  }
-  .el-tag+.el-tag {
-    margin-left: 0;
-  }
+   .logo {
+     display: block;
+     width: 60px;
+     height: 60px;
+   }
+
+   .el-tag+.el-tag {
+     margin-left: 0;
+   }
  </style>
- 

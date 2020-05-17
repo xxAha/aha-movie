@@ -90,7 +90,7 @@ export default ({method, url, data = ''}) => {
     Axios({
         method,
         url,
-        data: method === 'post' || method === 'put' ? data : null,
+        data: method === 'post' || method === 'put' || method === 'patch' ? data : null,
         params: method === 'get' || method === 'delete' ? data : null,
         cancelToken: new CancelToken(c => {
           cancel = c;

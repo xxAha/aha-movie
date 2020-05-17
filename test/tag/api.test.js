@@ -39,7 +39,7 @@ test('创建标签，应该成功', async () => {
 
 test('删除标签，应该成功', async () => {
   const res = await server
-    .post(`/api/tags/delete/${tagId}`)
+    .delete(`/api/tags/${tagId}`)
     .set('Authorization', 'Bearer ' + token)
   expect(res.body.errno).toBe(0)
 })

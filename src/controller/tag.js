@@ -28,8 +28,12 @@ async function addTag(resourceId, title) {
 async function deleteTag(id) {
   try {
     const result = await destroyTag(id)
-    console.log(result)
-    return new SuccessModel()
+    if (result) {
+      return new SuccessModel()
+    } else {
+      return new ErrorModel(deleteTagFailInfo)
+    }
+
   } catch (error) {
     return new ErrorModel(deleteTagFailInfo)
   }

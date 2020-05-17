@@ -12,8 +12,8 @@ export const createTagAPI = function(data) {
 //删除标签
 export const deleteTagAPI = function(id) {
   return Axios({
-    method: 'post',
-    url: `/api/tags/delete/${id}`,
+    method: 'delete',
+    url: `/api/tags/${id}`,
   })
 }
 
