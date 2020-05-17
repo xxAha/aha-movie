@@ -3,7 +3,7 @@
      <el-input @input="handleSearch" class="search" placeholder="请输入搜索内容" prefix-icon="el-icon-search" v-model="searchValue">
      </el-input>
 
-     <el-table :data="tableData" style="width: 100%">
+     <el-table v-loading="loading" :data="tableData" style="width: 100%">
        <el-table-column prop="createdAtFormat" label="创建日期">
        </el-table-column>
        <el-table-column prop="title" label="标题">
@@ -21,13 +21,13 @@
 
        <el-table-column prop="types" label="分类">
          <template slot-scope="scope">
-           <el-tag class="mr-10" v-for="item in scope.row.types" :key="item.id + item.title">{{item.title}}</el-tag>
+           <el-tag class="mr-10 mb-10 mt-10" v-for="item in scope.row.types" :key="item.id + item.title">{{item.title}}</el-tag>
          </template>
        </el-table-column>
 
        <el-table-column prop="types" label="标签">
          <template slot-scope="scope">
-           <el-tag class="mr-10" v-for="item in scope.row.tags" :key="item.id + item.title">{{item.title}}</el-tag>
+           <el-tag class="mr-10 mb-10 mt-10" v-for="item in scope.row.tags" :key="item.id + item.title">{{item.title}}</el-tag>
          </template>
        </el-table-column>
 
@@ -51,6 +51,7 @@
    export default {
      data() {
        return {
+         loading: false,
          tableData: [],
          total: 0,
          pageSize: 2,
@@ -78,7 +79,10 @@
          this.tableData = result.data.rows
        },
        async getResourceData() {
-         return await getAllResourceAPI(this.currentPage, this.pageSize, this.searchValue)
+         this.loading = true
+         const result = await getAllResourceAPI(this.currentPage, this.pageSize, this.searchValue)
+         this.loading = false
+         return result
        },
        handleEdit(id) {
          this.$router.push(`/update-resource/${id}`)
