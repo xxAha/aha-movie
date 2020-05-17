@@ -62,7 +62,7 @@
   import { uploadAPI } from '@/api/utils'
   import { createResourceAPI, getResourceTypeAPI, getResourceAPI } from '@/api/resource'
   import { getTypesAPI } from '@/api/type'
-  import { createTagAPI } from '@/api/tag'
+  import { createTagAPI, deleteTagAPI } from '@/api/tag'
   export default {
     data() {
       return {
@@ -177,9 +177,12 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(() => {
+        }).then(async () => {
           if(this.isUpdate) {
-
+            const result = await deleteTagAPI(tag.id)
+            if(result.errno === 0) {
+              this.form.tags.splice(this.form.tags.indexOf(tag), 1)
+            }
           }else { 
             this.createTags.splice(this.createTags.indexOf(tag), 1)
           }

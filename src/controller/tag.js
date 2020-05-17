@@ -4,8 +4,8 @@
 
 
 const { ErrorModel, SuccessModel } = require('../model/ResModel')
-const { createTagFailInfo } = require('../model/ErrorInfo')
-const { createTag } = require('../services/tag')
+const { createTagFailInfo, deleteTagFailInfo } = require('../model/ErrorInfo')
+const { createTag, destroyTag } = require('../services/tag')
 
 /**
  * 创建标签
@@ -21,6 +21,22 @@ async function addTag(resourceId, title) {
   }
 }
 
+/**
+ * 删除标签
+ * @param {number} id 标签id
+ */
+async function deleteTag(id) {
+  try {
+    const result = await destroyTag(id)
+    console.log(result)
+    return new SuccessModel()
+  } catch (error) {
+    return new ErrorModel(deleteTagFailInfo)
+  }
+}
+
+
 module.exports = {
-  addTag
+  addTag,
+  deleteTag
 }

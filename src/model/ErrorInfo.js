@@ -93,4 +93,9 @@ module.exports = {
     errno: 10018,
     message: '查询所有资源信息失败'
   },
+  // 删除标签失败
+  deleteTagFailInfo: {
+    errno: 10019,
+    message: '删除标签失败'
+  },
 }

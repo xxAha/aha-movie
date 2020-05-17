@@ -35,7 +35,7 @@ test('查询资源列表，应该成功', async () => {
   const res = await server
     .get('/api/resources')
     .set('Authorization', 'Bearer ' + token)
-  expect(res.body.errno).toBe()
+  expect(res.body.errno).toBe(0)
 })
 
 

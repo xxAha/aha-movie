@@ -17,6 +17,20 @@ async function createTag(resourceId, title) {
   return result
 }
 
+/**
+ * 删除标签
+ * @param {number} id 标签id
+ */
+async function destroyTag(id) {
+  const result = await Tag.destroy({
+    where: {
+      id: id
+    }
+  })
+  return result > 0
+}
+
 module.exports = {
-  createTag
+  createTag,
+  destroyTag
 }
