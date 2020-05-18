@@ -16,7 +16,7 @@
             <span>网站设置</span>
           </template>
           <el-menu-item index="/setting">
-            <i class="el-icon-s-tools"></i>SEO设置
+            <i class="el-icon-s-tools"></i>网站设置
           </el-menu-item>
         </el-submenu>
 
@@ -101,33 +101,45 @@
       return {
         isCollapse: false, //左侧栏关闭状态
         currentPath: '', //当前页面路径
-        avatar: 'https://unsplash.it/1600/900?random'
+        avatar: 'https://unsplash.it/1600/900?random',
+        breadcrumbText: '',
+      }
+    },
+    watch: {
+      $route(r) {
+        const name = r.name
+        this.breadcrumbText = this.getBreadcrumbText(name)
       }
     },
     computed: {
-      ...mapState(['ownerInfo']),
-      //面包屑导航路径
-      breadcrumbText(v) {
-        const path = this.currentPath
-        switch (path) {
-          case '/setting':
-            return 'SEO设置'
-          case '/create-type':
-            return '创建分类'
-          case '/type-list':
-            return '分类列表'
-          case '/add-resource':
-            return '添加资源'
-          default:
-            return ''
-        }
-      }
+      ...mapState(['ownerInfo'])
     },
     methods: {
       ...mapActions(['getOwnerInfoAct']),
       //初始化path
-      initPath() {
+      init() {
         this.currentPath = this.$route.path
+        this.breadcrumbText = this.getBreadcrumbText(this.$route.name)
+      },
+      getBreadcrumbText(name) {
+        switch (name) {
+          case 'Setting':
+            return '网站设置'
+          case 'CreateType':
+            return '创建分类'
+          case 'TypeList':
+            return '分类列表'
+          case 'UpdateType':
+            return '更新分类'
+          case 'AddResource':
+            return '添加资源'
+          case 'ResourceList':
+            return '资源列表'
+          case 'UpdateResource':
+            return '更新资源'
+          default:
+            return ''
+        }
       },
       //左侧Menu点击处理
       handleMenuSelect(path) {
@@ -158,8 +170,9 @@
       }
     },
     mounted() {
-      this.initPath()
+      this.init()
       this.getOwnerInfo()
+      console.log(this)
     }
   }
 </script>

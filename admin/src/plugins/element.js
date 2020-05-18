@@ -31,8 +31,10 @@ import {
   Select,
   Option,
   Pagination,
+  Alert,
 } from 'element-ui'
 
+Vue.use(Alert)
 Vue.use(Pagination)
 Vue.use(Select)
 Vue.use(Option)

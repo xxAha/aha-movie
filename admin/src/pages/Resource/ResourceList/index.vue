@@ -1,5 +1,5 @@
  <template>
-   <div class="container text-left">
+   <div class="text-left">
      <el-input @input="handleSearch" class="search" placeholder="请输入搜索内容" prefix-icon="el-icon-search" v-model="searchValue">
      </el-input>
 
@@ -67,12 +67,10 @@
      methods: {
        handleSearch(value) {
          if (this.timer) return
-         
+
          this.timer = setTimeout(async () => {
            this.currentPage = 0
-           const result = await this.getResourceData()
-           this.tableData = result.data.rows
-           this.total = result.data.count
+           await this.getResourceData()
            this.timer = null
          }, 200)
        },
@@ -80,13 +78,13 @@
        async handlePageChange(index) {
          this.currentPage = index - 1
          const result = await this.getResourceData()
-         this.tableData = result.data.rows
        },
        async getResourceData() {
          this.loading = true
          const result = await getAllResourceAPI(this.currentPage, this.pageSize, this.searchValue)
+         this.tableData = result.data.rows
+         this.total = result.data.count
          this.loading = false
-         return result
        },
        handleEdit(id) {
          this.$router.push(`/update-resource/${id}`)
@@ -115,8 +113,6 @@
        },
        async init() {
          const result = await this.getResourceData()
-         this.tableData = result.data.rows
-         this.total = result.data.count
        }
      },
      mounted() {

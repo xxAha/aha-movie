@@ -3,6 +3,7 @@ const Type = require('./type')
 const Resource = require('./resource')
 const Tag = require('./tag')
 const TypeRelation = require('./type-relation')
+const Setting = require('./setting')
 
 Resource.hasMany(Tag, {
   foreignKey: 'resourceId'
@@ -21,5 +22,6 @@ module.exports = {
   Type,
   Resource,
   Tag,
-  TypeRelation
+  TypeRelation,
+  Setting
 }

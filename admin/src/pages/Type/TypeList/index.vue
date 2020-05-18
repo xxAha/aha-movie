@@ -1,8 +1,9 @@
  <template>
-   <div class="container text-left">
+   <div class="text-left">
      <el-input @input="handleSearch" class="search" placeholder="请输入搜索内容" prefix-icon="el-icon-search" v-model="searchValue">
      </el-input>
-     <el-table :data="tableData" style="width: 100%">
+
+     <el-table v-loading="loading" :data="tableData" style="width: 100%">
        <el-table-column prop="createdAtFormat" label="日期">
        </el-table-column>
        <el-table-column prop="title" label="标题">
@@ -27,7 +28,7 @@
 
      <el-pagination @current-change="handlePageChange" class="text-right" :page-size="pageSize" background layout="prev, pager, next" :total="total">
      </el-pagination>
-     
+
    </div>
  </template>
 
@@ -51,9 +52,7 @@
 
          this.timer = setTimeout(async () => {
            this.currentPage = 0
-           const result = await this.getTypeData()
-           this.tableData = result.data.rows
-           this.total = result.data.count
+           await this.getTypeData()
            this.timer = null
          }, 200)
        },
@@ -61,13 +60,13 @@
        async handlePageChange(index) {
          this.currentPage = index - 1
          const result = await this.getTypeData()
-         this.tableData = result.data.rows
        },
        async getTypeData() {
          this.loading = true
          const result = await getAllTypeAPI(this.currentPage, this.pageSize, this.searchValue)
+         this.tableData = result.data.rows
+         this.total = result.data.count
          this.loading = false
-         return result
        },
        handleEdit(id) {
          this.$router.push(`/update-type/${id}`)
@@ -96,8 +95,6 @@
        },
        async init() {
          const result = await this.getTypeData()
-         this.tableData = result.data.rows
-         this.total = result.data.count
        }
      },
      mounted() {
