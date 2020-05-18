@@ -5,7 +5,7 @@
 const router = require('koa-router')()
 const auth = require('../../middleware/jwt')
 const role = require('../../middleware/role')
-const { addType, getTyps } = require('../../controller/type')
+const { addType, getAllType, getType } = require('../../controller/type')
 
 
 
@@ -19,9 +19,16 @@ router.post('/create', auth, role, async (ctx, next) => {
   ctx.body = result
 })
 
-//查询分类
+//查询某个分类
+router.get('/:id', auth, async (ctx, next) => {
+  const { id } = ctx.params
+  const result = await getType( id * 1 )
+  ctx.body = result
+})
+
+//查询所有分类
 router.get('/', auth, async (ctx, next) => {
-  const result = await getTyps()
+  const result = await getAllType()
   ctx.body = result
 })
 

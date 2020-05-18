@@ -16,7 +16,7 @@ export const createTypeRelation = function (typeId, resourceId) {
 export const getTypeRelationAPI = function(id) {
   return Axios({
     method: 'get',
-    url: `/api/type-relation/${id}`,
+    url: `/api/type-relation/resources/${id}`,
   })
 }
 

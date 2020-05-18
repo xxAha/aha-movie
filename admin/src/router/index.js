@@ -4,7 +4,7 @@ import Layout from '@/layout/Layout'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import Setting from '@/pages/Setting'
-import CreateType from '@/pages/Type/CreateType'
+import Type from '@/pages/Type/Type'
 import TypeList from '@/pages/Type/TypeList'
 import UpdateType from '@/pages/Type/UpdateType'
 import Resource from '@/pages/Resource/Resource'
@@ -34,22 +34,17 @@ export default new Router({
         {
           path: '/create-type',
           name: 'CreateType',
-          component: CreateType
+          component: Type
+        },
+        {
+          path: '/update-type/:id',
+          name: 'UpdateType',
+          component: Type
         },
         {
           path: '/type-list',
           name: 'TypeList',
           component: TypeList
-        },
-        {
-          path: '/update-type',
-          name: 'UpdateType',
-          component: UpdateType
-        },
-        {
-          path: '/resource-list',
-          name: 'ResourceList',
-          component: ResourceList
         },
         {
           path: '/add-resource',
@@ -60,6 +55,11 @@ export default new Router({
           path: '/update-resource/:id',
           name: 'UpdateResource',
           component: Resource
+        },
+        {
+          path: '/resource-list',
+          name: 'ResourceList',
+          component: ResourceList
         },
         {
           path: '/change-password',

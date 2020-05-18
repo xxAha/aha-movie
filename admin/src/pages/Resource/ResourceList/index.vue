@@ -68,7 +68,7 @@
      methods: {
        handleSearch(value) {
          if (this.timer) return
-
+         
          this.timer = setTimeout(async () => {
            this.currentPage = 0
            const result = await this.getResourceData()

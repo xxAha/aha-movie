@@ -113,4 +113,9 @@ module.exports = {
     errno: 10022,
     message: '修改资源失败'
   },
+  // 查询分类信息失败
+  getTypeFailInfo: {
+    errno: 10023,
+    message: '查询分类信息失败'
+  },
 }

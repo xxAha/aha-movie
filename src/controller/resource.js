@@ -7,7 +7,7 @@ const { createResourceFailInfo, getResourceFailInfo, getAllResourceFailInfo, del
 const { createResource, findResourceInfo, findAllResourceInfo, destroyResource, updateResource } = require('../services/resource')
 const { createTag } = require('../services/tag')
 const { createTypeRelation } = require('../services/type-relation')
-const { findAllTypeRelation } = require('../services/type-relation')
+const { findAllTypeRelation, findResTypeRelation } = require('../services/type-relation')
 const { DEFAULT_PAGE, DEFAULT_PAGESIZE } = require('../config/constant')
 
 /**
@@ -84,9 +84,20 @@ async function deleteResource(id) {
  * @param {number} id 资源id
  */
 async function getResourceInfo(id) {
+
   try {
-    const result = await findResourceInfo(id)
-    return new SuccessModel(result)
+    //获取资源信息
+    let resResult = await findResourceInfo(id)
+    //获取资源下的分类信息
+    let tyReResult = await findResTypeRelation(id)
+    if(tyReResult.length) {
+      tyReResult = tyReResult.map(i => {
+        const type = i.dataValues.type.dataValues
+        return type
+      })
+      resResult.dataValues.types = tyReResult
+    }
+    return new SuccessModel(resResult)
 
   } catch (error) {
     return new ErrorModel(getResourceFailInfo)
@@ -97,7 +108,8 @@ async function getResourceInfo(id) {
 /**
  * 查找所有资源
  */
-async function getAllResourceInfo(page = DEFAULT_PAGE, pageSize = DEFAULT_PAGESIZE, searchValue) {
+async function getAllResourceInfo(page = DEFAULT_PAGE, pageSize = DEFAULT_PAGESIZE, searchValue = '') {
+
   try {
     //查询所有的资源
     const resResult = await findAllResourceInfo(page, pageSize, searchValue)

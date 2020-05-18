@@ -21,7 +21,7 @@ async function createTypeRelation(typeId, resourceId) {
  * 获取某个资源的分类关系
  * @param {number} resourceId 资源id
  */
-async function findTypeRelation(resourceId) {
+async function findResTypeRelation(resourceId) {
   const result = await TypeRelation.findAll({
     where: {
       resourceId
@@ -29,6 +29,24 @@ async function findTypeRelation(resourceId) {
     include: [
       {
         model: Type
+      }
+    ]
+  })
+  return result
+}
+
+/**
+ * 获取某个分类的分类关系
+ * @param {number} typeId 资源id
+ */
+async function findTypeTypeRelation(typeId) {
+  const result = await TypeRelation.findAll({
+    where: {
+      typeId
+    },
+    include: [
+      {
+        model: Resource
       }
     ]
   })
@@ -88,7 +106,8 @@ async function destroyTypeRelation(typeId, resourceId) {
 
 module.exports = {
   createTypeRelation,
-  findTypeRelation,
+  findResTypeRelation,
+  findTypeTypeRelation,
   findAllTypeRelation,
   destroyTypeRelation
 }

@@ -45,9 +45,10 @@ router.get('/:id', auth, role, async (ctx, next) => {
 
 //查询所有资源
 router.get('/', auth, role, async (ctx, next) => {
-  const { page, pageSize, searchValue } = ctx.query
-  console.log(searchValue)
-  const result = await getAllResourceInfo(page * 1, pageSize * 1, searchValue)
+  let { page, pageSize, searchValue } = ctx.query
+  page = page && page * 1
+  pageSize = pageSize && pageSize * 1
+  const result = await getAllResourceInfo(page, pageSize, searchValue)
   ctx.body = result
 })
 

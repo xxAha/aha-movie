@@ -7,20 +7,20 @@
       </el-form-item>
 
       <el-form-item label="资源标题" prop="title">
-        <el-input  placeholder="请输入标题" v-model="form.title"></el-input>
+        <el-input placeholder="请输入标题" v-model="form.title"></el-input>
       </el-form-item>
 
       <el-form-item label="资源链接" prop="link">
-        <el-input  placeholder="请输入链接" v-model="form.link"></el-input>
+        <el-input placeholder="请输入链接" v-model="form.link"></el-input>
       </el-form-item>
 
       <el-form-item label="index" prop="index">
-        <el-input type="number"  placeholder="请输入排序数字" v-model="form.index"></el-input>
+        <el-input type="number" placeholder="请输入排序数字" v-model="form.index"></el-input>
       </el-form-item>
 
 
       <el-form-item label="资源描述" prop="description">
-        <el-input  type="textarea" resize="none" :rows="2" placeholder="请输入描述内容" v-model="form.description"></el-input>
+        <el-input type="textarea" resize="none" :rows="2" placeholder="请输入描述内容" v-model="form.description"></el-input>
       </el-form-item>
 
       <el-form-item class="text-left" label="选择分类">
@@ -65,9 +65,9 @@
   import Crop from '@/components/Crop'
   import { uploadAPI } from '@/api/utils'
   import { createResourceAPI, getResourceAPI, updateResourceAPI } from '@/api/resource'
-  import { getTypesAPI } from '@/api/type'
+  import { getAllTypeAPI } from '@/api/type'
   import { createTagAPI, deleteTagAPI } from '@/api/tag'
-  import { getTypeRelationAPI, deleteTypeRelationAPI, createTypeRelation } from '@/api/type-relation'
+  import { deleteTypeRelationAPI, createTypeRelation } from '@/api/type-relation'
   import { types } from 'util';
   export default {
     data() {
@@ -157,7 +157,7 @@
       },
       //获取所有分类
       async getTypes() {
-        const result = await getTypesAPI()
+        const result = await getAllTypeAPI()
         if (result.errno === 0) {
           this.types = result.data
         } else {
@@ -175,7 +175,7 @@
           const hasType = this.form.types.some(itemId => {
             return itemId === typeId
           })
-          
+
           if (hasType) {
             const result = await createTypeRelation(typeId, this.resourceId)
             if (result.errno === 0) {
@@ -202,7 +202,6 @@
             })
           }
         }
-
       },
 
       async handlCropDone(formData) {
@@ -273,17 +272,13 @@
         this.tagValue = '';
       },
 
-      //获取当前资源的数据
+      //获取需要更新的资源数据
       async getCurrentData() {
         if (this.isUpdate) {
           this.resourceId = this.$route.params.id
-          const typeResult = await getTypeRelationAPI(this.resourceId)
-          const resResult = await getResourceAPI(this.resourceId)
-          if (typeResult.errno === 0 && resResult.errno === 0) {
-            //这里必须先初始化tyeps 为一个 [] 再赋值给 form 不然点击 options 标签没反应
-            resResult.data.types = []
-            this.form = resResult.data
-            this.form.types = typeResult.data.map(i => i.id)
+          const result = await getResourceAPI(this.resourceId)
+          if (result.errno === 0) {
+            this.form = result.data
             this.$refs.crop.headerImage = this.form.logo
           } else {
             this.$message({

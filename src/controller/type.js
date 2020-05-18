@@ -2,9 +2,9 @@
  * @description 分类 controller
  */
 const { ErrorModel, SuccessModel } = require('../model/ResModel')
-const { createTyepFailInfo, getTypesFailInfo } = require('../model/ErrorInfo')
-const { createType, findTypes } = require('../services/type')
-const { createTypeRelation } = require('../services/type-relation')
+const { createTyepFailInfo, getTypesFailInfo, getTypeFailInfo } = require('../model/ErrorInfo')
+const { createType, findAllType, findType } = require('../services/type')
+const { createTypeRelation, findTypeTypeRelation } = require('../services/type-relation')
 
 /**
  * 创建分类
@@ -20,7 +20,7 @@ async function addType({title, logo, index, resources = []}) {
     if(resources.length) {
       const resResult = await Promise.all(resources.map(r => createTypeRelation(typeId, r)))
       const resList = resResult.map(r => r.dataValues)
-      typeResult.dataValues.resList =resList
+      typeResult.dataValues.resList = resList
     }
 
     return new SuccessModel(typeResult)
@@ -30,12 +30,26 @@ async function addType({title, logo, index, resources = []}) {
   }
 }
 
+
+/**
+ * 查询某个分类
+ * @param {number} id 分类id
+ */
+async function getType(id) {
+  try {
+    const result = await findType(id)
+    return new SuccessModel(result)
+  } catch (error) {
+    return new ErrorModel(getTypeFailInfo)
+  }
+}
+
 /**
  * 查询所有分类
  */
-async function getTyps() {
+async function getAllType() {
   try {
-    const result = await findTypes()
+    const result = await findAllType()
     return new SuccessModel(result)
   } catch (error) {
     return new ErrorModel(getTypesFailInfo)
@@ -44,5 +58,6 @@ async function getTyps() {
 
 module.exports = {
   addType,
-  getTyps
+  getAllType,
+  getType
 }

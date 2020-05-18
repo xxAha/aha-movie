@@ -97,13 +97,15 @@ async function findResourceInfo(id) {
  * 查找所有资源
  */
 async function findAllResourceInfo(page, pageSize, searchValue) {
+  const whereOpt = {}
+  if(searchValue) {
+    whereOpt.title = {
+      [Op.like]: '%' + searchValue + '%'
+    }
+  }
 
   let result = await Resource.findAndCountAll({
-    where: {
-      title: {
-        [Op.like]: '%' + searchValue + '%'
-      }
-    },
+    where: whereOpt,
     limit: pageSize,
     offset: page * pageSize,
     order: [
@@ -113,7 +115,8 @@ async function findAllResourceInfo(page, pageSize, searchValue) {
       {
         model: Tag
       }
-    ]
+    ],
+    distinct:true
   })
 
   if(result.count) {

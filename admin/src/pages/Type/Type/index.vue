@@ -29,8 +29,9 @@
 
 <script>
   import Crop from '@/components/Crop'
-  import { createTypeAPI } from '@/api/type'
+  import { createTypeAPI, getTypeAPI } from '@/api/type'
   import { uploadAPI } from '@/api/utils'
+  import { getAllResourceAPI } from '@/api/resource'
   export default {
     data() {
       return {
@@ -41,6 +42,7 @@
           index: 0,
           resources: []
         },
+        typeId: '',
         rules: {
           title: [{
             required: true,
@@ -59,10 +61,7 @@
           }]
 
         },
-        resources: [{
-          id: 1,
-          title: '复仇者'
-        }]
+        resources: []
 
       }
     },
@@ -80,20 +79,23 @@
           } else {
             //result = await updateResourceAPI(this.resourceId, this.form)
           }
- 
+
           this.loading = false
           if (result.errno === 0) {
+            !this.isUpdate && this.resetData()
             this.$message({
               type: 'success',
               message: '创建成功'
             })
-            //this.$refs.form.resetFields()
-            this.$refs.crop.headerImage = ''
             return
           }
           this.$message('创建失败')
 
         })
+      },
+      async getAllResources() {
+        const result = await getAllResourceAPI()
+        this.resources = result.data.rows
       },
       async handlCropDone(formData) {
         const result = await uploadAPI(formData)
@@ -105,13 +107,58 @@
         this.$message('图片过大，请压缩图片。')
       },
       handleRemove() {},
-      handleOptionClick() {}
+      handleOptionClick() {},
+      //重置数据
+      resetData() {
+        console.log(1)
+        this.$refs.form.resetFields()
+        this.$refs.crop.headerImage = ''
+        this.form.resources = []
+
+      },
+      //获取需要更新的资源数据
+      async getCurrentData() {
+        if (this.isUpdate) {
+          this.typeId = this.$route.params.id
+          const result = await getTypeAPI(this.typeId)
+          console.log(result)
+          // const typeResult = await getTypeAPI(this.typeId)
+          // console.log(typeResult)
+          // const typeResult = await getTypeRelationAPI(this.resourceId)
+          // const resResult = await getResourceAPI(this.resourceId)
+          // if (typeResult.errno === 0 && resResult.errno === 0) {
+          //   //这里必须先初始化tyeps 为一个 [] 再赋值给 form 不然点击 options 标签没反应
+          //   resResult.data.types = []
+          //   this.form = resResult.data
+          //   this.form.types = typeResult.data.map(i => i.id)
+          //   this.$refs.crop.headerImage = this.form.logo
+          // } else {
+          //   this.$message({
+          //     type: 'warning',
+          //     message: '获取资源信息失败'
+          //   })
+          // }
+
+        }
+      }
     },
     computed: {
       isUpdate() {
         return this.$route.name === 'UpdateType'
       }
     },
+    mounted() {
+      this.getAllResources()
+      this.getCurrentData()
+    },
+    beforeRouteEnter(to, from, next) {
+      next((vm) => {
+        const path = vm.$route.path
+        if (path === '/add-type') {
+          vm.resetData()
+        }
+      })
+    }
   }
 </script>
 
