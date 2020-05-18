@@ -9,7 +9,6 @@ const { SuccessModel } = require('../../model/ResModel')
 
 router.prefix('/api')
 
-
 //上传文件
 router.post('/upload', async (ctx, next) => {
   const file = ctx.request.files.file

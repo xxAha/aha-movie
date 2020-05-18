@@ -14,9 +14,9 @@ const { DEFAULT_PAGE, DEFAULT_PAGESIZE } = require('../config/constant')
  * 创建资源
  * @param {object}
  */
-async function addResource({ title, logo, index, link, tags = [], types = [] }) {
+async function addResource({ title, logo, index, link, description, tags = [], types = [] }) {
   try {
-    const resResult = await createResource({ title, logo, index, link })
+    const resResult = await createResource({ title, logo, index, link, description })
     const resourceId = resResult.id
 
     //创建资源标签
@@ -105,11 +105,11 @@ async function getAllResourceInfo(page = DEFAULT_PAGE, pageSize = DEFAULT_PAGESI
 
     resResult.rows.forEach(item => {
       tyRelationResult.forEach(ty => {
-        if(item.id === ty.resourceId) {
+        if (item.id === ty.resourceId) {
           const data = item.dataValues
-          if(data.types) {
+          if (data.types) {
             data.types.push(ty.type)
-          }else {
+          } else {
             data.types = []
             data.types.push(ty.type)
           }

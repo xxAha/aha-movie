@@ -30,6 +30,11 @@ const Resource = seq.define('resource', {
     type: INTEGER,
     allowNull: false,
     comment: '资源 排序'
+  },
+  description: {
+    type: STRING,
+    allowNull: true,
+    comment: '资源 描述'
   }
 })
 

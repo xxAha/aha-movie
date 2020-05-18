@@ -7,20 +7,25 @@
       </el-form-item>
 
       <el-form-item label="资源标题" prop="title">
-        <el-input v-model="form.title"></el-input>
+        <el-input  placeholder="请输入标题" v-model="form.title"></el-input>
       </el-form-item>
 
       <el-form-item label="资源链接" prop="link">
-        <el-input v-model="form.link"></el-input>
+        <el-input  placeholder="请输入链接" v-model="form.link"></el-input>
       </el-form-item>
 
       <el-form-item label="index" prop="index">
-        <el-input type="number" v-model="form.index"></el-input>
+        <el-input type="number"  placeholder="请输入排序数字" v-model="form.index"></el-input>
+      </el-form-item>
+
+
+      <el-form-item label="资源描述" prop="description">
+        <el-input  type="textarea" resize="none" :rows="2" placeholder="请输入描述内容" v-model="form.description"></el-input>
       </el-form-item>
 
       <el-form-item class="text-left" label="选择分类">
 
-        <el-select @remove-tag="handleRemoveTypeTag" v-model="form.types" multiple placeholder="请选择">
+        <el-select @remove-tag="handleRemoveTypeTag" v-model="form.types" multiple placeholder="请选择分类">
           <el-option @click.native="handleOptionClick(item)" v-for="item in types" :key="item.id" :label="item.title" :value="item.id">
           </el-option>
         </el-select>
@@ -74,6 +79,7 @@
           link: '',
           logo: '',
           index: 0,
+          description: '',
           tags: [],
           types: []
         },

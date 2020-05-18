@@ -10,12 +10,13 @@ const Op = require('sequelize').Op
  * 创建资源
  * @param {object} 数据对象
  */
-async function createResource({title, logo, index, link, tags}) {
+async function createResource({title, logo, index, link, description}) {
   const result = await Resource.create({
     title,
     logo,
     index,
-    link
+    link,
+    description
   })
   return result
 }
@@ -35,6 +36,9 @@ async function updateResource(id, data) {
   }
   if(data.link) {
     updateData.link = data.link
+  }
+  if(data.description) {
+    updateData.description = data.description
   }
   if(data.index) {
     updateData.index = data.index

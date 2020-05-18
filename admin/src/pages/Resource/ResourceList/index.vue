@@ -8,31 +8,36 @@
        </el-table-column>
        <el-table-column prop="title" label="标题">
        </el-table-column>
+
        <el-table-column prop="img" label="图标">
          <template slot-scope="scope">
            <img class="logo" :src="scope.row.logo" alt="logo">
          </template>
        </el-table-column>
+
        <el-table-column prop="link" label="链接">
          <template slot-scope="scope">
-           <el-link :href="scope.row.link" target="_blank" type="success">{{scope.row.link}}</el-link>
+           <el-link :href="scope.row.link" target="_blank" type="success">点击跳转</el-link>
          </template>
        </el-table-column>
 
-       <el-table-column prop="types" label="分类">
+       <el-table-column prop="description" label="描述">
+       </el-table-column>
+
+       <el-table-column prop="types" label="分类" width="180">
          <template slot-scope="scope">
            <el-tag class="mr-10 mb-10 mt-10" v-for="item in scope.row.types" :key="item.id + item.title">{{item.title}}</el-tag>
          </template>
        </el-table-column>
 
-       <el-table-column prop="types" label="标签">
+       <el-table-column prop="types" label="标签" width="180">
          <template slot-scope="scope">
            <el-tag class="mr-10 mb-10 mt-10" v-for="item in scope.row.tags" :key="item.id + item.title">{{item.title}}</el-tag>
          </template>
        </el-table-column>
 
 
-       <el-table-column label="操作">
+       <el-table-column label="操作" width="180">
          <template slot-scope="scope">
            <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
            <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
@@ -62,7 +67,7 @@
      },
      methods: {
        handleSearch(value) {
-         if(this.timer) return
+         if (this.timer) return
 
          this.timer = setTimeout(async () => {
            this.currentPage = 0
@@ -123,10 +128,11 @@
  </script>
 
  <style lang="scss" scoped>
-    .search {
-      width: 400px;
-      margin-bottom: 20px;
-    }
+   .search {
+     width: 400px;
+     margin-bottom: 20px;
+   }
+
    .logo {
      display: block;
      width: 60px;
