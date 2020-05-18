@@ -19,10 +19,15 @@ export const getTypeAPI = function(id) {
 
 
 //获取所有分类
-export const getAllTypeAPI = function(id) {
+export const getAllTypeAPI = function(page, pageSize, searchValue) {
   return Axios({
     method: 'get',
-    url: '/api/types'
+    url: '/api/types',
+    data: {
+      page,
+      pageSize,
+      searchValue
+    }
   })
 }
 

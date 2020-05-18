@@ -1,26 +1,34 @@
  <template>
-   <el-table :data="tableData" style="width: 100%">
-     <el-table-column prop="createdAtFormat" label="日期">
-     </el-table-column>
-     <el-table-column prop="title" label="标题">
-     </el-table-column>
-     <el-table-column prop="img" label="图标">
-       <template slot-scope="scope">
-         <img class="logo" :src="scope.row.logo" alt="logo">
-       </template>
-     </el-table-column>
-     <el-table-column class="list" prop="img" label="分类下的资源">
-       <template slot-scope="scope">
-         <el-link class="mr-10" v-for="(item, index) in scope.row.resources" :key="index" :href="item.link" target="_blank" type="success">{{item.title}}</el-link>
-       </template>
-     </el-table-column>
-     <el-table-column label="操作">
-       <template slot-scope="scope">
-         <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
-         <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
-       </template>
-     </el-table-column>
-   </el-table>
+   <div class="container text-left">
+     <el-input @input="handleSearch" class="search" placeholder="请输入搜索内容" prefix-icon="el-icon-search" v-model="searchValue">
+     </el-input>
+     <el-table :data="tableData" style="width: 100%">
+       <el-table-column prop="createdAtFormat" label="日期">
+       </el-table-column>
+       <el-table-column prop="title" label="标题">
+       </el-table-column>
+       <el-table-column prop="img" label="图标">
+         <template slot-scope="scope">
+           <img class="logo" :src="scope.row.logo" alt="logo">
+         </template>
+       </el-table-column>
+       <el-table-column class="list" prop="img" label="分类下的资源">
+         <template slot-scope="scope">
+           <el-link class="mr-10" v-for="(item, index) in scope.row.resources" :key="index" :href="item.link" target="_blank" type="success">{{item.title}}</el-link>
+         </template>
+       </el-table-column>
+       <el-table-column label="操作">
+         <template slot-scope="scope">
+           <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
+           <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+         </template>
+       </el-table-column>
+     </el-table>
+
+     <el-pagination @current-change="handlePageChange" class="text-right" :page-size="pageSize" background layout="prev, pager, next" :total="total">
+     </el-pagination>
+     
+   </div>
  </template>
 
  <script>

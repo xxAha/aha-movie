@@ -46,7 +46,6 @@
      </el-table>
 
      <el-pagination @current-change="handlePageChange" class="text-right" :page-size="pageSize" background layout="prev, pager, next" :total="total">
-
      </el-pagination>
    </div>
  </template>
