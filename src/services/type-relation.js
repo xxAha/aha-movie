@@ -61,6 +61,9 @@ async function findAllTypeRelation() {
     include: [
       {
         model: Type
+      },
+      {
+        model: Resource
       }
     ]
   })

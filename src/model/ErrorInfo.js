@@ -118,4 +118,14 @@ module.exports = {
     errno: 10023,
     message: '查询分类信息失败'
   },
+  // 修改分类失败
+  updateTypeFailInfo: {
+    errno: 10024,
+    message: '修改分类失败'
+  },
+  // 删除分类失败
+  deleteTypeFailInfo: {
+    errno: 10025,
+    message: '删除分类失败'
+  },
 }

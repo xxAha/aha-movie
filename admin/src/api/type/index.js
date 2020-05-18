@@ -25,3 +25,20 @@ export const getAllTypeAPI = function(id) {
     url: '/api/types'
   })
 }
+
+//更新某个分类
+export const updateTypeAPI = function(id, data) {
+  return Axios({
+    method: 'patch',
+    url: `/api/types/${id}`,
+    data
+  })
+}
+
+//删除某个分类
+export const deleteTypeAPI = function(id) {
+  return Axios({
+    method: 'delete',
+    url: `/api/types/${id}`,
+  })
+}

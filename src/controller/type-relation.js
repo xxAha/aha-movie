@@ -4,8 +4,8 @@
 
 
 const { ErrorModel, SuccessModel } = require('../model/ResModel')
-const { createTypeRelationFailInfo, getTypeRelationFailInfo, deleteTypeRelationFailInfo } = require('../model/ErrorInfo')
-const { createTypeRelation, findResTypeRelation, findAllTypeRelation, destroyTypeRelation } = require('../services/type-relation')
+const { createTypeRelationFailInfo, deleteTypeRelationFailInfo } = require('../model/ErrorInfo')
+const { createTypeRelation, destroyTypeRelation } = require('../services/type-relation')
 
 /**
  * 创建分类关系
@@ -19,40 +19,6 @@ async function addTypeRelation(typeId, resourceId) {
     return new SuccessModel(result)
   } catch (error) {
     return new ErrorModel(createTypeRelationFailInfo)
-  }
-}
-
-/**
- * 获取某个资源的分类关系
- * @param {number} resourceId 资源id
- */
-async function getResTypeRelation(resourceId) {
-
-  try {
-    let result = await findResTypeRelation(resourceId)
-    if(result.length) {
-      result = result.map(i => {
-        const type = i.dataValues.type.dataValues
-        return type
-      })
-    }
-    return new SuccessModel(result)
-  } catch (error) {
-    return new ErrorModel(getTypeRelationFailInfo)
-  }
-}
-
-
-/**
- * 获取所有资源的分类关系
- */
-async function getAllTypeRelation() {
-
-  try {
-    let result = await findAllTypeRelation()
-    return new SuccessModel(result)
-  } catch (error) {
-    return new ErrorModel(getTypeRelationFailInfo)
   }
 }
 
@@ -77,7 +43,5 @@ async function deleteTypeRelation(typeId, resourceId) {
 
 module.exports = {
   addTypeRelation,
-  getResTypeRelation,
-  getAllTypeRelation,
   deleteTypeRelation
 }

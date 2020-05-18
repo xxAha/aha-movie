@@ -40,7 +40,7 @@
        <el-table-column label="操作" width="180">
          <template slot-scope="scope">
            <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
-           <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+           <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
          </template>
        </el-table-column>
      </el-table>
@@ -92,13 +92,12 @@
        handleEdit(id) {
          this.$router.push(`/update-resource/${id}`)
        },
-       async handleDelete(resource) {
+       async handleDelete(id) {
          this.$messageBox.confirm('删除该资源, 是否继续?', '提示', {
            confirmButtonText: '确定',
            cancelButtonText: '取消',
            type: 'warning'
          }).then(async () => {
-           const { id } = resource
            const result = await deleteResourceAPI(id)
            if (result.errno === 0) {
              this.$message({

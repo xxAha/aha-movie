@@ -61,7 +61,7 @@ async function changeResource(id, data) {
 
 /**
  * 删除资源
- * @param {object}
+ * @param {number} id 资源id
  */
 async function deleteResource(id) {
   try {

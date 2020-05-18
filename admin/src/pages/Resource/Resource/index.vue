@@ -54,7 +54,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit('form')">{{isUpdate?'更新': '创建'}}</el-button>
+        <el-button :loading="loading" type="primary" @click="onSubmit('form')">{{isUpdate?'更新': '创建'}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -68,7 +68,8 @@
   import { getAllTypeAPI } from '@/api/type'
   import { createTagAPI, deleteTagAPI } from '@/api/tag'
   import { deleteTypeRelationAPI, createTypeRelation } from '@/api/type-relation'
-  import { types } from 'util';
+  // ？？
+  // import { types } from 'util';
   export default {
     data() {
       return {
@@ -159,7 +160,7 @@
       async getTypes() {
         const result = await getAllTypeAPI()
         if (result.errno === 0) {
-          this.types = result.data
+          this.types = result.data.rows
         } else {
           this.$message({
             type: 'warning',
@@ -191,7 +192,7 @@
 
       },
 
-      //删除分类
+      //删除关系
       async handleRemoveTypeTag(typeId) {
         if (this.isUpdate) {
           const result = await deleteTypeRelationAPI(typeId, this.resourceId)
@@ -278,6 +279,7 @@
           this.resourceId = this.$route.params.id
           const result = await getResourceAPI(this.resourceId)
           if (result.errno === 0) {
+            result.data.types = result.data.types ? result.data.types.map(i => i.id) : []
             this.form = result.data
             this.$refs.crop.headerImage = this.form.logo
           } else {

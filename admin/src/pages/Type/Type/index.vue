@@ -13,14 +13,14 @@
       </el-form-item>
 
       <el-form-item class="text-left" label="选择资源">
-        <el-select @remove-tag="handleRemove" v-model="form.resources" multiple placeholder="请选择分类">
+        <el-select @remove-tag="handleRemoveTypeTag" v-model="form.resources" multiple placeholder="请选择资源">
           <el-option @click.native="handleOptionClick(item)" v-for="item in resources" :key="item.id" :label="item.title" :value="item.id">
           </el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item>
-        <el-button :loading="loading" type="primary" @click="onSubmit('form')">创建</el-button>
+        <el-button :loading="loading" type="primary" @click="onSubmit('form')">{{isUpdate?'更新': '创建'}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -29,9 +29,10 @@
 
 <script>
   import Crop from '@/components/Crop'
-  import { createTypeAPI, getTypeAPI } from '@/api/type'
+  import { createTypeAPI, getTypeAPI, updateTypeAPI } from '@/api/type'
   import { uploadAPI } from '@/api/utils'
   import { getAllResourceAPI } from '@/api/resource'
+  import { deleteTypeRelationAPI, createTypeRelation } from '@/api/type-relation'
   export default {
     data() {
       return {
@@ -77,7 +78,7 @@
           if (!this.isUpdate) {
             result = await createTypeAPI(this.form)
           } else {
-            //result = await updateResourceAPI(this.resourceId, this.form)
+            result = await updateTypeAPI(this.typeId, this.form)
           }
 
           this.loading = false
@@ -85,11 +86,14 @@
             !this.isUpdate && this.resetData()
             this.$message({
               type: 'success',
-              message: '创建成功'
+              message: this.isUpdate ? '更新成功' : '创建成功'
             })
             return
           }
-          this.$message('创建失败')
+          this.$message({
+            type: 'warning',
+            message: this.isUpdate ? '更新失败' : '创建失败'
+          })
 
         })
       },
@@ -106,8 +110,41 @@
       handleSizeOver() {
         this.$message('图片过大，请压缩图片。')
       },
-      handleRemove() {},
-      handleOptionClick() {},
+
+      //选择分类(只对更新资源起作用)
+      async handleOptionClick(resourceObj) {
+        if (this.isUpdate) {
+          const { id: resourceId } = resourceObj
+          const hasType = this.form.resources.some(itemId => {
+            return itemId === resourceId
+          })
+
+          if (hasType) {
+            const result = await createTypeRelation(this.typeId, resourceId)
+            if (result.errno === 0) {
+              this.$message({
+                type: 'success',
+                message: '资源关联已创建'
+              })
+            }
+          } else {
+            this.handleRemoveTypeTag(resourceId)
+          }
+        }
+      },
+      //删除关系
+      async handleRemoveTypeTag(resourceId) {
+        if (this.isUpdate) {
+          const result = await deleteTypeRelationAPI(this.typeId, resourceId)
+          if (result.errno === 0) {
+            this.$message({
+              type: 'success',
+              message: '资源关联已删除'
+            })
+          }
+        }
+      },
+
       //重置数据
       resetData() {
         console.log(1)
@@ -121,24 +158,17 @@
         if (this.isUpdate) {
           this.typeId = this.$route.params.id
           const result = await getTypeAPI(this.typeId)
-          console.log(result)
-          // const typeResult = await getTypeAPI(this.typeId)
-          // console.log(typeResult)
-          // const typeResult = await getTypeRelationAPI(this.resourceId)
-          // const resResult = await getResourceAPI(this.resourceId)
-          // if (typeResult.errno === 0 && resResult.errno === 0) {
-          //   //这里必须先初始化tyeps 为一个 [] 再赋值给 form 不然点击 options 标签没反应
-          //   resResult.data.types = []
-          //   this.form = resResult.data
-          //   this.form.types = typeResult.data.map(i => i.id)
-          //   this.$refs.crop.headerImage = this.form.logo
-          // } else {
-          //   this.$message({
-          //     type: 'warning',
-          //     message: '获取资源信息失败'
-          //   })
-          // }
 
+          if (result.errno === 0) {
+            result.data.resources = result.data.resources ? result.data.resources.map(i => i.id) : []
+            this.form = result.data
+            this.$refs.crop.headerImage = this.form.logo
+          } else {
+            this.$message({
+              type: 'warning',
+              message: '获取分类信息失败'
+            })
+          }
         }
       }
     },
@@ -170,5 +200,9 @@
     .hidden-errorInfo+.el-form-item__error {
       display: none;
     }
+  }
+
+  .el-select {
+    width: 100%;
   }
 </style>

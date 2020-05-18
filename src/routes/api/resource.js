@@ -28,14 +28,6 @@ router.patch('/:id', auth, role, async (ctx, next) => {
   
 })
 
-//删除某个资源
-router.delete('/:id', auth, role, async (ctx, next) => {
-  const { id } = ctx.params
-  const result = await deleteResource(id)
-  ctx.body = result
-})
-
-
 //查询某个资源
 router.get('/:id', auth, role, async (ctx, next) => {
   const { id } = ctx.params
@@ -49,6 +41,13 @@ router.get('/', auth, role, async (ctx, next) => {
   page = page && page * 1
   pageSize = pageSize && pageSize * 1
   const result = await getAllResourceInfo(page, pageSize, searchValue)
+  ctx.body = result
+})
+
+//删除某个资源
+router.delete('/:id', auth, role, async (ctx, next) => {
+  const { id } = ctx.params
+  const result = await deleteResource(id)
   ctx.body = result
 })
 
