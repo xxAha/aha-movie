@@ -10,7 +10,8 @@ const resourcePostData = {
   title: '测试资源标题',
   logo: DEFAULT_LOGO,
   link: 'http://www.baidu.com',
-  index: 1
+  index: 1,
+  description: '描述'
 }
 
 let resourceId

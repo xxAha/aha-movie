@@ -13,8 +13,9 @@ router.prefix('/api/types')
 
 //创建分类
 router.post('/create', auth, role, async (ctx, next) => {
-  const { title, logo, index } = ctx.request.body
-  const result = await addType(title, logo, index * 1)
+  let { title, logo, index, resources } = ctx.request.body
+  index = index * 1
+  const result = await addType({title, logo, index, resources})
   ctx.body = result
 })
 

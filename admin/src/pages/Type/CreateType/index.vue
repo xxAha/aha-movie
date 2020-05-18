@@ -3,8 +3,7 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="分类图标" prop="logo">
         <input type="text" :value="form.logo" hidden />
-        <Crop :class="form.logo?'hidden-errorInfo': ''" ref="crop" @cropDone="handlCropDone"
-          @sizeOver="handleSizeOver" />
+        <Crop :class="form.logo?'hidden-errorInfo': ''" ref="crop" @cropDone="handlCropDone" @sizeOver="handleSizeOver" />
       </el-form-item>
       <el-form-item label="分类标题" prop="title">
         <el-input v-model="form.title"></el-input>
@@ -12,6 +11,14 @@
       <el-form-item label="index" prop="index">
         <el-input type="number" v-model="form.index"></el-input>
       </el-form-item>
+
+      <el-form-item class="text-left" label="选择资源">
+        <el-select @remove-tag="handleRemove" v-model="form.resources" multiple placeholder="请选择分类">
+          <el-option @click.native="handleOptionClick(item)" v-for="item in resources" :key="item.id" :label="item.title" :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
       <el-form-item>
         <el-button :loading="loading" type="primary" @click="onSubmit('form')">创建</el-button>
       </el-form-item>
@@ -22,8 +29,8 @@
 
 <script>
   import Crop from '@/components/Crop'
-  import {createTypeAPI} from '@/api/type'
-  import {uploadAPI} from '@/api/utils'
+  import { createTypeAPI } from '@/api/type'
+  import { uploadAPI } from '@/api/utils'
   export default {
     data() {
       return {
@@ -31,7 +38,8 @@
         form: {
           title: '',
           logo: '',
-          index: 0
+          index: 0,
+          resources: []
         },
         rules: {
           title: [{
@@ -50,7 +58,11 @@
             trigger: 'change'
           }]
 
-        }
+        },
+        resources: [{
+          id: 1,
+          title: '复仇者'
+        }]
 
       }
     },
@@ -62,14 +74,20 @@
         this.$refs[form].validate(async v => {
           if (!v) return
           this.loading = true
-          const result = await createTypeAPI(this.form)
+          let result
+          if (!this.isUpdate) {
+            result = await createTypeAPI(this.form)
+          } else {
+            //result = await updateResourceAPI(this.resourceId, this.form)
+          }
+ 
           this.loading = false
           if (result.errno === 0) {
             this.$message({
               type: 'success',
               message: '创建成功'
             })
-            this.$refs.form.resetFields()
+            //this.$refs.form.resetFields()
             this.$refs.crop.headerImage = ''
             return
           }
@@ -85,10 +103,16 @@
       },
       handleSizeOver() {
         this.$message('图片过大，请压缩图片。')
+      },
+      handleRemove() {},
+      handleOptionClick() {}
+    },
+    computed: {
+      isUpdate() {
+        return this.$route.name === 'UpdateType'
       }
     },
   }
-
 </script>
 
 <style lang="scss" scoped>
@@ -100,5 +124,4 @@
       display: none;
     }
   }
-
 </style>

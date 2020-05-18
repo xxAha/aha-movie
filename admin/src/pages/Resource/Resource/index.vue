@@ -237,26 +237,6 @@
             message: '标签删除成功'
           })
         }
-
-        // this.$messageBox.confirm('删除该标签, 是否继续?', '提示', {
-        //   confirmButtonText: '确定',
-        //   cancelButtonText: '取消',
-        //   type: 'warning'
-        // }).then(async () => {
-        //   if (this.isUpdate) {
-        //     const result = await deleteTagAPI(tag.id)
-        //     if (result.errno === 0) {
-        //       this.form.tags.splice(this.form.tags.indexOf(tag), 1)
-        //     }
-        //   } else {
-        //     this.createTags.splice(this.createTags.indexOf(tag), 1)
-        //   }
-
-        //   this.$message({
-        //     type: 'success',
-        //     message: '删除成功!'
-        //   })
-        // })
       },
 
       //添加标签显示输入

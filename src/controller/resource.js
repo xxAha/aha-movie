@@ -16,16 +16,17 @@ const { DEFAULT_PAGE, DEFAULT_PAGESIZE } = require('../config/constant')
  */
 async function addResource({ title, logo, index, link, description, tags = [], types = [] }) {
   try {
+    //创建资源
     const resResult = await createResource({ title, logo, index, link, description })
     const resourceId = resResult.id
 
-    //创建资源标签
+    //创建资源下的标签
     if (tags.length) {
       const tagResult = await Promise.all(tags.map(tag => createTag(resourceId, tag)))
       const tagList = tagResult.map(i => i.dataValues)
       resResult.dataValues.tags = tagList
     }
-    //创建分类关系
+    //创建资源下的分类关系
     if (types.length) {
       const tyResult = await Promise.all(types.map(type => createTypeRelation(type, resourceId)))
       const typeList = tyResult.map(i => i.dataValues)
