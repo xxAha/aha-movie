@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <!-- 侧边栏开始 -->
-    <el-aside :width="isCollapse? '64px': '256px'">
+    <el-aside v-if="ownerInfo" :width="isCollapse? '64px': '256px'">
       <div v-if="setting" v-show="!isCollapse" class="logo-box">
         <div>
           <img v-if="setting.logo" :src="setting.logo" alt="logo">
@@ -16,12 +16,29 @@
             <i class="el-icon-s-platform"></i>
             <span>网站设置</span>
           </template>
-          <el-menu-item index="/setting">
+          <el-menu-item :disabled="ownerInfo.role !== 0" index="/setting">
             <i class="el-icon-s-tools"></i>网站设置
           </el-menu-item>
         </el-submenu>
 
         <el-submenu index="2">
+
+          <template slot="title">
+            <i class="el-icon-s-platform"></i>
+            <span>用户管理</span>
+          </template>
+          <el-menu-item :disabled="ownerInfo.role !== 0" index="/create-user">
+            <i class="el-icon-s-tools"></i>添加用户
+          </el-menu-item>
+          <el-menu-item index="/user-list">
+            <i class="el-icon-s-tools"></i>用户列表
+          </el-menu-item>
+          <el-menu-item index="/update-user">
+            <i class="el-icon-s-tools"></i>修改信息
+          </el-menu-item>
+        </el-submenu>
+
+        <el-submenu index="3">
           <template slot="title">
             <i class="el-icon-s-order"></i>
             <span>分类管理</span>
@@ -37,12 +54,12 @@
           </el-menu-item> -->
         </el-submenu>
 
-        <el-submenu index="3">
+        <el-submenu index="4">
           <template slot="title">
             <i class="el-icon-video-camera-solid"></i>
             <span>资源管理</span>
           </template>
-          <el-menu-item index="/add-resource">
+          <el-menu-item index="/create-resource">
             <i class="el-icon-s-ticket"></i>添加资源
           </el-menu-item>
           <el-menu-item index="/resource-list">
@@ -118,14 +135,14 @@
     methods: {
       ...mapActions(['getOwnerInfoAct', 'getSettingAct']),
       //初始化path
-      init() {
+      async init() {
         this.currentPath = this.$route.path
         this.breadcrumbText = this.getBreadcrumbText(this.$route.name)
-        this.getOwnerInfoAct()
-        this.getSettingAct()
-      },
-      getSetting() {
+        await this.getOwnerInfoAct()
 
+        await this.getSettingAct()
+
+        
       },
       getBreadcrumbText(name) {
         switch (name) {
@@ -137,12 +154,18 @@
             return '分类列表'
           case 'UpdateType':
             return '更新分类'
-          case 'AddResource':
+          case 'CreateResource':
             return '添加资源'
           case 'ResourceList':
             return '资源列表'
           case 'UpdateResource':
             return '更新资源'
+          case 'CreateUser':
+            return '添加用户'
+          case 'UserList':
+            return '用户列表'
+          case 'UpdateUser':
+            return '修改信息'
           default:
             return ''
         }

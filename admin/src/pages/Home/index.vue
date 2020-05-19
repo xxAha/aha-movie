@@ -28,7 +28,7 @@
       getCurrentTime() {
         const date = new Date()
         this.date.year = date.getFullYear()
-        this.date.month = date.getMonth() + 1 
+        this.date.month = date.getMonth() + 1
         this.date.day = date.getDate()
       }
     },
@@ -36,28 +36,31 @@
       this.getCurrentTime()
     }
   }
-
 </script>
 
 <style lang="scss" scope>
-.container {
-  margin: 50px;
-  display: flex;
-  .right {
+  .container {
+    margin: 50px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-left: 100px;
-    font-size: 28px;
-    .time {
-      text-indent: 60px;
-    }
-    .user-name {
-      //text-indent: 40px;
-    }
-    p {
-      margin-bottom: 20px;
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin-left: 100px;
+      font-size: 28px;
+
+      .time {
+        text-indent: 60px;
+      }
+
+      .user-name {
+        //text-indent: 40px;
+      }
+
+      p {
+        margin-bottom: 20px;
+      }
     }
   }
-}
 </style>

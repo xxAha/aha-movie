@@ -8,20 +8,21 @@ import Type from '@/pages/Type/Type'
 import TypeList from '@/pages/Type/TypeList'
 import Resource from '@/pages/Resource/Resource'
 import ResourceList from '@/pages/Resource/ResourceList'
+import User from '@/pages/User/User'
+import UserList from '@/pages/User/UserList'
 import ChangePassword from '@/pages/ChangePassword'
+
 
 
 Vue.use(Router)
 
 export default new Router({
   //mode: 'history',
-  routes: [
-    {
+  routes: [{
       path: '/',
       redirect: '/home',
       component: Layout,
-      children: [
-        {
+      children: [{
           path: 'home',
           name: 'Home',
           component: Home
@@ -47,8 +48,8 @@ export default new Router({
           component: TypeList
         },
         {
-          path: 'add-resource',
-          name: 'AddResource',
+          path: 'create-resource',
+          name: 'CreateResource',
           component: Resource
         },
         {
@@ -65,6 +66,21 @@ export default new Router({
           path: 'change-password',
           name: 'ChangePassword',
           component: ChangePassword
+        },
+        {
+          path: 'create-user',
+          name: 'CreateUser',
+          component: User
+        },
+        {
+          path: 'update-user',
+          name: 'UpdateUser',
+          component: User
+        },
+        {
+          path: 'user-list',
+          name: 'UserList',
+          component: UserList
         }
       ]
     },

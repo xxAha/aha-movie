@@ -143,4 +143,19 @@ module.exports = {
     errno: 10028,
     message: '修改密码失败'
   },
+  // 创建用户失败
+  createUserFailInfo: {
+    errno: 10029,
+    message: '创建用户失败'
+  },
+  // 更新用户信息失败
+  updateUserInfoFailInfo: {
+    errno: 10030,
+    message: '更新用户信息失败'
+  },
+  // 查询用户列表失败
+  getUserListFailInfo: {
+    errno: 10031,
+    message: '查询用户列表失败'
+  },
 }

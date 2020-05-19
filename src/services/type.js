@@ -3,7 +3,7 @@
  */
 
 const { Type, TypeRelation } = require('../db/model')
-const { formatResource } = require('./_format')
+const { formatDate } = require('./_format')
 const Op = require('sequelize').Op
 
 /**
@@ -83,7 +83,7 @@ async function findAllType(page, pageSize, searchValue) {
 
   if(result.count) {
     result.rows.map(r => {
-      return formatResource(r.dataValues)
+      return formatDate(r.dataValues)
     })
   }
   
@@ -92,7 +92,7 @@ async function findAllType(page, pageSize, searchValue) {
 
 /**
  * 删除分类
- * @param {number}} 分类id
+ * @param {number} id 分类id
  */
 async function destroyType(id) {
   await TypeRelation.destroy({

@@ -2,6 +2,24 @@
  * @description 用户 services
  */
 const { User } = require('../db/model')
+const { formatDate } = require('./_format')
+const Op = require('sequelize').Op
+
+/**
+ * 创建用户
+ * @param {object} 创建的数据对象
+ */
+async function createUser({ userName, role, password, nickName, avatar }) {
+  const result = await User.create({
+    userName,
+    nickName,
+    role,
+    password,
+    avatar
+  })
+
+  return result
+}
 
 /**
  * 查询用户信息
@@ -9,13 +27,13 @@ const { User } = require('../db/model')
  */
 async function findUserInfo(data) {
   const whereOpt = {}
-  if(data.id) {
+  if (data.id) {
     whereOpt.id = data.id
   }
-  if(data.userName) {
+  if (data.userName) {
     whereOpt.userName = data.userName
   }
-  if(data.password) {
+  if (data.password) {
     whereOpt.password = data.password
   }
 
@@ -26,6 +44,61 @@ async function findUserInfo(data) {
 
   return result
 
+}
+
+/**
+ * 查询用户列表
+ */
+async function findAllUser(page, pageSize, searchValue) {
+  const whereOpt = {}
+  if(searchValue) {
+    whereOpt.title = {
+      [Op.like]: '%' + searchValue + '%'
+    }
+  }
+
+  let result = await User.findAndCountAll({
+    where: whereOpt,
+    limit: pageSize,
+    offset: page * pageSize,
+    order: [
+      ['id', 'desc']
+    ]
+  })
+
+  if(result.count) {
+    result.rows.map(r => {
+      return formatDate(r.dataValues)
+    })
+  }
+  return result
+}
+
+
+/**
+ * 修改用户信息
+ * @param {number} id 用户id
+ * @param {object} data 修改的数据对象
+ */
+async function updateUserInfo(id, data) {
+  const updateData = {}
+  if (data.nickName) {
+    updateData.nickName = data.nickName
+  }
+  if (data.role) {
+    updateData.role = data.role
+  }
+  if (data.avatar) {
+    updateData.avatar = data.avatar
+  }
+
+  const result = await User.update(updateData, {
+    where: {
+      id
+    }
+  })
+
+  return result[0] > 0
 }
 
 /**
@@ -47,6 +120,9 @@ async function updateUserPassword(id, oldPassword, newPassword) {
 }
 
 module.exports = {
+  createUser,
   findUserInfo,
-  updateUserPassword
+  updateUserPassword,
+  updateUserInfo,
+  findAllUser
 }

@@ -3,12 +3,12 @@
  */
 
 const { Resource, Tag, TypeRelation } = require('../db/model')
-const { formatResource } = require('./_format')
+const { formatDate } = require('./_format')
 const Op = require('sequelize').Op
 
 /**
  * 创建资源
- * @param {object} 数据对象
+ * @param {object} 创建的数据对象
  */
 async function createResource({title, logo, index, link, description}) {
   const result = await Resource.create({
@@ -121,7 +121,7 @@ async function findAllResourceInfo(page, pageSize, searchValue) {
 
   if(result.count) {
     result.rows.map(r => {
-      return formatResource(r.dataValues)
+      return formatDate(r.dataValues)
     })
   }
   return result
