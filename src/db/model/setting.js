@@ -10,6 +10,11 @@ const Setting = seq.define('setting', {
     allowNull: false,
     comment: '网站 标题'
   },
+  logo: {
+    type: STRING,
+    allowNull: false,
+    comment: '网站 logo'
+  },
   keywords: {
     type: STRING,
     comment: '网站 关键词'

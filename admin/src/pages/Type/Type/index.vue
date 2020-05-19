@@ -196,10 +196,6 @@
   .wrapper {
     width: 60%;
     margin: auto;
-
-    .hidden-errorInfo+.el-form-item__error {
-      display: none;
-    }
   }
 
   .el-select {

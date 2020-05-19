@@ -318,16 +318,11 @@
     width: 60%;
     margin: auto;
 
-    .hidden-errorInfo+.el-form-item__error {
-      display: none;
-
-    }
-
-    .hidden-errorInfo {
+    /* .hidden-errorInfo {
       .el-input__inner {
         border-color: #C0C4CC;
       }
-    }
+    } */
 
     .tag-box {
       display: inline-block;

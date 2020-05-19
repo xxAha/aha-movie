@@ -3,8 +3,9 @@
  */
 
 const router = require('koa-router')()
-const { login, getOwnerInfo } = require('../../controller/user')
+const { login, getOwnerInfo, changePassword } = require('../../controller/user')
 const auth = require('../../middleware/jwt')
+const checkOwner = require('../../middleware/checkOwner')
 
 router.prefix('/api/users')
 
@@ -21,6 +22,14 @@ router.post('/login', async (ctx, next) => {
 //获取当前登录用户的信息
 router.get('/owner', auth, async (ctx, next) => {
   const result = await getOwnerInfo(ctx)
+  ctx.body = result
+})
+
+//修改密码
+router.patch('/password/:id', auth, checkOwner, async (ctx, next) => {
+  const { id } = ctx.params
+  const { oldPassword, newPassword } = ctx.request.body
+  const result = await changePassword(id * 1, oldPassword, newPassword)
   ctx.body = result
 })
 

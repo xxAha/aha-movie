@@ -128,4 +128,19 @@ module.exports = {
     errno: 10025,
     message: '删除分类失败'
   },
+  // 获取网站设置失败
+  getSettingFailInfo: {
+    errno: 10026,
+    message: '获取网站设置失败'
+  },
+  // 修改网站设置失败
+  updateSettingFailInfo: {
+    errno: 10027,
+    message: '修改网站设置失败'
+  },
+  // 修改密码失败
+  updatePasswordFailInfo: {
+    errno: 10028,
+    message: '修改密码失败'
+  },
 }

@@ -2,10 +2,10 @@
  * @description 用户 controller
  */
 const jwt = require('jsonwebtoken')
-const { getUserInfo } = require('../services/user')
 const doCrypto = require('../utils/cryp')
+const { findUserInfo, updateUserPassword } = require('../services/user')
 const { ErrorModel, SuccessModel } = require('../model/ResModel')
-const { loginFailInfo, loginCheckFailInfo } = require('../model/ErrorInfo')
+const { loginFailInfo, loginCheckFailInfo, updatePasswordFailInfo } = require('../model/ErrorInfo')
 const { SECRET } = require('../config/constant')
 
 /**
@@ -14,7 +14,8 @@ const { SECRET } = require('../config/constant')
  * @param {string} password 密码
  */
 async function login(userName, password) {
-  const user = await getUserInfo(userName, doCrypto(password))
+
+  const user = await findUserInfo({userName, password: doCrypto(password)})
   if (user == null) {
     return new ErrorModel(loginFailInfo)
   }
@@ -41,8 +42,30 @@ async function getOwnerInfo(ctx) {
   return new SuccessModel(info)
 }
 
+/**
+ * 修改用户密码
+ * @param {number} id 用户id
+ * @param {string} oldPassword 旧密码
+ * @param {string} newPassword 新密码
+ */
+async function changePassword(id, oldPassword, newPassword) {
+  const oldPwd = doCrypto(oldPassword)
+  const newPwd = doCrypto(newPassword)
+  try {
+    const result = await updateUserPassword(id, oldPwd, newPwd)
+    if(result){
+      return new SuccessModel()
+    }else {
+      return new ErrorModel(updatePasswordFailInfo)
+    }
+    
+  } catch (error) {
+    return new ErrorModel(updatePasswordFailInfo)
+  }
+}
 
 module.exports = {
   login,
-  getOwnerInfo
+  getOwnerInfo,
+  changePassword
 }

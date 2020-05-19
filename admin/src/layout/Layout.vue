@@ -2,11 +2,12 @@
   <el-container>
     <!-- 侧边栏开始 -->
     <el-aside :width="isCollapse? '64px': '256px'">
-      <div v-show="!isCollapse" class="logo-box">
+      <div v-if="setting" v-show="!isCollapse" class="logo-box">
         <div>
-          <img src="../../static/img/1.jpg" alt="logo">
+          <img v-if="setting.logo" :src="setting.logo" alt="logo">
+          <img v-else src="../../static/img/1.jpg" alt="logo">
         </div>
-        <h1>Aha电影库</h1>
+        <h1>{{setting.title}}</h1>
       </div>
       <!-- #545c64 -->
       <el-menu @select="handleMenuSelect" :router="true" :collapse="isCollapse" background-color="#303133" text-color="#fff" active-text-color="#ffd04b" :collapse-transition="false" :default-active="currentPath">
@@ -112,14 +113,19 @@
       }
     },
     computed: {
-      ...mapState(['ownerInfo'])
+      ...mapState(['ownerInfo', 'setting'])
     },
     methods: {
-      ...mapActions(['getOwnerInfoAct']),
+      ...mapActions(['getOwnerInfoAct', 'getSettingAct']),
       //初始化path
       init() {
         this.currentPath = this.$route.path
         this.breadcrumbText = this.getBreadcrumbText(this.$route.name)
+        this.getOwnerInfoAct()
+        this.getSettingAct()
+      },
+      getSetting() {
+
       },
       getBreadcrumbText(name) {
         switch (name) {
@@ -159,10 +165,6 @@
       changeMenuStatus() {
         this.isCollapse = !this.isCollapse
       },
-      //获取当前登录用户的信息
-      async getOwnerInfo() {
-        this.getOwnerInfoAct()
-      },
       //登出
       handleLogout() {
         sessionStorage.clear()
@@ -171,8 +173,6 @@
     },
     mounted() {
       this.init()
-      this.getOwnerInfo()
-      console.log(this)
     }
   }
 </script>

@@ -14,6 +14,7 @@ import ChangePassword from '@/pages/ChangePassword'
 Vue.use(Router)
 
 export default new Router({
+  //mode: 'history',
   routes: [
     {
       path: '/',
@@ -21,47 +22,47 @@ export default new Router({
       component: Layout,
       children: [
         {
-          path: '/home',
+          path: 'home',
           name: 'Home',
           component: Home
         },
         {
-          path: '/setting',
+          path: 'setting',
           name: 'Setting',
           component: Setting
         },
         {
-          path: '/create-type',
+          path: 'create-type',
           name: 'CreateType',
           component: Type
         },
         {
-          path: '/update-type/:id',
+          path: 'update-type/:id',
           name: 'UpdateType',
           component: Type
         },
         {
-          path: '/type-list',
+          path: 'type-list',
           name: 'TypeList',
           component: TypeList
         },
         {
-          path: '/add-resource',
+          path: 'add-resource',
           name: 'AddResource',
           component: Resource
         },
         {
-          path: '/update-resource/:id',
+          path: 'update-resource/:id',
           name: 'UpdateResource',
           component: Resource
         },
         {
-          path: '/resource-list',
+          path: 'resource-list',
           name: 'ResourceList',
           component: ResourceList
         },
         {
-          path: '/change-password',
+          path: 'change-password',
           name: 'ChangePassword',
           component: ChangePassword
         }

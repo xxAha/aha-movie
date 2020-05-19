@@ -7,5 +7,6 @@ module.exports = {
   CRYPTO_SECRET_KEY: 'sljlcas',
   PUBLIC_PATH: isProd? 'http://localhost:3000': 'http://localhost:3000',
   DEFAULT_PAGE: 0,
-  DEFAULT_PAGESIZE: 10
+  DEFAULT_PAGESIZE: 10,
+  SETTING_ID: 1
 }
