@@ -158,4 +158,14 @@ module.exports = {
     errno: 10031,
     message: '查询用户列表失败'
   },
+  // 查询用户信息失败
+  getUserFailInfo: {
+    errno: 10032,
+    message: '查询用户信息失败'
+  },
+  // 删除用户失败
+  deleteUserFailInfo: {
+    errno: 10033,
+    message: '删除用户失败'
+  },
 }

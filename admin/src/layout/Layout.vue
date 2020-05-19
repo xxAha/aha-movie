@@ -33,9 +33,6 @@
           <el-menu-item index="/user-list">
             <i class="el-icon-s-tools"></i>用户列表
           </el-menu-item>
-          <el-menu-item index="/update-user">
-            <i class="el-icon-s-tools"></i>修改信息
-          </el-menu-item>
         </el-submenu>
 
         <el-submenu index="3">
@@ -94,7 +91,8 @@
             </div>
 
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
+              <el-dropdown-item :command="`/update-user/${ownerInfo.id}`">修改信息</el-dropdown-item>
+              <el-dropdown-item command="/change-password">修改密码</el-dropdown-item>
               <el-dropdown-item @click.native="handleLogout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -180,9 +178,7 @@
       },
       //右上角下拉选择框点击处理
       handleCommand(type) {
-        if (type === 'changePassword') {
-          this.$router.push('/change-password')
-        }
+        this.$router.push(type)
       },
       //伸缩Menu
       changeMenuStatus() {

@@ -16,6 +16,12 @@ import ChangePassword from '@/pages/ChangePassword'
 
 Vue.use(Router)
 
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch(err => err)
+}
+
 export default new Router({
   //mode: 'history',
   routes: [{
@@ -73,7 +79,7 @@ export default new Router({
           component: User
         },
         {
-          path: 'update-user',
+          path: 'update-user/:id',
           name: 'UpdateUser',
           component: User
         },

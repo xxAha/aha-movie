@@ -3,9 +3,19 @@
  */
 
 const router = require('koa-router')()
-const { login, getOwnerInfo, changePassword, addUser, changeUserInfo, getAllUser } = require('../../controller/user')
+const {
+  login,
+  getOwnerInfo,
+  changePassword,
+  addUser,
+  changeUserInfo,
+  getAllUser,
+  getUserInfo,
+  deleteUser
+} = require('../../controller/user')
 const auth = require('../../middleware/jwt')
 const checkOwner = require('../../middleware/checkOwner')
+const role = require('../../middleware/role')
 
 router.prefix('/api/users')
 
@@ -25,10 +35,17 @@ router.get('/owner', auth, async (ctx, next) => {
   ctx.body = result
 })
 
+//获取某个用户的信息
+router.get('/:id', auth, async (ctx, next) => {
+  const { id } = ctx.params
+  const result = await getUserInfo(id * 1)
+  ctx.body = result
+})
+
 //创建用户
 router.post('/', auth, async (ctx, next) => {
-  const {userName, nickName, role, avatar, password} = ctx.request.body
-  const result = await addUser({userName, nickName, role, avatar, password})
+  const { userName, nickName, role, avatar, password } = ctx.request.body
+  const result = await addUser({ userName, nickName, role, avatar, password })
   ctx.body = result
 })
 
@@ -36,7 +53,7 @@ router.post('/', auth, async (ctx, next) => {
 router.patch('/info/:id', auth, checkOwner, async (ctx, next) => {
   const { id } = ctx.params
   const { nickName, role, avatar } = ctx.request.body
-  const result = await changeUserInfo(id * 1, {nickName, role, avatar})
+  const result = await changeUserInfo(id * 1, { nickName, role, avatar })
   ctx.body = result
 })
 
@@ -57,5 +74,13 @@ router.get('/', auth, async (ctx, next) => {
   const result = await getAllUser(page, pageSize, searchValue)
   ctx.body = result
 })
+
+//删除某个用户
+router.delete('/:id', auth, role, async (ctx, next) => {
+  const { id } = ctx.params
+  const result = await deleteUser(id)
+  ctx.body = result
+})
+
 
 module.exports = router

@@ -3,9 +3,18 @@
  */
 const jwt = require('jsonwebtoken')
 const doCrypto = require('../utils/cryp')
-const { findUserInfo, updateUserPassword, createUser, updateUserInfo, findAllUser } = require('../services/user')
+const { findUserInfo, updateUserPassword, createUser, updateUserInfo, findAllUser, destroyUser } = require('../services/user')
 const { ErrorModel, SuccessModel } = require('../model/ResModel')
-const { loginFailInfo, loginCheckFailInfo, updatePasswordFailInfo, createUserFailInfo, updateUserInfoFailInfo, getUserListFailInfo } = require('../model/ErrorInfo')
+const {
+  loginFailInfo,
+  loginCheckFailInfo,
+  updatePasswordFailInfo,
+  createUserFailInfo,
+  updateUserInfoFailInfo,
+  getUserListFailInfo,
+  getUserFailInfo,
+  deleteUserFailInfo
+} = require('../model/ErrorInfo')
 const { SECRET } = require('../config/constant')
 const { DEFAULT_PAGE, DEFAULT_PAGESIZE } = require('../config/constant')
 
@@ -35,10 +44,10 @@ async function login(userName, password) {
  * 创建用户
  * @param {object} 创建用户的数据对象
  */
-async function addUser({userName, nickName, role, avatar, password}) {
+async function addUser({ userName, nickName, role, avatar, password }) {
   try {
     password = doCrypto(password)
-    const result = await createUser({userName, nickName, role, avatar, password})
+    const result = await createUser({ userName, nickName, role, avatar, password })
     return new SuccessModel(result)
   } catch (error) {
     return new ErrorModel(createUserFailInfo)
@@ -50,11 +59,33 @@ async function addUser({userName, nickName, role, avatar, password}) {
  * @param {object} info 用户信息
  */
 async function getOwnerInfo(ctx) {
-  const info = ctx.state.user
-  if (info == null) {
+  try {
+    const info = ctx.state.user
+    if (info == null) {
+      return new ErrorModel(loginCheckFailInfo)
+    }
+    return new SuccessModel(info)
+  } catch (error) {
     return new ErrorModel(loginCheckFailInfo)
   }
-  return new SuccessModel(info)
+
+}
+
+/**
+ * 获取某个用户的信息
+ * @param {number} id 用户id
+ */
+async function getUserInfo(id) {
+  try {
+    const info = await findUserInfo({ id })
+    if (info == null) {
+      return new ErrorModel(getUserFailInfo)
+    }
+    return new SuccessModel(info)
+  } catch (error) {
+    return new ErrorModel(getUserFailInfo)
+  }
+
 }
 
 /**
@@ -111,11 +142,32 @@ async function getAllUser(page = DEFAULT_PAGE, pageSize = DEFAULT_PAGESIZE, sear
 
 }
 
+/**
+ * 删除用户
+ * @param {number} id 用户id
+ */
+async function deleteUser(id) {
+  try {
+    const result = await destroyUser(id)
+    if (result) {
+      return new SuccessModel()
+    } else {
+      return new ErrorModel(deleteUserFailInfo)
+    }
+
+  } catch (error) {
+    return new ErrorModel(deleteUserFailInfo)
+  }
+
+}
+
 module.exports = {
   login,
   addUser,
+  getUserInfo,
   getAllUser,
   getOwnerInfo,
   changeUserInfo,
-  changePassword
+  changePassword,
+  deleteUser
 }

@@ -147,7 +147,6 @@
 
       //重置数据
       resetData() {
-        console.log(1)
         this.$refs.form.resetFields()
         this.$refs.crop.headerImage = ''
         this.form.resources = []

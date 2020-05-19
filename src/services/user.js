@@ -52,7 +52,7 @@ async function findUserInfo(data) {
 async function findAllUser(page, pageSize, searchValue) {
   const whereOpt = {}
   if(searchValue) {
-    whereOpt.title = {
+    whereOpt.userName = {
       [Op.like]: '%' + searchValue + '%'
     }
   }
@@ -119,10 +119,26 @@ async function updateUserPassword(id, oldPassword, newPassword) {
   return result[0] > 0
 }
 
+/**
+ * 删除用户
+ * @param {number} id 用户id
+ */
+async function destroyUser(id) {
+  const result = await User.destroy({
+    where: {
+      id
+    }
+  })
+  return result > 0
+}
+
+
+
 module.exports = {
   createUser,
   findUserInfo,
   updateUserPassword,
   updateUserInfo,
-  findAllUser
+  findAllUser,
+  destroyUser
 }
