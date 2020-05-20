@@ -26,6 +26,7 @@ async function createUser({ userName, role, password, nickName, avatar }) {
  * @param {object} data 查询条件对象
  */
 async function findUserInfo(data) {
+  console.log(data)
   const whereOpt = {}
   if (data.id) {
     whereOpt.id = data.id

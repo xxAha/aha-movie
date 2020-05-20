@@ -24,7 +24,6 @@ const { DEFAULT_PAGE, DEFAULT_PAGESIZE } = require('../config/constant')
  * @param {string} password 密码
  */
 async function login(userName, password) {
-
   const user = await findUserInfo({ userName, password: doCrypto(password) })
   if (user == null) {
     return new ErrorModel(loginFailInfo)
