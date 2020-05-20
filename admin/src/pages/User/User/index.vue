@@ -29,8 +29,6 @@
 
       <el-form-item v-if="!isUpdate" label="密码" prop="password">
         <el-input type="password" v-model="form.password"></el-input>
-        <el-alert v-if="!userIsExist" type="info" description="密码最少6位" show-icon>
-        </el-alert>
       </el-form-item>
 
       <el-form-item v-if="!isUpdate" label="确认密码" prop="confirmPassword">
@@ -118,7 +116,8 @@
             trigger: 'change'
           }],
           password: [
-            { required: true, validator: validatePass, trigger: 'blur' }
+            { required: true, validator: validatePass, trigger: 'blur' },
+            { type: 'string', min: 6, message: '密码最少6位', trigger: 'blur' }
           ],
           confirmPassword: [
             { required: true, validator: validatePass2, trigger: 'blur' }

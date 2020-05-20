@@ -6,12 +6,14 @@ const router = require('koa-router')()
 const auth = require('../../middleware/jwt')
 const role = require('../../middleware/role')
 const { addResource, getResourceInfo, getAllResourceInfo, deleteResource, changeResource } = require('../../controller/resource')
+const { genValidator } = require('../../middleware/validator')
+const resourceValidate = require('../../validator/resource')
 
 
 router.prefix('/api/resources')
 
 //创建资源
-router.post('/create', auth, role, async (ctx, next) => {
+router.post('/', auth, role, genValidator(resourceValidate), async (ctx, next) => {
   //创建资源
   const { title, logo, index, link, description,tags, types } = ctx.request.body
   const result = await addResource({ title, logo, index, link, description,tags, types })
@@ -20,7 +22,7 @@ router.post('/create', auth, role, async (ctx, next) => {
 })
 
 //修改某个资源
-router.patch('/:id', auth, role, async (ctx, next) => {
+router.patch('/:id', auth, role, genValidator(resourceValidate), async (ctx, next) => {
   const { id } = ctx.params
   let { title, logo, link, index, description} = ctx.request.body
   const result = await changeResource(id * 1, {title, logo, link, index, description})

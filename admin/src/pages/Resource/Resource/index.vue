@@ -68,10 +68,21 @@
   import { getAllTypeAPI } from '@/api/type'
   import { createTagAPI, deleteTagAPI } from '@/api/tag'
   import { deleteTypeRelationAPI, createTypeRelation } from '@/api/type-relation'
-  // ？？
-  // import { types } from 'util';
   export default {
     data() {
+
+      const reg = /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-.,@?^=%&:\/~+#]*[\w\-@?^=%&\/~+#])?$/;
+      const validateLink = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入链接'))
+        } else {
+          if (!reg.test(value)) {
+            callback(new Error('请输入正确的链接地址'))
+          }
+          callback()
+        }
+      }
+      
       return {
         resourceId: null,
         loading: false,
@@ -91,11 +102,7 @@
             message: '请输入标题',
             trigger: 'blur'
           }],
-          link: [{
-            required: true,
-            message: '请输入资源链接',
-            trigger: 'blur'
-          }],
+          link: [{ required: true, validator: validateLink, trigger: 'blur' }],
           logo: [{
             required: true,
             message: '请上传图标',
@@ -178,7 +185,7 @@
           })
 
           if (hasType) {
-            const result = await createTypeRelation(typeId, this.resourceId)
+            const result = await createTypeRelation(typeId * 1, this.resourceId * 1)
             if (result.errno === 0) {
               this.$message({
                 type: 'success',

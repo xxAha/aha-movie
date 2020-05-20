@@ -4,7 +4,7 @@ import Axios from '../index'
 export const createResourceAPI = function(data) {
   return Axios({
     method: 'post',
-    url: '/api/resources/create',
+    url: '/api/resources',
     data
   })
 }

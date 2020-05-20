@@ -23,19 +23,19 @@ async function findSetting(id) {
  * @param {object} data 更新的数据对象
  */
 async function updateSetting(id, data) {
-  const updateData = {}
-  if(data.title) {
-    updateData.title = data.title
-  }
-  if(data.logo) {
-    updateData.logo = data.logo
-  }
-  if(data.keywords) {
-    updateData.keywords = data.keywords
-  }
-  if(data.description) {
-    updateData.description = data.description
-  }
+  const updateData = data
+  // if(data.title) {
+  //   updateData.title = data.title
+  // }
+  // if(data.logo) {
+  //   updateData.logo = data.logo
+  // }
+  // if(data.keywords) {
+  //   updateData.keywords = data.keywords
+  // }
+  // if(data.description) {
+  //   updateData.description = data.description
+  // }
 
   const result = await Setting.update(updateData, {
     where: {

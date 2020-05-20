@@ -14,10 +14,12 @@ export default new Vuex.Store({
     async getOwnerInfoAct(ctx) {
       const result = await getOwnerInfoAPI()
       ctx.commit('saveOwnerInfoMut', result.data)
+      return result
     },
     async getSettingAct(ctx) {
       const result = await getSettingAPI()
       ctx.commit('saveSettingMut', result.data)
+      return result
     }
   },
   mutations: {

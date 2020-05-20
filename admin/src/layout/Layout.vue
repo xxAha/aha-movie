@@ -1,7 +1,8 @@
 <template>
   <el-container>
     <!-- 侧边栏开始 -->
-    <el-aside v-if="ownerInfo" :width="isCollapse? '64px': '256px'">
+    <el-aside v-loading="loading" element-loading-background="#303133" :width="isCollapse? '64px': '256px'">
+
       <div v-if="setting" v-show="!isCollapse" class="logo-box">
         <div>
           <img v-if="setting.logo" :src="setting.logo" alt="logo">
@@ -10,7 +11,7 @@
         <h1>{{setting.title}}</h1>
       </div>
       <!-- #545c64 -->
-      <el-menu @select="handleMenuSelect" :router="true" :collapse="isCollapse" background-color="#303133" text-color="#fff" active-text-color="#ffd04b" :collapse-transition="false" :default-active="currentPath">
+      <el-menu v-if="ownerInfo" @select="handleMenuSelect" :router="true" :collapse="isCollapse" background-color="#303133" text-color="#fff" active-text-color="#ffd04b" :collapse-transition="false" :default-active="currentPath">
         <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-s-platform"></i>
@@ -61,6 +62,7 @@
           </el-menu-item>
         </el-submenu>
       </el-menu>
+
     </el-aside>
     <!-- 侧边栏结束 -->
 
@@ -105,6 +107,7 @@
     </el-container>
     <!-- 右侧内容结束 -->
   </el-container>
+
 </template>
 
 <script>
@@ -112,9 +115,9 @@
   export default {
     data() {
       return {
+        loading: false,
         isCollapse: false, //左侧栏关闭状态
         currentPath: '', //当前页面路径
-        avatar: 'https://unsplash.it/1600/900?random',
         breadcrumbText: '',
       }
     },
@@ -131,13 +134,15 @@
       ...mapActions(['getOwnerInfoAct', 'getSettingAct']),
       //初始化path
       async init() {
+        this.loading = true
         this.currentPath = this.$route.path
         this.breadcrumbText = this.getBreadcrumbText(this.$route.name)
-        await this.getOwnerInfoAct()
+        const infoResult = await this.getOwnerInfoAct()
+        const setResult = await this.getSettingAct()
+        if (infoResult.errno === 0 && setResult.errno === 0) {
+          this.loading = false
+        }
 
-        await this.getSettingAct()
-
-        
       },
       getBreadcrumbText(name) {
         switch (name) {

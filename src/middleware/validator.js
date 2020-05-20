@@ -15,7 +15,7 @@ function genValidator(validateFn) {
     const error = validateFn(data)
     if (error) {
       // 验证失败
-      console.log(error)
+      console.log('validateFileInfo: ',error)
       ctx.body = new ErrorModel(jsonSchemaFileInfo)
       return
     }

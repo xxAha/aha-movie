@@ -4,7 +4,7 @@ import Axios from '../index'
 export const createTagAPI = function(data) {
   return Axios({
     method: 'post',
-    url: '/api/tags/create',
+    url: '/api/tags',
     data
   })
 }

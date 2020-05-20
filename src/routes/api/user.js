@@ -62,7 +62,7 @@ router.post('/', auth, role, genValidator(userValidate), async (ctx, next) => {
 })
 
 //修改用户信息
-router.patch('/info/:id', auth, async (ctx, next) => {
+router.patch('/info/:id', auth, genValidator(userValidate), async (ctx, next) => {
   const { id } = ctx.params
   const { nickName, role, avatar } = ctx.request.body
   const result = await changeUserInfo(id * 1, { nickName, role, avatar })

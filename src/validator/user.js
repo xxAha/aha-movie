@@ -10,7 +10,7 @@ const SCHEMA = {
     userName: {
       type: 'string',
       maxLength: 255,
-      minLength: 2
+      minLength: 1
     },
     role: {
       type: 'number',
