@@ -4,7 +4,7 @@
 
 const router = require('koa-router')()
 const auth = require('../../middleware/jwt')
-const role = require('../../middleware/role')
+const { role }  = require('../../middleware/role')
 const { addTag, deleteTag } = require('../../controller/tag')
 const { genValidator } = require('../../middleware/validator')
 const tagValidate = require('../../validator/tag')

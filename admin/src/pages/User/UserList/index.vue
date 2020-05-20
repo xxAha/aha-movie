@@ -28,10 +28,10 @@
          </template>
        </el-table-column>
 
-       <el-table-column label="操作">
+       <el-table-column v-if="ownerInfo" label="操作">
          <template slot-scope="scope">
-           <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
-           <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+           <el-button :disabled="ownerInfo.role !== 0" size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
+           <el-button :disabled="ownerInfo.role !== 0" size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
          </template>
        </el-table-column>
      </el-table>
@@ -43,6 +43,7 @@
  </template>
 
  <script>
+   import { mapState } from 'vuex'
    import { getAllUserAPI, deleteUserAPI } from '@/api/user'
    export default {
      data() {
@@ -55,6 +56,9 @@
          searchValue: '',
          timer: null
        }
+     },
+     computed: {
+       ...mapState(['ownerInfo'])
      },
      methods: {
        handleSearch(value) {

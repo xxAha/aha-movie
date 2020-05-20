@@ -4,7 +4,7 @@
 
 const router = require('koa-router')()
 const auth = require('../../middleware/jwt')
-const role = require('../../middleware/role')
+const { role } = require('../../middleware/role')
 const { addResource, getResourceInfo, getAllResourceInfo, deleteResource, changeResource } = require('../../controller/resource')
 const { genValidator } = require('../../middleware/validator')
 const resourceValidate = require('../../validator/resource')
@@ -31,14 +31,14 @@ router.patch('/:id', auth, role, genValidator(resourceValidate), async (ctx, nex
 })
 
 //查询某个资源
-router.get('/:id', auth, role, async (ctx, next) => {
+router.get('/:id', auth, async (ctx, next) => {
   const { id } = ctx.params
   const result = await getResourceInfo(id)
   ctx.body = result
 })
 
 //查询所有资源
-router.get('/', auth, role, async (ctx, next) => {
+router.get('/', auth, async (ctx, next) => {
   let { page, pageSize, searchValue } = ctx.query
   page = page && page * 1
   pageSize = pageSize && pageSize * 1

@@ -4,7 +4,7 @@
 
 const router = require('koa-router')()
 const auth = require('../../middleware/jwt')
-const role = require('../../middleware/role')
+const { role, superRole }  = require('../../middleware/role')
 const { getSetting, changeSetting } = require('../../controller/setting')
 const { SETTING_ID } = require('../../config/constant')
 const { genValidator } = require('../../middleware/validator')
@@ -21,7 +21,7 @@ router.get('/', auth, async (ctx, next) => {
 })
 
 //修改网站设置
-router.patch('/', auth, role, genValidator(settingValidate), async (ctx, next) => {
+router.patch('/', auth, superRole, genValidator(settingValidate), async (ctx, next) => {
   const id = SETTING_ID
   const { title, logo, keywords, description } = ctx.request.body 
   const result = await changeSetting(id, { title, logo, keywords, description })

@@ -4,7 +4,7 @@
 
 const router = require('koa-router')()
 const auth = require('../../middleware/jwt')
-const role = require('../../middleware/role')
+const { role }  = require('../../middleware/role')
 const { addTypeRelation, deleteTypeRelation } = require('../../controller/type-relation')
 const { genValidator } = require('../../middleware/validator')
 const typeRelationValidate = require('../../validator/type-relation')
@@ -19,7 +19,7 @@ router.post('/', auth, role, genValidator(typeRelationValidate), async (ctx, nex
 })
 
 //删除某个分类关系
-router.delete('/', auth, async (ctx, next) => {
+router.delete('/', auth, role, async (ctx, next) => {
   const { typeId, resourceId } = ctx.query
   const result = await deleteTypeRelation(typeId * 1, resourceId * 1)
   ctx.body = result

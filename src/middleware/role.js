@@ -1,4 +1,4 @@
-async function role(ctx, next) {
+async function superRole(ctx, next) {
   const { role } = ctx.state.user
   if (role === 0) {
     await next()
@@ -8,4 +8,17 @@ async function role(ctx, next) {
   }
 }
 
-module.exports = role
+async function role(ctx, next) {
+  const { role } = ctx.state.user
+  if (role === 1) {
+    await next()
+  } else {
+    ctx.throw(403, '没有权限')
+    return
+  }
+}
+
+module.exports = {
+  superRole,
+  role
+}
