@@ -73,8 +73,8 @@ router.patch('/info/:id', auth, genValidator(userValidate), async (ctx, next) =>
 //修改密码
 router.patch('/password/:id', auth, checkOwner, genValidator(userValidate), async (ctx, next) => {
   const { id } = ctx.params
-  const { oldPassword, newPassword } = ctx.request.body
-  const result = await changePassword(id * 1, oldPassword, newPassword)
+  const { oldPassword, password } = ctx.request.body
+  const result = await changePassword(id * 1, oldPassword, password)
   ctx.body = result
 })
 

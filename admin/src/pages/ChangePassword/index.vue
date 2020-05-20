@@ -4,8 +4,8 @@
       <el-form-item label="原密码" prop="oldPassword">
         <el-input type="password" v-model="form.oldPassword"></el-input>
       </el-form-item>
-      <el-form-item label="新密码" prop="newPassword">
-        <el-input type="password" v-model="form.newPassword"></el-input>
+      <el-form-item label="新密码" prop="password">
+        <el-input type="password" v-model="form.password"></el-input>
       </el-form-item>
       <el-form-item label="确认新密码" prop="confirmNewPsd">
         <el-input type="password" v-model="form.confirmNewPsd"></el-input>
@@ -34,7 +34,7 @@
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'))
-        } else if (value !== this.form.newPassword) {
+        } else if (value !== this.form.password) {
           callback(new Error('两次输入密码不一致!'))
         } else {
           callback()
@@ -44,11 +44,11 @@
         form: {
           id: '',
           oldPassword: '',
-          newPassword: '',
+          password: '',
           confirmNewPsd: ''
         },
         rules: {
-          newPassword: [
+          password: [
             { required: true, validator: validatePass, trigger: 'blur' },
             { type: 'string', min: 6, message: '密码最少6位', trigger: 'blur' }
           ],

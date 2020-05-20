@@ -28,13 +28,13 @@ export const getOwnerInfoAPI = function() {
 
 
 //修改密码
-export const changePasswordAPI = function({ id, oldPassword, newPassword }) {
+export const changePasswordAPI = function({ id, oldPassword, password }) {
   return Axios({
     method: 'patch',
     url: `/api/users/password/${id}`,
     data: {
       oldPassword,
-      newPassword
+      password
     }
   })
 }
