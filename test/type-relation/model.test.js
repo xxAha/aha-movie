@@ -1,9 +1,7 @@
 /**
  * @description type-relation Model 测试
  */
-
 const { TypeRelation } = require('../../src/db/model')
-
 
 test('Tag 模型的各个属性，符合预期', () => {
   const tag = TypeRelation.build({
