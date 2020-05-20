@@ -4,7 +4,7 @@ import Axios from '../index'
 export const createTypeAPI = function(data) {
   return Axios({
     method: 'post',
-    url: '/api/types/create',
+    url: '/api/types',
     data
   })
 }

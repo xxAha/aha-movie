@@ -72,16 +72,39 @@ async function getOwnerInfo(ctx) {
 }
 
 /**
- * 获取某个用户的信息
- * @param {number} id 用户id
+ * 通过id获取某个用户的信息
+ * @param {object} data 查询的数据对象
  */
-async function getUserInfo(id) {
+async function getUserInfoById(id) {
   try {
-    const info = await findUserInfo({ id })
+    const info = await findUserInfo({id})
     if (info == null) {
       return new ErrorModel(getUserFailInfo)
     }
     return new SuccessModel(info)
+  } catch (error) {
+    return new ErrorModel(getUserFailInfo)
+  }
+
+}
+
+/**
+ * 获取用户是否存在
+ * @param {string} userName 用户名
+ */
+async function userIsExist(userName) {
+  try {
+    const info = await findUserInfo({userName})
+    if (info == null) {
+      return new SuccessModel({
+        isExist: false
+      })
+    }else {
+      return new SuccessModel({
+        isExist: true
+      })
+    }
+    
   } catch (error) {
     return new ErrorModel(getUserFailInfo)
   }
@@ -164,10 +187,11 @@ async function deleteUser(id) {
 module.exports = {
   login,
   addUser,
-  getUserInfo,
+  getUserInfoById,
   getAllUser,
   getOwnerInfo,
   changeUserInfo,
   changePassword,
-  deleteUser
+  deleteUser,
+  userIsExist
 }

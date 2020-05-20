@@ -6,13 +6,15 @@ const router = require('koa-router')()
 const auth = require('../../middleware/jwt')
 const role = require('../../middleware/role')
 const { addType, getAllType, getType, changeType, deleteType } = require('../../controller/type')
+const { genValidator } = require('../../middleware/validator')
+const typeValidate = require('../../validator/type')
 
 
 
 router.prefix('/api/types')
 
 //创建分类
-router.post('/create', auth, role, async (ctx, next) => {
+router.post('/', auth, role, genValidator(typeValidate), role, async (ctx, next) => {
   let { title, logo, index, resources } = ctx.request.body
   index = index * 1
   const result = await addType({title, logo, index, resources})
@@ -20,7 +22,7 @@ router.post('/create', auth, role, async (ctx, next) => {
 })
 
 //修改某个资源
-router.patch('/:id', auth, role, async (ctx, next) => {
+router.patch('/:id', auth, role, genValidator(typeValidate), async (ctx, next) => {
   const { id } = ctx.params
   let { title, logo, index,} = ctx.request.body
   const result = await changeType(id * 1, {title, logo, index})

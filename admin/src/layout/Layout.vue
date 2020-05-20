@@ -24,14 +24,14 @@
         <el-submenu index="2">
 
           <template slot="title">
-            <i class="el-icon-s-platform"></i>
+            <i class="el-icon-user-solid"></i>
             <span>用户管理</span>
           </template>
           <el-menu-item :disabled="ownerInfo.role !== 0" index="/create-user">
-            <i class="el-icon-s-tools"></i>添加用户
+            <i class="el-icon-circle-plus"></i>添加用户
           </el-menu-item>
           <el-menu-item index="/user-list">
-            <i class="el-icon-s-tools"></i>用户列表
+            <i class="el-icon-more"></i>用户列表
           </el-menu-item>
         </el-submenu>
 
@@ -46,9 +46,6 @@
           <el-menu-item index="/type-list">
             <i class="el-icon-document"></i>分类列表
           </el-menu-item>
-          <!-- <el-menu-item index="/setting">
-            <i class="el-icon-document-copy"></i>分类管理
-          </el-menu-item> -->
         </el-submenu>
 
         <el-submenu index="4">

@@ -77,3 +77,14 @@ export const deleteUserAPI = function(id) {
     url: `/api/users/${id}`,
   })
 }
+
+//删除某个用户
+export const userIsExistAPI = function(userName) {
+  return Axios({
+    method: 'get',
+    url: '/api/users/is_exist',
+    data: {
+      userName
+    }
+  })
+}

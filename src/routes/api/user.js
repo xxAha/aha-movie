@@ -10,12 +10,15 @@ const {
   addUser,
   changeUserInfo,
   getAllUser,
-  getUserInfo,
-  deleteUser
+  getUserInfoById,
+  deleteUser,
+  userIsExist
 } = require('../../controller/user')
 const auth = require('../../middleware/jwt')
 const checkOwner = require('../../middleware/checkOwner')
 const role = require('../../middleware/role')
+const { genValidator } = require('../../middleware/validator')
+const userValidate = require('../../validator/user')
 
 router.prefix('/api/users')
 
@@ -35,22 +38,31 @@ router.get('/owner', auth, async (ctx, next) => {
   ctx.body = result
 })
 
-//获取某个用户的信息
-router.get('/:id', auth, async (ctx, next) => {
-  const { id } = ctx.params
-  const result = await getUserInfo(id * 1)
+//获取用户是否存在
+router.get('/is_exist', auth, async (ctx, next) => {
+  const { userName } = ctx.query
+  const result = await userIsExist(userName)
   ctx.body = result
 })
 
+//通过id获取某个用户的信息
+router.get('/:id', auth, async (ctx, next) => {
+  let { id } = ctx.params
+  id = id && id * 1
+  const result = await getUserInfoById(id)
+  ctx.body = result
+})
+
+
 //创建用户
-router.post('/', auth, async (ctx, next) => {
+router.post('/', auth, role, genValidator(userValidate), async (ctx, next) => {
   const { userName, nickName, role, avatar, password } = ctx.request.body
   const result = await addUser({ userName, nickName, role, avatar, password })
   ctx.body = result
 })
 
 //修改用户信息
-router.patch('/info/:id', auth, checkOwner, async (ctx, next) => {
+router.patch('/info/:id', auth, async (ctx, next) => {
   const { id } = ctx.params
   const { nickName, role, avatar } = ctx.request.body
   const result = await changeUserInfo(id * 1, { nickName, role, avatar })

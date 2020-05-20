@@ -168,4 +168,9 @@ module.exports = {
     errno: 10033,
     message: '删除用户失败'
   },
+  //数据校验失败
+  jsonSchemaFileInfo: {
+    errno: 10034,
+    message: '数据校验失败'
+  }
 }

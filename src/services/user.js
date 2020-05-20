@@ -33,10 +33,13 @@ async function findUserInfo(data) {
   if (data.userName) {
     whereOpt.userName = data.userName
   }
+  if (data.nickName) {
+    whereOpt.nickName = data.nickName
+  }
   if (data.password) {
     whereOpt.password = data.password
   }
-
+  
   const result = await User.findOne({
     attributes: ['id', 'userName', 'nickName', 'avatar', 'role'],
     where: whereOpt

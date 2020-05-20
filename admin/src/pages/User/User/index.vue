@@ -3,8 +3,10 @@
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
 
       <el-form-item v-if="!isUpdate" label="用户名" prop="userName">
-        <el-input v-model="form.userName"></el-input>
-        <el-alert type="info" description="用户名注册后无法修改" show-icon>
+        <el-input @blur="handleUserIsExist" v-model="form.userName"></el-input>
+        <el-alert v-if="!userIsExist" type="info" description="用户名注册后无法修改" show-icon>
+        </el-alert>
+        <el-alert v-else type="error" description="用户名已存在" show-icon>
         </el-alert>
       </el-form-item>
 
@@ -27,6 +29,8 @@
 
       <el-form-item v-if="!isUpdate" label="密码" prop="password">
         <el-input type="password" v-model="form.password"></el-input>
+        <el-alert v-if="!userIsExist" type="info" description="密码最少6位" show-icon>
+        </el-alert>
       </el-form-item>
 
       <el-form-item v-if="!isUpdate" label="确认密码" prop="confirmPassword">
@@ -44,7 +48,7 @@
 <script>
   import Crop from '@/components/Crop'
   import { mapState } from 'vuex'
-  import { createUserAPI, updateUserInfoAPI, getUserInfoAPI } from '@/api/user'
+  import { createUserAPI, updateUserInfoAPI, getUserInfoAPI, userIsExistAPI } from '@/api/user'
   import { uploadAPI } from '@/api/utils'
   export default {
     data() {
@@ -70,6 +74,7 @@
       return {
         loading: false,
         userId: '',
+        userIsExist: false,
         form: {
           userName: '',
           role: '',
@@ -128,6 +133,7 @@
       onSubmit(form) {
         this.$refs[form].validate(async v => {
           if (!v) return
+          if (this.userIsExist) return
 
           this.loading = true
           let result
@@ -152,6 +158,11 @@
           })
 
         })
+      },
+      async handleUserIsExist() {
+        if (!this.form.userName) return
+        const result = await userIsExistAPI(this.form.userName)
+        this.userIsExist = result.data.isExist
       },
       async handlCropDone(formData) {
         const result = await uploadAPI(formData)
@@ -213,7 +224,8 @@
     width: 500px;
     margin: auto;
   }
-    .el-select {
+
+  .el-select {
     width: 100%;
   }
 </style>
