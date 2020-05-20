@@ -10,7 +10,7 @@ async function superRole(ctx, next) {
 
 async function role(ctx, next) {
   const { role } = ctx.state.user
-  if (role === 1) {
+  if (role <= 1) {
     await next()
   } else {
     ctx.throw(403, '没有权限')

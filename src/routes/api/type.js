@@ -16,7 +16,7 @@ router.prefix('/api/types')
 //创建分类
 router.post('/', auth, role, genValidator(typeValidate), role, async (ctx, next) => {
   let { title, logo, index, resources } = ctx.request.body
-  index = index * 1
+  //index = index * 1
   const result = await addType({title, logo, index, resources})
   ctx.body = result
 })

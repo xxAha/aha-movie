@@ -120,7 +120,7 @@
           })
 
           if (hasType) {
-            const result = await createTypeRelation(this.typeId, resourceId)
+            const result = await createTypeRelation(this.typeId * 1, resourceId * 1)
             if (result.errno === 0) {
               this.$message({
                 type: 'success',
@@ -135,7 +135,7 @@
       //删除关系
       async handleRemoveTypeTag(resourceId) {
         if (this.isUpdate) {
-          const result = await deleteTypeRelationAPI(this.typeId, resourceId)
+          const result = await deleteTypeRelationAPI(this.typeId * 1, resourceId * 1)
           if (result.errno === 0) {
             this.$message({
               type: 'success',

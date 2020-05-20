@@ -202,7 +202,7 @@
       //删除关系
       async handleRemoveTypeTag(typeId) {
         if (this.isUpdate) {
-          const result = await deleteTypeRelationAPI(typeId, this.resourceId)
+          const result = await deleteTypeRelationAPI(typeId * 1, this.resourceId * 1)
           if (result.errno === 0) {
             this.$message({
               type: 'success',
