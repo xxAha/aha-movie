@@ -3,29 +3,34 @@
  */
 
 const server = require('../server')
-const { token } = require('../testInfo')
-const { DEFAULT_LOGO } = require('../../src/config/constant')
-
-const resourcePostData = {
-  title: '测试资源标题',
-  logo: DEFAULT_LOGO,
-  link: 'http://www.baidu.com',
-  index: 1,
-  description: '描述'
-}
+const { token, resourceData } = require('../testInfo')
 
 let resourceId
 
 test('创建资源，应该成功', async () => {
   const res = await server
-    .post('/api/resources/create')
-    .send(resourcePostData)
+    .post('/api/resources')
+    .send(resourceData)
     .set('Authorization', 'Bearer ' + token)
   expect(res.body.errno).toBe(0)
   resourceId = res.body.data.id
 })
 
-test('某个资源，应该成功', async () => {
+test('修改某个资源，应该成功', async () => {
+  const res = await server
+    .patch(`/api/resources/${resourceId}`)
+    .send({
+      title: '修改后的资源',
+      logo: 'http://www.baidu.com',
+      index: 999,
+      link: 'http://www.baidu.com',
+      description: '描述'
+    })
+    .set('Authorization', 'Bearer ' + token)
+  expect(res.body.errno).toBe(0)
+})
+
+test('查询某个资源，应该成功', async () => {
   const res = await server
     .get(`/api/resources/${resourceId}`)
     .set('Authorization', 'Bearer ' + token)
@@ -38,6 +43,15 @@ test('查询资源列表，应该成功', async () => {
     .set('Authorization', 'Bearer ' + token)
   expect(res.body.errno).toBe(0)
 })
+
+
+test('删除某个资源，应该成功', async () => {
+  const res = await server
+    .delete(`/api/resources/${resourceId}`)
+    .set('Authorization', 'Bearer ' + token)
+  expect(res.body.errno).toBe(0)
+})
+
 
 
 
