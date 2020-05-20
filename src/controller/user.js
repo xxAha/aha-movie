@@ -55,23 +55,6 @@ async function addUser({ userName, nickName, role, avatar, password }) {
 }
 
 /**
- * 获取当前用户的信息
- * @param {object} info 用户信息
- */
-async function getOwnerInfo(ctx) {
-  try {
-    const info = ctx.state.user
-    if (info == null) {
-      return new ErrorModel(loginCheckFailInfo)
-    }
-    return new SuccessModel(info)
-  } catch (error) {
-    return new ErrorModel(loginCheckFailInfo)
-  }
-
-}
-
-/**
  * 通过id获取某个用户的信息
  * @param {object} data 查询的数据对象
  */
@@ -132,7 +115,7 @@ async function changeUserInfo(id, data) {
 /**
  * 修改用户密码
  * @param {number} id 用户id
- * @param {string} oldPassword 旧密码
+ * @param {string} password 旧密码
  * @param {string} newPassword 新密码
  */
 async function changePassword(id, oldPassword, newPassword) {
@@ -189,7 +172,6 @@ module.exports = {
   addUser,
   getUserInfoById,
   getAllUser,
-  getOwnerInfo,
   changeUserInfo,
   changePassword,
   deleteUser,

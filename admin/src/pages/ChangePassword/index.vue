@@ -49,7 +49,8 @@
         },
         rules: {
           newPassword: [
-            { required: true, validator: validatePass, trigger: 'blur' }
+            { required: true, validator: validatePass, trigger: 'blur' },
+            { type: 'string', min: 6, message: '密码最少6位', trigger: 'blur' }
           ],
           confirmNewPsd: [
             { required: true, validator: validatePass2, trigger: 'blur' }

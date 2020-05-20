@@ -34,7 +34,8 @@ router.post('/login', async (ctx, next) => {
 
 //获取当前登录用户的信息
 router.get('/owner', auth, async (ctx, next) => {
-  const result = await getOwnerInfo(ctx)
+  const { id } = ctx.state.user
+  const result = await getUserInfoById(id)
   ctx.body = result
 })
 
@@ -70,7 +71,7 @@ router.patch('/info/:id', auth, genValidator(userValidate), async (ctx, next) =>
 })
 
 //修改密码
-router.patch('/password/:id', auth, checkOwner, async (ctx, next) => {
+router.patch('/password/:id', auth, checkOwner, genValidator(userValidate), async (ctx, next) => {
   const { id } = ctx.params
   const { oldPassword, newPassword } = ctx.request.body
   const result = await changePassword(id * 1, oldPassword, newPassword)
