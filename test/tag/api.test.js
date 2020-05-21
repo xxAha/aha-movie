@@ -35,3 +35,10 @@ test('删除标签，应该成功', async () => {
     .set('Authorization', 'Bearer ' + token)
   expect(res.body.errno).toBe(0)
 })
+
+test('删除某个资源，应该成功', async () => {
+  const res = await server
+    .delete(`/api/resources/${resourceId}`)
+    .set('Authorization', 'Bearer ' + token)
+  expect(res.body.errno).toBe(0)
+})

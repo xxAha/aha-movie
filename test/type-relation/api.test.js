@@ -43,3 +43,17 @@ test('删除分类关系，应该成功', async () => {
     .set('Authorization', 'Bearer ' + token)
   expect(res.body.errno).toBe(0)
 })
+
+test('删除某个资源，应该成功', async () => {
+  const res = await server
+    .delete(`/api/resources/${resourceId}`)
+    .set('Authorization', 'Bearer ' + token)
+  expect(res.body.errno).toBe(0)
+})
+
+test('删除某个分类，应该成功', async () => {
+  const res = await server
+    .delete(`/api/types/${typeId}`)
+    .set('Authorization', 'Bearer ' + token)
+  expect(res.body.errno).toBe(0)
+})

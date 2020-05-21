@@ -17,10 +17,12 @@ const Setting = seq.define('setting', {
   },
   keywords: {
     type: STRING,
+    defaultValue: '',
     comment: '网站 关键词'
   },
   description: {
     type: STRING,
+    defaultValue: '',
     comment: '网站 描述'
   }
 })

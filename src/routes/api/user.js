@@ -66,6 +66,7 @@ router.post('/', auth, superRole, genValidator(userValidate), async (ctx, next) 
 router.patch('/info/:id', auth, superRole, genValidator(userValidate), async (ctx, next) => {
   const { id } = ctx.params
   const { nickName, role, avatar } = ctx.request.body
+  console.log(role)
   const result = await changeUserInfo(id * 1, { nickName, role, avatar })
   ctx.body = result
 })
