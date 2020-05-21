@@ -130,7 +130,7 @@
           if (!v) return
           this.loading = true
           let result
-
+          this.form.index = this.form.index * 1
           if (!this.isUpdate) {
             this.form.tags = this.createTags
             result = await createResourceAPI(this.form)
@@ -312,7 +312,7 @@
     beforeRouteEnter: (to, from, next) => {
       next((vm) => {
         const path = vm.$route.path
-        if (path === '/add-resource') {
+        if (path === '/create-resource') {
           vm.resetData()
         }
       })

@@ -30,7 +30,16 @@ async function destroyTag(id) {
   return result > 0
 }
 
+/**
+ * 获取所有标签
+ */
+async function findAllTags() {
+  const result = await Tag.findAll()
+  return result
+}
+
 module.exports = {
   createTag,
-  destroyTag
+  destroyTag,
+  findAllTags
 }

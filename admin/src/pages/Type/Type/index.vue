@@ -74,6 +74,7 @@
         this.$refs[form].validate(async v => {
           if (!v) return
           this.loading = true
+          this.form.index = this.form.index * 1
           let result
           if (!this.isUpdate) {
             result = await createTypeAPI(this.form)
@@ -182,8 +183,9 @@
     },
     beforeRouteEnter(to, from, next) {
       next((vm) => {
+       
         const path = vm.$route.path
-        if (path === '/add-type') {
+        if (path === '/create-type') {
           vm.resetData()
         }
       })

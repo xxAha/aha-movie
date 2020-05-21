@@ -1,0 +1,190 @@
+@font-face {
+  font-family: "iconfont";
+  src: url('../icon/iconfont.eot?t=1590048055167');
+  /* IE9 */
+  src: url('iconfont.eot?t=1590048055167#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAMcAAsAAAAAB2AAAALOAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqCQIIsATYCJAMMCwgABCAFhG0HPRt5BsgOJQX7zOzDDcVCPPy39nrfzvzNZjZJgVCRI9BIruwJHIJrKmx0URi07fF8fF32f9c0Y9R5r3KAqEr28OeaHuRe+jsEYYp+5EiZ2bpNj916cThuAYVjv2W5rT1xUhdgFwYU6FiDtnCBdAFpw9hNlAexnkAxW7eSbavbYVItA90CcZ5bGqlOuWVZizVCXTI2i8d6mupO9QmP+Ofjn1VRTaWXgL47T66YZP7n9Md9utnddJRq3RrPCG0SCSsRmTheGj6oTGjYMkVcXp9ay0I1lq/r4GxXWq/0j1cRNZA9AJaKyspJcTCD4Pc9S8Qhda4xhJOIywJmYsqgyCUDDv2pxUpLafNhcybDuDh/eb5Eu0/+1EVylp00Lp+PuFiTkF69X9uWkhfc+zgnNdx7O+VA/vWt4cn7c2/KQAx/uPtuptq73yypX+aPTI57TO28XZ97OVff/q+sAd39DlH+EBqHz2+qxDsb1dPfrBmJJJK6/kIX6bvepa6uTvUv/Wy02F0cTTGr2tlVllkItASICnRM36sU3Y0s3fwd3zESfDDnRNO6/6bN4MdPdIxz21lpTtYSvHxOy4rs8oAmZZuN2X4s2aTh1vIVBR1gH++9v3RS62xCY1IMlT6zIGksRGTMSuhprYFaYyMUK6xNbk0glYncj+WuBQhjPUNlyEdIxnpFZMwb9Ez2C7WxUQbF/pgwZ2tx8NqtEjQEk+r7lBvCY0iHtUFuEKyko8kkj5OjIBPcRwd6+7OxNfBAjjEgsWMNIjLKpHDpqrAZOI6gvhRxMLA3huhP9vWxsiv1GsIltbaSgAYBE6XbR3EGwcNobVSbe38QsCQ5NLKmrMMcBaQE3jw1oFd/C8Sa2GtVdi2XJOywDEKIoRhJcFGrghE4MCxQfnmrOGBAvWI9gr5JfVI11lbcO7/Ufb4NUICjUlSRIisXgOtcE8gHKw/4flLzCAEAAA==') format('woff2'),
+    url('../icon/iconfont.woff?t=1590048055167') format('woff'),
+    url('../icon/iconfont.ttf?t=1590048055167') format('truetype'),
+    /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url('../icon/iconfont.svg?t=1590048055167#iconfont') format('svg');
+  /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-weibiaoti2:before {
+  content: "\e63c";
+}
+
+.icon-ziyuan:before {
+  content: "\e8a5";
+}
+
+
+body,
+html,
+.page-container {
+  height: 100%;
+  /* height：100vh;  */
+}
+
+.icon-ziyuan:before {
+  content: "\e8a5";
+}
+
+
+.page-container {
+  display: flex;
+}
+
+.page-container .left {
+  width: 256px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+.page-container .left .logo-warpper {
+
+  padding: 19px 45px;
+  text-align: center;
+  background-color: #343a40;
+  border-bottom: 1px solid #313437;
+}
+
+.page-container .left .logo-warpper img {
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  border-radius: 50%;
+}
+
+.page-container .left .logo-warpper span {
+  vertical-align: bottom;
+  color: #fff;
+}
+
+
+.page-container .left .nav {
+  flex: 1;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px 40px;
+  font-size: 14px;
+  list-style: none;
+}
+
+.nav-link {
+  color: #979898;
+}
+
+.nav-link:hover {
+  color: #fff;
+}
+
+.nav-link img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.page-container .right {
+  padding: 30px;
+  flex: 1;
+  min-height: 100%;
+  overflow: scroll;
+}
+
+.page-container .right .type-box {
+  display: flex;
+  align-items: center;
+}
+
+.page-container .right .type-box img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.page-container .right .type-box .iconfont {
+  font-size: 30px;
+  color: #555;
+}
+
+
+.page-container .right .type-logo {
+  font-size: 30px;
+  vertical-align: center;
+  color: #555;
+}
+
+.page-container .right .type-title {
+  margin-left: 10px;
+  font-size: 16px;
+  vertical-align: center;
+  color: #555;
+  font-weight: bold;
+}
+
+.page-container .right .item-box {
+  height: 86px;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #e4ecf3;
+  margin: 20px 0 0 0;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.page-container .right .item-box a {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 0px 20px 0px 20px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.page-container .right .item-box a:hover {
+  text-decoration: none;
+}
+
+.page-container .right .item-box img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.page-container .right .item-box .text {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.page-container .right .item-box .text .text-item {
+  font-weight: bold;
+  color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.page-container .right .item-box .text .bottom {
+  margin-top: 4px;
+  color: #979898;
+}

@@ -1,14 +1,19 @@
 const router = require('koa-router')()
+const { SETTING_ID } = require('../../config/constant')
+const { getSetting } = require('../../controller/setting')
+const { getAllTypeRelations } = require('../../controller/type-relation')
 
 router.get('/', async (ctx, next) => {
-  await ctx.render('index', {
-    title: 'Hello Koa 2!'
-  })
-})
+  const id = SETTING_ID
+  const setResult = await getSetting(id)
+  const setting = setResult.data.dataValues
+  const dataResut = await getAllTypeRelations()
+  const data = dataResut.data
+  
 
-router.get('/home', async (ctx, next) => {
   await ctx.render('index', {
-    title: 'Hello Koa 2!'
+    data,
+    setting
   })
 })
 

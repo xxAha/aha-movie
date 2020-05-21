@@ -34,7 +34,7 @@ app.use(koaBody({
 // middlewares
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(path.resolve(__dirname, 'public')))
+app.use(require('koa-static')(path.resolve(__dirname, './public')))
 app.use(require('koa-static')(path.resolve(__dirname, '../uploadFiles')))
 
 app.use(views(__dirname + '/views', {

@@ -172,5 +172,10 @@ module.exports = {
   jsonSchemaFileInfo: {
     errno: 10034,
     message: '数据校验失败'
+  },
+  //获取首页数据失败
+  getHomeDataFileInfo: {
+    errno: 10035,
+    message: '获取首页数据失败'
   }
 }

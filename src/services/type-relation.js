@@ -85,28 +85,6 @@ async function destroyTypeRelation(typeId, resourceId) {
   return result > 0
 }
 
-//模拟查询分类关系表
-// async function test() {
-//   const result = await TypeRelation.findAll({
-//     include: [
-//       {
-//         model: Type
-//       },
-//       {
-//         model: Resource
-//       }
-//     ]
-//   })
-//   const data = result.map(r => {
-//     const t = r.dataValues
-//     t.type = r.dataValues.type.dataValues
-//     t.resource = r.dataValues.resource.dataValues
-//     return t
-//   })
-//   console.log(data)
-// }
-//test()
-
 module.exports = {
   createTypeRelation,
   findResTypeRelation,
