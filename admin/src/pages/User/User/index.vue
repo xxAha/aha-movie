@@ -14,12 +14,17 @@
         <el-input v-model="form.nickName"></el-input>
       </el-form-item>
 
-      <el-form-item label="角色" prop="role">
+      <el-form-item v-if="!isUpdate" label="角色" prop="role">
         <el-select v-model="form.role" placeholder="请选择角色">
           <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-alert type="info" description="超级管理：权限最高可以管理用户和数据，一般管理员：可以管理数据，游客：只能查看数据列表" show-icon></el-alert>
+        <el-alert title="超级管理：权限最高可以管理用户和数据" type="success" show-icon>
+        </el-alert>
+        <el-alert title="一般管理员：可以管理数据" type="warning" show-icon>
+        </el-alert>
+        <el-alert title="游客：只能查看数据列表" type="info" show-icon>
+        </el-alert>
       </el-form-item>
 
       <el-form-item label="头像" prop="avatar">

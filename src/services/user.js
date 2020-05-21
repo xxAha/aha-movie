@@ -84,16 +84,16 @@ async function findAllUser(page, pageSize, searchValue) {
  * @param {object} data 修改的数据对象
  */
 async function updateUserInfo(id, data) {
-  const updateData = data
-  // if (data.nickName) {
-  //   updateData.nickName = data.nickName
-  // }
+  const updateData = {}
+  if (data.nickName) {
+    updateData.nickName = data.nickName
+  }
   // if (data.role) {
   //   updateData.role = data.role
   // }
-  // if (data.avatar) {
-  //   updateData.avatar = data.avatar
-  // }
+  if (data.avatar) {
+    updateData.avatar = data.avatar
+  }
 
   const result = await User.update(updateData, {
     where: {
