@@ -40,7 +40,7 @@ async function updateResource(id, data) {
   if(data.description) {
     updateData.description = data.description
   }
-  if(data.index) {
+  if(data.index >= 0) {
     updateData.index = data.index
   }
   const result = await Resource.update(updateData, {
@@ -120,7 +120,7 @@ async function findAllResourceInfo(page, pageSize, searchValue) {
     limit,
     offset,
     order: [
-      ['id', 'desc']
+      ['index', 'desc']
     ],
     include: [
       {

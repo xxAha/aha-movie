@@ -36,7 +36,7 @@ async function updateType(id, data) {
     updateData.logo = data.logo
   }
 
-  if (data.index) {
+  if (data.index >= 0) {
     updateData.index = data.index
   }
   const result = await Type.update(updateData, {
@@ -87,7 +87,7 @@ async function findAllType(page, pageSize, searchValue) {
     limit,
     offset,
     order: [
-      ['id', 'desc']
+      ['index', 'desc']
     ]
   })
 

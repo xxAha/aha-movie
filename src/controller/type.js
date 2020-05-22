@@ -92,19 +92,24 @@ async function getAllType(page = DEFAULT_PAGE, pageSize = DEFAULT_PAGESIZE, sear
     const tyRelationResult = await findAllTypeRelation()
     //查询所有标签
     const tagResult = await findAllTags()
+
     //分类下添加该分类下的资源
     typeResult.rows.forEach(item => {
-
       tyRelationResult.forEach(ty => {
         if (item.id === ty.typeId) {
           item.resources.push(ty.resource)
           item.dataValues.resources.push(ty.resource)
         }
       })
+      item.resources.sort(function(a, b) {
+        return b.index - a.index
+      })
+      item.dataValues.resources.sort(function(a, b) {
+        return b.index - a.index
+      })
     })
-
+    //处理标签
     typeResult.rows.forEach((item) => {
-      
       item.resources.forEach(l => {
         const filterTags = tagResult.filter(tag => {
           return tag.resourceId === l.id
@@ -115,6 +120,17 @@ async function getAllType(page = DEFAULT_PAGE, pageSize = DEFAULT_PAGESIZE, sear
         l.dataValues.tags = filterTags
       })
     })
+
+    //index 排序
+    // typeResult.rows.sort(function (a, b) {
+    //   return b.index - a.index
+    // })
+    // typeResult.rows.forEach(item => {
+    //   item.resources.sort(function(a, b) {
+    //     return b.index - a.index
+    //   })
+    // })
+    
 
     return new SuccessModel(typeResult)
   } catch (error) {
