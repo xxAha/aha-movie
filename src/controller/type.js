@@ -6,19 +6,20 @@ const { createTyepFailInfo, getTypesFailInfo, getTypeFailInfo, updateTypeFailInf
 const { createType, findAllType, findType, updateType, destroyType } = require('../services/type')
 const { createTypeRelation, findTypeTypeRelation, findAllTypeRelation } = require('../services/type-relation')
 const { DEFAULT_PAGE, DEFAULT_PAGESIZE } = require('../config/constant')
+const { findAllTags } = require('../services/tag')
 
 /**
  * 创建分类
  * @param {object} obj 数据对象
  */
-async function addType({title, logo, index, resources = []}) {
+async function addType({ title, logo, index, resources = [] }) {
   try {
     //创建分类
     const typeResult = await createType(title, logo, index)
     const typeId = typeResult.id
 
     //创建分类下的资源
-    if(resources.length) {
+    if (resources.length) {
       const resResult = await Promise.all(resources.map(r => createTypeRelation(typeId, r)))
       const resList = resResult.map(r => r.dataValues)
       typeResult.dataValues.resList = resList
@@ -61,7 +62,7 @@ async function getType(id) {
     let typeResult = await findType(id)
     //查询分类下的资源
     let tyReResult = await findTypeTypeRelation(id)
-    if(tyReResult.length) {
+    if (tyReResult.length) {
       tyReResult = tyReResult.map(i => {
         const resource = i.dataValues.resource.dataValues
         return resource
@@ -82,20 +83,36 @@ async function getAllType(page = DEFAULT_PAGE, pageSize = DEFAULT_PAGESIZE, sear
   try {
     //查询分类
     const typeResult = await findAllType(page, pageSize, searchValue)
+    typeResult.rows = typeResult.rows.map(i => {
+      i.resources = []
+      i.dataValues.resources = []
+      return i
+    })
     //查询分类下的关系
     const tyRelationResult = await findAllTypeRelation()
+    //查询所有标签
+    const tagResult = await findAllTags()
     //分类下添加该分类下的资源
     typeResult.rows.forEach(item => {
+
       tyRelationResult.forEach(ty => {
         if (item.id === ty.typeId) {
-          const data = item.dataValues
-          if (data.resources) {
-            data.resources.push(ty.resource)
-          } else {
-            data.resources = []
-            data.resources.push(ty.resource)
-          }
+          item.resources.push(ty.resource)
+          item.dataValues.resources.push(ty.resource)
         }
+      })
+    })
+
+    typeResult.rows.forEach((item) => {
+      
+      item.resources.forEach(l => {
+        const filterTags = tagResult.filter(tag => {
+          return tag.resourceId === l.id
+        })
+        //这里是模版引擎 ejs 渲染使用的数据
+        l.tags = filterTags
+        //这里是接口使用的数据 (dataValues 层)
+        l.dataValues.tags = filterTags
       })
     })
 
