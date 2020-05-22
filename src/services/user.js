@@ -54,16 +54,26 @@ async function findUserInfo(data) {
  */
 async function findAllUser(page, pageSize, searchValue) {
   const whereOpt = {}
+  let limit = null
+  let offset = null 
   if(searchValue) {
     whereOpt.userName = {
       [Op.like]: '%' + searchValue + '%'
     }
   }
 
+  if(pageSize) {
+    limit = pageSize
+  }
+
+  if(page >=0 && pageSize) {
+    offset = page * pageSize
+  }
+
   let result = await User.findAndCountAll({
     where: whereOpt,
-    limit: pageSize,
-    offset: page * pageSize,
+    limit,
+    offset,
     order: [
       ['id', 'desc']
     ]

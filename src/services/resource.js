@@ -98,16 +98,27 @@ async function findResourceInfo(id) {
  */
 async function findAllResourceInfo(page, pageSize, searchValue) {
   const whereOpt = {}
+  let limit = null
+  let offset = null 
   if(searchValue) {
     whereOpt.title = {
       [Op.like]: '%' + searchValue + '%'
     }
   }
 
+
+  if(pageSize) {
+    limit = pageSize
+  }
+
+  if(page >=0 && pageSize) {
+    offset = page * pageSize
+  }
+
   let result = await Resource.findAndCountAll({
     where: whereOpt,
-    limit: pageSize,
-    offset: page * pageSize,
+    limit,
+    offset,
     order: [
       ['id', 'desc']
     ],
