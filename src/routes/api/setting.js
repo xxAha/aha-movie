@@ -13,7 +13,7 @@ const settingValidate = require('../../validator/setting')
 router.prefix('/api/setting')
 
 //获取网站设置
-router.get('/', auth, async (ctx, next) => {
+router.get('/', async (ctx, next) => {
   //id 写死
   const id = SETTING_ID
   const result = await getSetting(id)

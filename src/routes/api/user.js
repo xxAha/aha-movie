@@ -81,7 +81,7 @@ router.patch('/password/:id', auth, checkOwner, genValidator(userValidate), asyn
 
 
 //查询所有用户
-router.get('/', auth, async (ctx, next) => {
+router.get('/', auth, superRole, async (ctx, next) => {
   let { page, pageSize, searchValue } = ctx.query
   page = page && page * 1
   pageSize = pageSize && pageSize * 1

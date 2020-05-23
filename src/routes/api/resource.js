@@ -31,14 +31,14 @@ router.patch('/:id', auth, role, genValidator(resourceValidate), async (ctx, nex
 })
 
 //查询某个资源
-router.get('/:id', auth, async (ctx, next) => {
+router.get('/:id', async (ctx, next) => {
   const { id } = ctx.params
   const result = await getResourceInfo(id)
   ctx.body = result
 })
 
 //查询所有资源
-router.get('/', auth, async (ctx, next) => {
+router.get('/', async (ctx, next) => {
   let { page, pageSize, searchValue } = ctx.query
   page = page && page * 1
   pageSize = pageSize && pageSize * 1
