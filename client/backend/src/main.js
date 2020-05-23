@@ -7,7 +7,7 @@ import axios from './api/index'
 import store from './store'
 import 'reset-css'
 import './plugins/element'
-import './assets/css//common.scss'
+import './assets/css/common.scss'
 
 
 Vue.prototype.$http = axios
