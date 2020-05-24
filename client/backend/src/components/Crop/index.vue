@@ -1,8 +1,8 @@
 <template>
-  <div id="crop">
+  <div id="demo">
     <!-- 遮罩层 -->
-    <div class="crop-father" v-show="panel">
-      <div class="crop-container">
+    <div class="father" v-show="panel">
+      <div class="container">
         <div id="cropper" style="margin-top:1%;margin-left: 1%;margin-right: 1%;height: 85%;margin-bottom: 1%">
           <img id="image" :src="url" alt="Picture">
         </div>
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div>
-      <div class="crop-show-box">
+      <div class="show-box">
         <input type="file" id="change" accept="image" @change="change" style="display:none;">
         <div class="show" v-on:mouseover="addClassload" v-on:mouseout="removeClassload" @click="upload"
           :style="'backgroundImage:url('+headerImage+');border: 1px dashed '+color">
@@ -165,9 +165,7 @@
         //这边写图片的上传
         const file = this.dataURLtoFile(this.headerImage)
         this.limitSize(file)
-        //监听组件的 cropDone 和 sizeOver 的自定义事件
       },
-      //限制图片大小
       limitSize(file) {
         const size = file.size
         //1 * 1024 * 1024 = 1m
@@ -184,12 +182,12 @@
   }
 
 </script>
-<style>
-  #crop .crop-show-box {
+<style scope>
+  .show-box {
     text-align: left;
   }
 
-  #crop .crop-father {
+  .father {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0px;
@@ -199,7 +197,7 @@
     z-index: 33;
   }
 
-  #crop .i {
+  .i {
     font-size: 28px;
     color: #8c939d;
     width: 100px;
@@ -208,7 +206,7 @@
     text-align: center;
   }
 
-  #crop .show {
+  #demo .show {
     border: 1px dashed #d9d9d9;
     border-radius: 10%;
     width: 100px;
@@ -224,7 +222,7 @@
     background-size: cover;
   }
 
-  #crop .crop-container {
+  #demo .container {
     z-index: 99;
     height: 300px;
     width: 500px;
@@ -235,7 +233,7 @@
     background-color: white;
   }
 
-  #crop #image {
+  #demo #image {
     max-width: 100%;
   }
 
@@ -251,7 +249,7 @@ border-radius: 100%; 圆形截图设置
 *
 * Date: 2017-03-25T12:02:21.062Z
 */
-  #crop .cropper-container {
+  .cropper-container {
     font-size: 0;
     line-height: 0;
     position: relative;
@@ -264,7 +262,7 @@ border-radius: 100%; 圆形截图设置
     touch-action: none
   }
 
-  #crop .cropper-container img {
+  .cropper-container img {
     /* Avoid margin top issue (Occur only when margin-top <= -height) */
     display: block;
     min-width: 0 !important;
@@ -276,7 +274,7 @@ border-radius: 100%; 圆形截图设置
     image-orientation: 0deg
   }
 
-  #crop .cropper-wrap-box,
+  .cropper-wrap-box,
   .cropper-canvas,
   .cropper-drag-box,
   .cropper-crop-box,
@@ -288,21 +286,21 @@ border-radius: 100%; 圆形截图设置
     left: 0;
   }
 
-  #crop .cropper-wrap-box {
+  .cropper-wrap-box {
     overflow: hidden;
   }
 
-  #crop .cropper-drag-box {
+  .cropper-drag-box {
     opacity: 0;
     background-color: #fff;
   }
 
-  #crop .cropper-modal {
+  .cropper-modal {
     opacity: .5;
     background-color: #000;
   }
 
-  #crop .cropper-view-box {
+  .cropper-view-box {
     display: block;
     overflow: hidden;
     width: 100%;
@@ -311,14 +309,14 @@ border-radius: 100%; 圆形截图设置
     outline-color: rgba(51, 153, 255, 0.75);
   }
 
-  #crop .cropper-dashed {
+  .cropper-dashed {
     position: absolute;
     display: block;
     opacity: .5;
     border: 0 dashed #eee
   }
 
-  #crop .cropper-dashed.dashed-h {
+  .cropper-dashed.dashed-h {
     top: 33.33333%;
     left: 0;
     width: 100%;
@@ -327,7 +325,7 @@ border-radius: 100%; 圆形截图设置
     border-bottom-width: 1px
   }
 
-  #crop .cropper-dashed.dashed-v {
+  .cropper-dashed.dashed-v {
     top: 0;
     left: 33.33333%;
     width: 33.33333%;
@@ -336,7 +334,7 @@ border-radius: 100%; 圆形截图设置
     border-left-width: 1px
   }
 
-  #crop .cropper-center {
+  .cropper-center {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -346,7 +344,7 @@ border-radius: 100%; 圆形截图设置
     opacity: .75
   }
 
-  #crop .cropper-center:before,
+  .cropper-center:before,
   .cropper-center:after {
     position: absolute;
     display: block;
@@ -361,14 +359,14 @@ border-radius: 100%; 圆形截图设置
     height: 1px
   }
 
-  #crop .cropper-center:after {
+  .cropper-center:after {
     top: -3px;
     left: 0;
     width: 1px;
     height: 7px
   }
 
-  #crop .cropper-face,
+  .cropper-face,
   .cropper-line,
   .cropper-point {
     position: absolute;
@@ -378,98 +376,98 @@ border-radius: 100%; 圆形截图设置
     opacity: .1;
   }
 
-  #crop .cropper-face {
+  .cropper-face {
     top: 0;
     left: 0;
     background-color: #fff;
   }
 
-  #crop .cropper-line {
+  .cropper-line {
     background-color: #39f
   }
 
-  #crop .cropper-line.line-e {
+  .cropper-line.line-e {
     top: 0;
     right: -3px;
     width: 5px;
     cursor: e-resize
   }
 
-  #crop .cropper-line.line-n {
+  .cropper-line.line-n {
     top: -3px;
     left: 0;
     height: 5px;
     cursor: n-resize
   }
 
-  #crop .cropper-line.line-w {
+  .cropper-line.line-w {
     top: 0;
     left: -3px;
     width: 5px;
     cursor: w-resize
   }
 
-  #crop .cropper-line.line-s {
+  .cropper-line.line-s {
     bottom: -3px;
     left: 0;
     height: 5px;
     cursor: s-resize
   }
 
-  #crop .cropper-point {
+  .cropper-point {
     width: 5px;
     height: 5px;
     opacity: .75;
     background-color: #39f
   }
 
-  #crop .cropper-point.point-e {
+  .cropper-point.point-e {
     top: 50%;
     right: -3px;
     margin-top: -3px;
     cursor: e-resize
   }
 
-  #crop .cropper-point.point-n {
+  .cropper-point.point-n {
     top: -3px;
     left: 50%;
     margin-left: -3px;
     cursor: n-resize
   }
 
-  #crop .cropper-point.point-w {
+  .cropper-point.point-w {
     top: 50%;
     left: -3px;
     margin-top: -3px;
     cursor: w-resize
   }
 
-  #crop .cropper-point.point-s {
+  .cropper-point.point-s {
     bottom: -3px;
     left: 50%;
     margin-left: -3px;
     cursor: s-resize
   }
 
-  #crop .cropper-point.point-ne {
+  .cropper-point.point-ne {
     top: -3px;
     right: -3px;
     cursor: ne-resize
   }
 
-  #crop .cropper-point.point-nw {
+  .cropper-point.point-nw {
     top: -3px;
     left: -3px;
     cursor: nw-resize
   }
 
-  #crop .cropper-point.point-sw {
+  .cropper-point.point-sw {
     bottom: -3px;
     left: -3px;
     cursor: sw-resize
   }
 
-  #crop .cropper-point.point-se {
+  .cropper-point.point-se {
     right: -3px;
     bottom: -3px;
     width: 20px;
@@ -479,28 +477,28 @@ border-radius: 100%; 圆形截图设置
   }
 
   @media (min-width: 768px) {
-    #crop .cropper-point.point-se {
+    .cropper-point.point-se {
       width: 15px;
       height: 15px
     }
   }
 
   @media (min-width: 992px) {
-    #crop .cropper-point.point-se {
+    .cropper-point.point-se {
       width: 10px;
       height: 10px
     }
   }
 
   @media (min-width: 1200px) {
-    #crop .cropper-point.point-se {
+    .cropper-point.point-se {
       width: 5px;
       height: 5px;
       opacity: .75
     }
   }
 
-  #crop .cropper-point.point-se:before {
+  .cropper-point.point-se:before {
     position: absolute;
     right: -50%;
     bottom: -50%;
@@ -512,34 +510,34 @@ border-radius: 100%; 圆形截图设置
     background-color: #39f
   }
 
-  #crop .cropper-invisible {
+  .cropper-invisible {
     opacity: 0;
   }
 
-  #crop .cropper-bg {
+  .cropper-bg {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');
   }
 
-  #crop .cropper-hide {
+  .cropper-hide {
     position: absolute;
     display: block;
     width: 0;
     height: 0;
   }
 
-  #crop .cropper-hidden {
+  .cropper-hidden {
     display: none !important;
   }
 
-  #crop .cropper-move {
+  .cropper-move {
     cursor: move;
   }
 
-  #crop .cropper-crop {
+  .cropper-crop {
     cursor: crosshair;
   }
 
-  #crop .cropper-disabled .cropper-drag-box,
+  .cropper-disabled .cropper-drag-box,
   .cropper-disabled .cropper-face,
   .cropper-disabled .cropper-line,
   .cropper-disabled .cropper-point {
