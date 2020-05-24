@@ -20,8 +20,7 @@
     <div>
       <div class="crop-show-box">
         <input type="file" id="change" accept="image" @change="change" style="display:none;">
-        <div class="show" v-on:mouseover="addClassload" v-on:mouseout="removeClassload" @click="upload"
-          :style="'backgroundImage:url('+headerImage+');border: 1px dashed '+color">
+        <div class="show" v-on:mouseover="addClassload" v-on:mouseout="removeClassload" @click="upload" :style="'backgroundImage:url('+headerImage+');border: 1px dashed '+color">
           <i class="el-icon-plus i" :style="'color: '+color"></i>
         </div>
       </div>
@@ -52,12 +51,12 @@
       var self = this;
       var image = document.getElementById('image');
       this.cropper = new Cropper(image, {
-        aspectRatio: 1, //控制裁剪框的比例
+        aspectRatio: 1, //控制裁剪框的比例（可以写入宽高200/100）
         viewMode: 1,
         zoomOnWheel: false, //是否允许通过鼠标滚轮来缩放图片
         background: true, //是否在容器上显示网格背景
         rotatable: true, //是否允许旋转图片
-        ready: function () {
+        ready: function() {
           self.croppable = true;
         }
       });
@@ -182,7 +181,6 @@
       }
     }
   }
-
 </script>
 <style>
   #crop .crop-show-box {
@@ -545,5 +543,4 @@ border-radius: 100%; 圆形截图设置
   .cropper-disabled .cropper-point {
     cursor: not-allowed;
   }
-
 </style>
