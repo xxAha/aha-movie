@@ -83,7 +83,7 @@
          this.loading = false
        },
        handleEdit(id) {
-         this.$router.push(`/update-user/${id}`)
+         this.$router.push(`/admin/update-user/${id}`)
        },
        async handleDelete(id) {
          this.$messageBox.confirm('删除该资源, 是否继续?', '提示', {

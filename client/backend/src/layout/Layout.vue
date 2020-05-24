@@ -17,7 +17,7 @@
             <i class="el-icon-s-platform"></i>
             <span>网站设置</span>
           </template>
-          <el-menu-item :disabled="ownerInfo.role !== 0" index="/setting">
+          <el-menu-item :disabled="ownerInfo.role !== 0" index="/admin/setting">
             <i class="el-icon-s-tools"></i>网站设置
           </el-menu-item>
         </el-submenu>
@@ -28,10 +28,10 @@
             <i class="el-icon-user-solid"></i>
             <span>用户管理</span>
           </template>
-          <el-menu-item :disabled="ownerInfo.role !== 0" index="/create-user">
+          <el-menu-item :disabled="ownerInfo.role !== 0" index="/admin/create-user">
             <i class="el-icon-circle-plus"></i>添加用户
           </el-menu-item>
-          <el-menu-item index="/user-list">
+          <el-menu-item index="/admin/user-list">
             <i class="el-icon-more"></i>用户列表
           </el-menu-item>
         </el-submenu>
@@ -41,10 +41,10 @@
             <i class="el-icon-s-order"></i>
             <span>分类管理</span>
           </template>
-          <el-menu-item index="/create-type">
+          <el-menu-item index="/admin/create-type">
             <i class="el-icon-document-add"></i>创建分类
           </el-menu-item>
-          <el-menu-item index="/type-list">
+          <el-menu-item index="/admin/type-list">
             <i class="el-icon-document"></i>分类列表
           </el-menu-item>
         </el-submenu>
@@ -54,10 +54,10 @@
             <i class="el-icon-video-camera-solid"></i>
             <span>资源管理</span>
           </template>
-          <el-menu-item index="/create-resource">
+          <el-menu-item index="/admin/create-resource">
             <i class="el-icon-s-ticket"></i>添加资源
           </el-menu-item>
-          <el-menu-item index="/resource-list">
+          <el-menu-item index="/admin/resource-list">
             <i class="el-icon-s-ticket"></i>资源列表
           </el-menu-item>
         </el-submenu>
@@ -76,7 +76,7 @@
           </div>
           <div class="breadcrumb-container">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item @click.native="currentPathToHome" :to="{ path: '/' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item @click.native="currentPathToHome" :to="{ path: '/admin' }">首页</el-breadcrumb-item>
               <el-breadcrumb-item v-if="breadcrumbText">{{breadcrumbText}}</el-breadcrumb-item>
             </el-breadcrumb>
           </div>
@@ -90,8 +90,8 @@
             </div>
 
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item :command="`/update-user/${ownerInfo.id}`">修改信息</el-dropdown-item>
-              <el-dropdown-item command="/change-password">修改密码</el-dropdown-item>
+              <el-dropdown-item :command="`/admin/update-user/${ownerInfo.id}`">修改信息</el-dropdown-item>
+              <el-dropdown-item command="/admin/change-password">修改密码</el-dropdown-item>
               <el-dropdown-item @click.native="handleLogout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -176,7 +176,7 @@
       },
       //面包屑回到主页
       currentPathToHome() {
-        this.currentPath = '/home'
+        this.currentPath = '/admin/home'
       },
       //右上角下拉选择框点击处理
       handleCommand(type) {

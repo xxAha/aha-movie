@@ -23,10 +23,10 @@ Router.prototype.push = function push(location, onResolve, onReject) {
 }
 
 export default new Router({
-  //mode: 'history',
+  mode: 'history',
   routes: [{
-      path: '/',
-      redirect: '/home',
+      path: '/admin',
+      redirect: '/admin/home',
       component: Layout,
       children: [{
           path: 'home',

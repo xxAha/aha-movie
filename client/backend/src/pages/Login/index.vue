@@ -59,7 +59,7 @@
     methods: {
       init() {
         const token = sessionStorage.getItem('access_token')
-        if (token) this.$router.replace('/home')
+        if (token) this.$router.replace('/admin/home')
       },
       //用户登录
       handleLogin(form) {
@@ -76,7 +76,7 @@
             return
           }
           this.setToken(result.data.token)
-          this.$router.replace('/home')
+          this.$router.replace('/admin/home')
         })
       },
       //保存token
