@@ -92,7 +92,7 @@
   .login-container {
     width: 100%;
     height: 100%;
-    background-image: url('/static/img/login-bg.jpg');
+    background-image: url('../../../static/img/login-bg.jpg'); //背景图片要用相对路径不然配置了是路径不对
     background-size: cover;
     background-position: center;
     position: relative;
