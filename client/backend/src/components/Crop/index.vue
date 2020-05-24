@@ -1,8 +1,8 @@
 <template>
-  <div id="demo">
+  <div id="crop">
     <!-- 遮罩层 -->
-    <div class="father" v-show="panel">
-      <div class="container">
+    <div class="crop-father" v-show="panel">
+      <div class="crop-container">
         <div id="cropper" style="margin-top:1%;margin-left: 1%;margin-right: 1%;height: 85%;margin-bottom: 1%">
           <img id="image" :src="url" alt="Picture">
         </div>
@@ -18,10 +18,9 @@
       </div>
     </div>
     <div>
-      <div class="show-box">
+      <div class="crop-show-box">
         <input type="file" id="change" accept="image" @change="change" style="display:none;">
-        <div class="show" v-on:mouseover="addClassload" v-on:mouseout="removeClassload" @click="upload"
-          :style="'backgroundImage:url('+headerImage+');border: 1px dashed '+color">
+        <div class="show" v-on:mouseover="addClassload" v-on:mouseout="removeClassload" @click="upload" :style="'backgroundImage:url('+headerImage+');border: 1px dashed '+color">
           <i class="el-icon-plus i" :style="'color: '+color"></i>
         </div>
       </div>
@@ -52,12 +51,12 @@
       var self = this;
       var image = document.getElementById('image');
       this.cropper = new Cropper(image, {
-        aspectRatio: 1, //控制裁剪框的比例
+        aspectRatio: 1, //控制裁剪框的比例（可以写入宽高200/100）
         viewMode: 1,
         zoomOnWheel: false, //是否允许通过鼠标滚轮来缩放图片
         background: true, //是否在容器上显示网格背景
         rotatable: true, //是否允许旋转图片
-        ready: function () {
+        ready: function() {
           self.croppable = true;
         }
       });
@@ -165,7 +164,9 @@
         //这边写图片的上传
         const file = this.dataURLtoFile(this.headerImage)
         this.limitSize(file)
+        //监听组件的 cropDone 和 sizeOver 的自定义事件
       },
+      //限制图片大小
       limitSize(file) {
         const size = file.size
         //1 * 1024 * 1024 = 1m
@@ -180,14 +181,13 @@
       }
     }
   }
-
 </script>
-<style scope>
-  .show-box {
+<style>
+  #crop .crop-show-box {
     text-align: left;
   }
 
-  .father {
+  #crop .crop-father {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0px;
@@ -197,7 +197,7 @@
     z-index: 33;
   }
 
-  .i {
+  #crop .i {
     font-size: 28px;
     color: #8c939d;
     width: 100px;
@@ -206,7 +206,7 @@
     text-align: center;
   }
 
-  #demo .show {
+  #crop .show {
     border: 1px dashed #d9d9d9;
     border-radius: 10%;
     width: 100px;
@@ -222,7 +222,7 @@
     background-size: cover;
   }
 
-  #demo .container {
+  #crop .crop-container {
     z-index: 99;
     height: 300px;
     width: 500px;
@@ -233,7 +233,7 @@
     background-color: white;
   }
 
-  #demo #image {
+  #crop #image {
     max-width: 100%;
   }
 
@@ -249,7 +249,7 @@ border-radius: 100%; 圆形截图设置
 *
 * Date: 2017-03-25T12:02:21.062Z
 */
-  .cropper-container {
+  #crop .cropper-container {
     font-size: 0;
     line-height: 0;
     position: relative;
@@ -262,7 +262,7 @@ border-radius: 100%; 圆形截图设置
     touch-action: none
   }
 
-  .cropper-container img {
+  #crop .cropper-container img {
     /* Avoid margin top issue (Occur only when margin-top <= -height) */
     display: block;
     min-width: 0 !important;
@@ -274,7 +274,7 @@ border-radius: 100%; 圆形截图设置
     image-orientation: 0deg
   }
 
-  .cropper-wrap-box,
+  #crop .cropper-wrap-box,
   .cropper-canvas,
   .cropper-drag-box,
   .cropper-crop-box,
@@ -286,21 +286,21 @@ border-radius: 100%; 圆形截图设置
     left: 0;
   }
 
-  .cropper-wrap-box {
+  #crop .cropper-wrap-box {
     overflow: hidden;
   }
 
-  .cropper-drag-box {
+  #crop .cropper-drag-box {
     opacity: 0;
     background-color: #fff;
   }
 
-  .cropper-modal {
+  #crop .cropper-modal {
     opacity: .5;
     background-color: #000;
   }
 
-  .cropper-view-box {
+  #crop .cropper-view-box {
     display: block;
     overflow: hidden;
     width: 100%;
@@ -309,14 +309,14 @@ border-radius: 100%; 圆形截图设置
     outline-color: rgba(51, 153, 255, 0.75);
   }
 
-  .cropper-dashed {
+  #crop .cropper-dashed {
     position: absolute;
     display: block;
     opacity: .5;
     border: 0 dashed #eee
   }
 
-  .cropper-dashed.dashed-h {
+  #crop .cropper-dashed.dashed-h {
     top: 33.33333%;
     left: 0;
     width: 100%;
@@ -325,7 +325,7 @@ border-radius: 100%; 圆形截图设置
     border-bottom-width: 1px
   }
 
-  .cropper-dashed.dashed-v {
+  #crop .cropper-dashed.dashed-v {
     top: 0;
     left: 33.33333%;
     width: 33.33333%;
@@ -334,7 +334,7 @@ border-radius: 100%; 圆形截图设置
     border-left-width: 1px
   }
 
-  .cropper-center {
+  #crop .cropper-center {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -344,7 +344,7 @@ border-radius: 100%; 圆形截图设置
     opacity: .75
   }
 
-  .cropper-center:before,
+  #crop .cropper-center:before,
   .cropper-center:after {
     position: absolute;
     display: block;
@@ -359,14 +359,14 @@ border-radius: 100%; 圆形截图设置
     height: 1px
   }
 
-  .cropper-center:after {
+  #crop .cropper-center:after {
     top: -3px;
     left: 0;
     width: 1px;
     height: 7px
   }
 
-  .cropper-face,
+  #crop .cropper-face,
   .cropper-line,
   .cropper-point {
     position: absolute;
@@ -376,98 +376,98 @@ border-radius: 100%; 圆形截图设置
     opacity: .1;
   }
 
-  .cropper-face {
+  #crop .cropper-face {
     top: 0;
     left: 0;
     background-color: #fff;
   }
 
-  .cropper-line {
+  #crop .cropper-line {
     background-color: #39f
   }
 
-  .cropper-line.line-e {
+  #crop .cropper-line.line-e {
     top: 0;
     right: -3px;
     width: 5px;
     cursor: e-resize
   }
 
-  .cropper-line.line-n {
+  #crop .cropper-line.line-n {
     top: -3px;
     left: 0;
     height: 5px;
     cursor: n-resize
   }
 
-  .cropper-line.line-w {
+  #crop .cropper-line.line-w {
     top: 0;
     left: -3px;
     width: 5px;
     cursor: w-resize
   }
 
-  .cropper-line.line-s {
+  #crop .cropper-line.line-s {
     bottom: -3px;
     left: 0;
     height: 5px;
     cursor: s-resize
   }
 
-  .cropper-point {
+  #crop .cropper-point {
     width: 5px;
     height: 5px;
     opacity: .75;
     background-color: #39f
   }
 
-  .cropper-point.point-e {
+  #crop .cropper-point.point-e {
     top: 50%;
     right: -3px;
     margin-top: -3px;
     cursor: e-resize
   }
 
-  .cropper-point.point-n {
+  #crop .cropper-point.point-n {
     top: -3px;
     left: 50%;
     margin-left: -3px;
     cursor: n-resize
   }
 
-  .cropper-point.point-w {
+  #crop .cropper-point.point-w {
     top: 50%;
     left: -3px;
     margin-top: -3px;
     cursor: w-resize
   }
 
-  .cropper-point.point-s {
+  #crop .cropper-point.point-s {
     bottom: -3px;
     left: 50%;
     margin-left: -3px;
     cursor: s-resize
   }
 
-  .cropper-point.point-ne {
+  #crop .cropper-point.point-ne {
     top: -3px;
     right: -3px;
     cursor: ne-resize
   }
 
-  .cropper-point.point-nw {
+  #crop .cropper-point.point-nw {
     top: -3px;
     left: -3px;
     cursor: nw-resize
   }
 
-  .cropper-point.point-sw {
+  #crop .cropper-point.point-sw {
     bottom: -3px;
     left: -3px;
     cursor: sw-resize
   }
 
-  .cropper-point.point-se {
+  #crop .cropper-point.point-se {
     right: -3px;
     bottom: -3px;
     width: 20px;
@@ -477,28 +477,28 @@ border-radius: 100%; 圆形截图设置
   }
 
   @media (min-width: 768px) {
-    .cropper-point.point-se {
+    #crop .cropper-point.point-se {
       width: 15px;
       height: 15px
     }
   }
 
   @media (min-width: 992px) {
-    .cropper-point.point-se {
+    #crop .cropper-point.point-se {
       width: 10px;
       height: 10px
     }
   }
 
   @media (min-width: 1200px) {
-    .cropper-point.point-se {
+    #crop .cropper-point.point-se {
       width: 5px;
       height: 5px;
       opacity: .75
     }
   }
 
-  .cropper-point.point-se:before {
+  #crop .cropper-point.point-se:before {
     position: absolute;
     right: -50%;
     bottom: -50%;
@@ -510,38 +510,37 @@ border-radius: 100%; 圆形截图设置
     background-color: #39f
   }
 
-  .cropper-invisible {
+  #crop .cropper-invisible {
     opacity: 0;
   }
 
-  .cropper-bg {
+  #crop .cropper-bg {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');
   }
 
-  .cropper-hide {
+  #crop .cropper-hide {
     position: absolute;
     display: block;
     width: 0;
     height: 0;
   }
 
-  .cropper-hidden {
+  #crop .cropper-hidden {
     display: none !important;
   }
 
-  .cropper-move {
+  #crop .cropper-move {
     cursor: move;
   }
 
-  .cropper-crop {
+  #crop .cropper-crop {
     cursor: crosshair;
   }
 
-  .cropper-disabled .cropper-drag-box,
+  #crop .cropper-disabled .cropper-drag-box,
   .cropper-disabled .cropper-face,
   .cropper-disabled .cropper-line,
   .cropper-disabled .cropper-point {
     cursor: not-allowed;
   }
-
 </style>

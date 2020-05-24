@@ -92,7 +92,7 @@
   .login-container {
     width: 100%;
     height: 100%;
-    background-image: url('/static/img/login-bg.jpg');
+    background-image: url('../../../static/img/login-bg.jpg');
     background-size: cover;
     background-position: center;
     position: relative;
