@@ -22,7 +22,7 @@ Router.prototype.push = function push(location, onResolve, onReject) {
   return originalPush.call(this, location).catch(err => err)
 }
 
-export default new Router({
+const router =  new Router({
   mode: 'history',
   routes: [{
       path: '/admin',
@@ -91,9 +91,16 @@ export default new Router({
       ]
     },
     {
+      path: '/admin/login',
+      name: 'Login',
+      component: Login
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login
     }
   ]
 })
+
+export default router
